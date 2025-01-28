@@ -1,0 +1,34 @@
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpClient } from '@angular/common/http';
+import * as i0 from "@angular/core";
+import * as i1 from "./ih-library.component";
+import * as i2 from "./components/table-grid/table-grid.component";
+import * as i3 from "./modal-components/modal-components.module";
+import * as i4 from "@angular/router";
+import * as i5 from "@angular/common";
+import * as i6 from "@ngx-translate/core";
+import * as i7 from "ngx-toastr";
+import * as i8 from "ngx-permissions";
+import * as i9 from "@angular/material/paginator";
+import * as i10 from "@angular/material/tooltip";
+import * as i11 from "@angular/material/input";
+import * as i12 from "@angular/material/form-field";
+import * as i13 from "@angular/material/expansion";
+import * as i14 from "@angular/material/bottom-sheet";
+import * as i15 from "@angular/material/snack-bar";
+import * as i16 from "@angular/material/menu";
+import * as i17 from "@angular/material/table";
+import * as i18 from "@angular/material/icon";
+import * as i19 from "@angular/material/sidenav";
+import * as i20 from "@angular/material/tabs";
+import * as i21 from "@angular/cdk/accordion";
+import * as i22 from "@angular/material/dialog";
+import * as i23 from "@angular/material/datepicker";
+import * as i24 from "@angular/material/core";
+import * as i25 from "@angular/forms";
+export declare function HttpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader;
+export declare class IhLibraryModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<IhLibraryModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<IhLibraryModule, [typeof i1.IhLibraryComponent, typeof i2.TableGridComponent], [typeof i3.ModalComponentsModule, typeof i4.RouterModule, typeof i5.CommonModule, typeof i6.TranslateModule, typeof i7.ToastrModule, typeof i8.NgxPermissionsModule, typeof i9.MatPaginatorModule, typeof i10.MatTooltipModule, typeof i11.MatInputModule, typeof i12.MatFormFieldModule, typeof i13.MatExpansionModule, typeof i14.MatBottomSheetModule, typeof i15.MatSnackBarModule, typeof i16.MatMenuModule, typeof i17.MatTableModule, typeof i18.MatIconModule, typeof i19.MatSidenavModule, typeof i20.MatTabsModule, typeof i21.CdkAccordionModule, typeof i22.MatDialogModule, typeof i23.MatDatepickerModule, typeof i24.MatNativeDateModule, typeof i25.FormsModule, typeof i25.ReactiveFormsModule], [typeof i1.IhLibraryComponent, typeof i2.TableGridComponent, typeof i9.MatPaginatorModule, typeof i10.MatTooltipModule, typeof i11.MatInputModule, typeof i12.MatFormFieldModule, typeof i13.MatExpansionModule, typeof i14.MatBottomSheetModule, typeof i15.MatSnackBarModule, typeof i16.MatMenuModule, typeof i17.MatTableModule, typeof i18.MatIconModule, typeof i19.MatSidenavModule, typeof i20.MatTabsModule, typeof i21.CdkAccordionModule, typeof i22.MatDialogModule, typeof i23.MatDatepickerModule, typeof i24.MatNativeDateModule, typeof i25.FormsModule, typeof i25.ReactiveFormsModule, typeof i8.NgxPermissionsModule, typeof i7.ToastrModule, typeof i6.TranslateModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<IhLibraryModule>;
+}

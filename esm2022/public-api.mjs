@@ -1,0 +1,8 @@
+/*
+ * Public API Surface of ih-library
+ */
+export * from './lib/ih-library.service';
+export * from './lib/ih-library.component';
+export * from './lib/ih-library.module';
+export * from './lib/components/table-grid/table-grid.component';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL2loLWxpYnJhcnkvc3JjL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFFSCxjQUFjLDBCQUEwQixDQUFDO0FBQ3pDLGNBQWMsNEJBQTRCLENBQUM7QUFDM0MsY0FBYyx5QkFBeUIsQ0FBQztBQUV4QyxjQUFjLGtEQUFrRCxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIGloLWxpYnJhcnlcclxuICovXHJcblxyXG5leHBvcnQgKiBmcm9tICcuL2xpYi9paC1saWJyYXJ5LnNlcnZpY2UnO1xyXG5leHBvcnQgKiBmcm9tICcuL2xpYi9paC1saWJyYXJ5LmNvbXBvbmVudCc7XHJcbmV4cG9ydCAqIGZyb20gJy4vbGliL2loLWxpYnJhcnkubW9kdWxlJztcclxuXHJcbmV4cG9ydCAqIGZyb20gJy4vbGliL2NvbXBvbmVudHMvdGFibGUtZ3JpZC90YWJsZS1ncmlkLmNvbXBvbmVudCc7Il19
