@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, Component, Inject, Input, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Injectable, Component, Inject, Input, ViewChild, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import * as i4 from '@ngx-translate/core';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import * as i10 from '@angular/material/paginator';
@@ -40,13 +40,8 @@ import localeEn from '@angular/common/locales/en';
 import * as i3$1 from 'ngx-permissions';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { MatButtonModule } from '@angular/material/button';
-import { NgxDropzoneModule } from 'ngx-dropzone';
-import { MomentModule } from 'ngx-moment';
 import { MatListModule } from '@angular/material/list';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { SignaturePadModule } from 'angular2-signaturepad';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
@@ -1549,7 +1544,16 @@ class TableGridComponent {
         if (selectedDate) {
             const formattedDate = this.formatDate(selectedDate);
             this.dataSource.filterPredicate = (data, filter) => {
-                const itemDate = dateField !== "followUp" ? data[dateField].includes(',') ? this.formatDate(data[dateField]) : this.convertToDate(data[dateField]) : this.formatDate(this.convertToISO(data.followUp));
+                let itemDate;
+                if (dateField === "followUp") {
+                    itemDate = this.formatDate(this.convertToISO(data.followUp));
+                }
+                else if (dateField === "slotJsDate") {
+                    itemDate = this.formatDate(data[dateField]);
+                }
+                else {
+                    itemDate = data[dateField].includes(',') ? this.formatDate(data[dateField]) : this.convertToDate(data[dateField]);
+                }
                 return itemDate === filter;
             };
             this.dataSource.filter = formattedDate;
@@ -1558,7 +1562,16 @@ class TableGridComponent {
             const formattedStartDate = this.formatDate(startDate);
             const formattedEndDate = this.formatDate(endDate);
             this.dataSource.filterPredicate = (data, filter) => {
-                const itemDate = dateField !== "followUp" ? data[dateField].includes(',') ? this.formatDate(data[dateField]) : this.convertToDate(data[dateField]) : this.formatDate(this.convertToISO(data.followUp));
+                let itemDate;
+                if (dateField === "followUp") {
+                    itemDate = this.formatDate(this.convertToISO(data.followUp));
+                }
+                else if (dateField === "slotJsDate") {
+                    itemDate = this.formatDate(data[dateField]);
+                }
+                else {
+                    itemDate = data[dateField].includes(',') ? this.formatDate(data[dateField]) : this.convertToDate(data[dateField]);
+                }
                 return itemDate >= formattedStartDate && itemDate <= formattedEndDate;
             };
             this.dataSource.filter = `${formattedStartDate}:${formattedEndDate}`;
@@ -1986,14 +1999,9 @@ class ModalComponentsModule {
             ReactiveFormsModule,
             MatIconModule,
             MatButtonModule,
-            NgxDropzoneModule,
-            MomentModule,
             MatListModule,
             MatDatepickerModule,
-            PdfViewerModule,
             NgSelectModule,
-            SignaturePadModule,
-            ImageCropperModule,
             MatProgressBarModule,
             MatTabsModule,
             MatTableModule,
@@ -2006,14 +2014,9 @@ class ModalComponentsModule {
             ReactiveFormsModule,
             MatIconModule,
             MatButtonModule,
-            NgxDropzoneModule,
-            MomentModule,
             MatListModule,
             MatDatepickerModule,
-            PdfViewerModule,
             NgSelectModule,
-            SignaturePadModule,
-            ImageCropperModule,
             MatProgressBarModule,
             MatTabsModule,
             MatTableModule,
@@ -2036,20 +2039,15 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
                         ReactiveFormsModule,
                         MatIconModule,
                         MatButtonModule,
-                        NgxDropzoneModule,
-                        MomentModule,
                         MatListModule,
                         MatDatepickerModule,
-                        PdfViewerModule,
                         NgSelectModule,
-                        SignaturePadModule,
-                        ImageCropperModule,
                         MatProgressBarModule,
                         MatTabsModule,
                         MatTableModule,
                         TranslateModule
                     ],
-                    // schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+                    schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
                 }]
         }] });
 
