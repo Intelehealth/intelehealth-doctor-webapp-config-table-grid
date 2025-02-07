@@ -465,6 +465,7 @@ export interface MedicineModel {
     days?: string;
     timing?: string;
     remark?: string;
+    frequency?: string;
     uuid?: string;
 }
 export interface PatientHistoryModel {
@@ -480,6 +481,7 @@ export interface DiagnosisModel {
     diagnosisType?: string;
     diagnosisStatus?: string;
     uuid?: string;
+    diagnosisTNMStaging?: string;
 }
 export interface DocImagesModel {
     src: string;
@@ -503,6 +505,7 @@ export interface FollowUpDataModel {
     followUpDate?: string;
     followUpTime?: string;
     followUpReason?: string;
+    followUpType?: string;
 }
 export interface HwModel {
     hwName: string;
@@ -574,6 +577,14 @@ export interface VitalModel {
     key: string;
     uuid: string;
     is_mandatory: boolean;
+    lang: object;
+}
+export interface DiagnosticModel {
+    name: string;
+    key: string;
+    uuid: string;
+    is_mandatory: boolean;
+    lang: object;
 }
 export interface FeatureModel extends BaseModel {
 }
@@ -605,6 +616,9 @@ export interface PatientVisitSummaryConfigModel {
     completed_visit_section: boolean;
     follow_up_visit_section: boolean;
     hw_interaction: boolean;
+    awaiting_visits_patient_type_demarcation: boolean;
+    awaiting_visit_section: boolean;
+    diagnosis_at_secondary_level: boolean;
 }
 export interface PagerdutyList {
     currentPage: number;
@@ -634,4 +648,31 @@ export interface MenuConfig {
     key: string;
     updatedAt?: string;
     is_locked: boolean;
+}
+export interface PatientVisitSection {
+    id: number;
+    is_enabled: boolean;
+    is_locked: boolean;
+    is_editable: boolean;
+    name: string;
+    lang: string;
+    key: string;
+    order: number;
+    sub_sections?: any;
+    updatedAt?: string;
+    createdAt?: string;
+}
+export interface DiagnosticUnit {
+    name: string;
+    unit: string;
+    min: number;
+    max?: number;
+    percentageMin?: number;
+    percentageMax?: number;
+    percentageUnit?: string;
+    gender?: string;
+}
+export interface DiagnosticName {
+    name: string;
+    testName: string;
 }

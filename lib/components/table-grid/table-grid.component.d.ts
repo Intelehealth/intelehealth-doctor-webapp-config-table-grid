@@ -265,7 +265,7 @@ export declare class TableGridComponent implements OnInit {
      * @param {any} column - Column definition
      * @return {string} - Space-separated class names
      */
-    getClasses(column: any): string;
+    getClasses(column: any, element: any): string;
     /**
      * Formats the follow-up date by cleaning up time details
      * @param {string} value - Follow-up date string
