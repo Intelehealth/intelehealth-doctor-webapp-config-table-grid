@@ -23,7 +23,7 @@ export declare class TableGridComponent implements OnInit {
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
-    dataSource: MatTableDataSource<any>;
+    dataSource: MatTableDataSource<any, MatPaginator>;
     patientRegFields: string[];
     isMCCUser: boolean;
     paginator: MatPaginator;
