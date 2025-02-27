@@ -1,16 +1,18 @@
-import { ElementRef, OnInit, SimpleChanges } from '@angular/core';
+import { ElementRef, OnInit, SimpleChanges, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { AppointmentModel, CustomEncounterModel, CustomObsModel, CustomVisitModel, ProviderAttributeModel } from '../../model/model';
+import { AppointmentModel, CustomEncounterModel, CustomObsModel, CustomVisitModel, ProviderAttributeModel, PatientVisitSummaryConfigModel } from '../../model/model';
 import { AppointmentService } from '../../services/appointment.service';
 import { VisitService } from '../../services/visit.service';
 import { CoreService } from '../../services/core.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { MindmapService } from '../../services/mindmap.service';
+import { AppConfigService } from '../../services/app-config.service';
 import { FormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxRolesService } from 'ngx-permissions';
 import * as i0 from "@angular/core";
 export declare class TableGridComponent implements OnInit {
     private appointmentService;
@@ -20,6 +22,8 @@ export declare class TableGridComponent implements OnInit {
     private translateService;
     private mindmapService;
     private sanitizer;
+    private appConfigService;
+    private rolesService;
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
@@ -41,10 +45,13 @@ export declare class TableGridComponent implements OnInit {
     completedVisits: CustomVisitModel[];
     followUpVisits: CustomVisitModel[];
     specialization: string;
+    visitsCountDate: EventEmitter<any>;
     visitsLengthCount: number;
     isFilterApplied: boolean;
+    pvs: PatientVisitSummaryConfigModel;
+    baseURL: any;
     ngAfterViewInit(): void;
-    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer);
+    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
     /**
      * Creates a filtered date range form with required date fields
      * @return {FormGroup} - The created form group
@@ -56,26 +63,6 @@ export declare class TableGridComponent implements OnInit {
      * @param changes pluginConfigObs
      */
     ngOnChanges(changes: SimpleChanges): void;
-    /**
-     * Get the patient type style
-     * @param type
-     */
-    getPatientTypeStyle(type: string): {
-        color: string;
-        backgroundColor: string;
-    };
-    /**
-     * Get the patient type either new or old
-     * @param type
-     */
-    getPatientTypeLabel(type: string): string;
-    getVisitTypeStyle(type: string): {
-        color: string;
-        backgroundColor: string;
-    };
-    getVisitTypeLabel(type: string): string;
-    getVisitTypeIcon(type: string): string;
-    formatVisitDate(date: string): string;
     /**
     * Retreive the chief complaints for the visit
     * @param {CustomVisitModel} visit - Visit
@@ -242,9 +229,9 @@ export declare class TableGridComponent implements OnInit {
      */
     getCompletedVisits(page?: number): void;
     /**
-  * Get follow-up visits for a logged-in doctor
-  * @return {void}
-  */
+    * Get follow-up visits for a logged-in doctor
+    * @return {void}
+    */
     getFollowUpVisit(page?: number): void;
     /**
     * Get encounter datetime for a given encounter type
@@ -284,6 +271,11 @@ export declare class TableGridComponent implements OnInit {
      * @param {string} telephone - Phone number for WhatsApp
      */
     openWhatsApp(event: MouseEvent, telephone: string): void;
+    /**
+     * Emits the visits count data with the given table tag name and count
+     * @param {number} visitsCount - The total visits count for the specific table
+     */
+    emitVisitsCount(visitsCount: number): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TableGridComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<TableGridComponent, "lib-table-grid", never, { "pluginConfigObs": "pluginConfigObs"; }, {}, never, never, false>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TableGridComponent, "lib-table-grid", never, { "pluginConfigObs": "pluginConfigObs"; }, { "visitsCountDate": "visitsCountDate"; }, never, never, false>;
 }

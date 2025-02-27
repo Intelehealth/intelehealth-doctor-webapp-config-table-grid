@@ -9,13 +9,13 @@ export declare class CoreService {
     * @param {any} data - Dialog data
     * @return {Observable<any>} - Dialog result
     */
-    openConfirmCancelAppointmentModal(mindmapURL: string, data: any): Observable<any>;
+    openConfirmCancelAppointmentModal(data: any): Observable<any>;
     /**
     * Open reschedule appointment modal
     * @param {any} data - Dialog data
     * @return {Observable<any>} - Dialog result
     */
-    openRescheduleAppointmentModal(mindmapURL: string, data: any): Observable<any>;
+    openRescheduleAppointmentModal(data: any): Observable<any>;
     /**
     * Open reschedule appointment confirmation modal
     * @param {any} data - Dialog data

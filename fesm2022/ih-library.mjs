@@ -1,10 +1,10 @@
 import * as i0 from '@angular/core';
-import { Injectable, Component, Inject, Directive, Input, ViewChild, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Injectable, Inject, Component, Directive, Input, EventEmitter, ChangeDetectionStrategy, ViewChild, Output, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import * as i4 from '@ngx-translate/core';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import * as i10 from '@angular/material/paginator';
+import * as i12 from '@angular/material/paginator';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import * as i15 from '@angular/material/table';
+import * as i17 from '@angular/material/table';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import * as i1 from '@angular/common/http';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -12,33 +12,33 @@ import { Subject } from 'rxjs';
 import moment from 'moment';
 import * as i1$1 from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import * as i9 from '@angular/common';
+import * as i11 from '@angular/common';
 import { DecimalPipe, formatDate, CommonModule, registerLocaleData } from '@angular/common';
 import * as i3 from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import * as i5 from '@angular/material/form-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import * as i18 from '@angular/forms';
+import * as i20 from '@angular/forms';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as i8 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import * as i14 from '@angular/material/menu';
+import * as i16 from '@angular/material/menu';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import * as i7 from '@angular/platform-browser';
-import * as i8$1 from '@angular/router';
+import * as i9 from 'ngx-permissions';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import * as i10 from '@angular/router';
 import { RouterModule } from '@angular/router';
-import * as i11 from '@angular/material/tooltip';
+import * as i13 from '@angular/material/tooltip';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import * as i13 from '@angular/material/expansion';
+import * as i15 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
-import * as i16 from '@angular/material/icon';
+import * as i18 from '@angular/material/icon';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import localeRu from '@angular/common/locales/ru';
 import localeEn from '@angular/common/locales/en';
-import * as i3$1 from 'ngx-permissions';
-import { NgxPermissionsModule } from 'ngx-permissions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -64,25 +64,26 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
 
 class AppointmentService {
     http;
-    // private baseURL = environment.mindmapURL; 'https://dev.intelehealth.org:3004/api'
-    constructor(http) {
+    mindmapURL;
+    constructor(http, environment) {
         this.http = http;
+        this.mindmapURL = environment.mindmapURL;
     }
     /**
     * Create or update appointment
     * @param {any} payload - Payload for create or update appointment
     * @return {Observable<any>}
     */
-    updateOrCreateAppointment(payload, mindmapURL) {
-        return this.http.post(`${mindmapURL}/appointment/createOrUpdateSchedule`, payload);
+    updateOrCreateAppointment(payload) {
+        return this.http.post(`${this.mindmapURL}/appointment/createOrUpdateSchedule`, payload);
     }
     /**
     * Update daysOffs
     * @param {any} payload - Payload for update daysOff's
     * @return {Observable<any>}
     */
-    updateDaysOff(mindmapURL, payload) {
-        return this.http.post(`${mindmapURL}/appointment/updateDaysOff`, payload);
+    updateDaysOff(payload) {
+        return this.http.post(`${this.mindmapURL}/appointment/updateDaysOff`, payload);
     }
     /**
     * Get user appointments
@@ -91,8 +92,8 @@ class AppointmentService {
     * @param {string} month - Month
     * @return {Observable<any>}
     */
-    getUserAppoitment(mindmapURL, userUuid, year, month) {
-        return this.http.get(`${mindmapURL}/appointment/getSchedule/${userUuid}?year=${year}&month=${month}`);
+    getUserAppoitment(userUuid, year, month) {
+        return this.http.get(`${this.mindmapURL}/appointment/getSchedule/${userUuid}?year=${year}&month=${month}`);
     }
     /**
     * Get user slots
@@ -101,8 +102,8 @@ class AppointmentService {
     * @param {string} toDate - To date
     * @return {Observable<any>}
     */
-    getUserSlots(mindmapURL, userUuid, fromDate, toDate, speciality = null) {
-        let url = `${mindmapURL}/appointment/getUserSlots/${userUuid}?fromDate=${fromDate}&toDate=${toDate}`;
+    getUserSlots(userUuid, fromDate, toDate, speciality = null) {
+        let url = `${this.mindmapURL}/appointment/getUserSlots/${userUuid}?fromDate=${fromDate}&toDate=${toDate}`;
         if (speciality) {
             url += `&speciality=${speciality}`;
         }
@@ -115,16 +116,16 @@ class AppointmentService {
     * @param {string} speciality - Speciality
     * @return {Observable<any>}
     */
-    getAppointmentSlots(mindmapURL, fromDate, toDate, speciality) {
-        return this.http.get(`${mindmapURL}/appointment/getAppointmentSlots?fromDate=${fromDate}&toDate=${toDate}&speciality=${speciality}`);
+    getAppointmentSlots(fromDate, toDate, speciality) {
+        return this.http.get(`${this.mindmapURL}/appointment/getAppointmentSlots?fromDate=${fromDate}&toDate=${toDate}&speciality=${speciality}`);
     }
     /**
     * Get appointment for a visit
     * @param {string} visitId - Visit uuid
     * @return {Observable<any>}
     */
-    getAppointment(mindmapURL, visitId) {
-        return this.http.get(`${mindmapURL}/appointment/getAppointment/${visitId}`);
+    getAppointment(visitId) {
+        return this.http.get(`${this.mindmapURL}/appointment/getAppointment/${visitId}`);
     }
     /**
     * Get scheduled months
@@ -133,8 +134,8 @@ class AppointmentService {
     * @param {string} speciality - Speciality
     * @return {Observable<any>}
     */
-    getScheduledMonths(mindmapURL, userUuid, year, speciality = null) {
-        let url = `${mindmapURL}/appointment/getScheduledMonths/${userUuid}?year=${year}`;
+    getScheduledMonths(userUuid, year, speciality = null) {
+        let url = `${this.mindmapURL}/appointment/getScheduledMonths/${userUuid}?year=${year}`;
         if (speciality) {
             url += `&speciality=${speciality}`;
         }
@@ -145,32 +146,32 @@ class AppointmentService {
     * @param {string} providerId - Provider uuid
     * @return {Observable<any>}
     */
-    getFollowUpVisit(mindmapURL, providerId) {
-        return this.http.get(`${mindmapURL}/openmrs/getFollowUpVisit/${providerId}`);
+    getFollowUpVisit(providerId) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getFollowUpVisit/${providerId}`);
     }
     /**
     * Reschedule appointment
     * @param {string} payload - Payload to reschedule appointment
     * @return {Observable<any>}
     */
-    rescheduleAppointment(mindmapURL, payload) {
-        return this.http.post(`${mindmapURL}/appointment/rescheduleAppointment`, payload);
+    rescheduleAppointment(payload) {
+        return this.http.post(`${this.mindmapURL}/appointment/rescheduleAppointment`, payload);
     }
     /**
     * Cancel appointment
     * @param {string} payload - Payload to cancel appointment
     * @return {Observable<any>}
     */
-    cancelAppointment(mindmapURL, payload) {
-        return this.http.post(`${mindmapURL}/appointment/cancelAppointment`, payload);
+    cancelAppointment(payload) {
+        return this.http.post(`${this.mindmapURL}/appointment/cancelAppointment`, payload);
     }
     /**
     * Complete appointment
     * @param {string} payload - Payload to complete appointment
     * @return {Observable<any>}
     */
-    completeAppointment(mindmapURL, payload) {
-        return this.http.post(`${mindmapURL}/appointment/completeAppointment`, payload);
+    completeAppointment(payload) {
+        return this.http.post(`${this.mindmapURL}/appointment/completeAppointment`, payload);
     }
     /**
     * Check appointment present or not
@@ -180,8 +181,8 @@ class AppointmentService {
     * @param {string} speciality - Speciality
     * @return {Observable<any>}
     */
-    checkAppointmentPresent(mindmapURL, userUuid, fromDate, toDate, speciality) {
-        return this.http.get(`${mindmapURL}/appointment/checkAppointment/${userUuid}?fromDate=${fromDate}&toDate=${toDate}&speciality=${speciality}`);
+    checkAppointmentPresent(userUuid, fromDate, toDate, speciality) {
+        return this.http.get(`${this.mindmapURL}/appointment/checkAppointment/${userUuid}?fromDate=${fromDate}&toDate=${toDate}&speciality=${speciality}`);
     }
     /**
     * Update speciality for the calendar slots
@@ -189,10 +190,10 @@ class AppointmentService {
     * @param {string} speciality - Speciality
     * @return {Observable<any>}
     */
-    updateSlotSpeciality(mindmapURL, userUuid, speciality) {
-        return this.http.put(`${mindmapURL}/appointment/updateSlotSpeciality/${userUuid}?speciality=${speciality}`, null);
+    updateSlotSpeciality(userUuid, speciality) {
+        return this.http.put(`${this.mindmapURL}/appointment/updateSlotSpeciality/${userUuid}?speciality=${speciality}`, null);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppointmentService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppointmentService, deps: [{ token: i1.HttpClient }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Injectable });
     static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppointmentService, providedIn: "root" });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppointmentService, decorators: [{
@@ -200,29 +201,34 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
             args: [{
                     providedIn: "root",
                 }]
-        }], ctorParameters: function () { return [{ type: i1.HttpClient }]; } });
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['environment']
+                }] }]; } });
 
-// import { environment } from "src/environments/environment";
 class VisitService {
     http;
-    // private baseURL = environment.baseURL; //'https://dev.intelehealth.org/openmrs/ws/rest/v1'
-    // private mindmapURL = environment.mindmapURL;
-    // private baseURLAbha = environment.abhaURL; 
     isVisitSummaryShow = false;
     isHelpButtonShow = false;
     triggerAction = new Subject();
     chatVisitId;
-    constructor(http) {
+    baseURL;
+    mindmapURL;
+    baseURLAbha;
+    constructor(http, environment) {
         this.http = http;
+        this.baseURL = environment.baseURL;
+        this.mindmapURL = environment.mindmapURL;
+        this.baseURLAbha = environment.baseURLAbha;
     }
     /**
     * Get visit
     * @param {string} uuid - Visit uuid
     * @return {Observable<any>}
     */
-    getVisit(baseURL, uuid) {
+    getVisit(uuid) {
         // tslint:disable-next-line:max-line-length
-        const url = `${baseURL}/visit/${uuid}?includeInactive=false&v=custom:(uuid,patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),person:(display,gender,age,birthdate)),location:(display),encounters:(display,encounterDatetime,voided,encounterType:(display),encounterProviders),attributes)`;
+        const url = `${this.baseURL}/visit/${uuid}?includeInactive=false&v=custom:(uuid,patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),person:(display,gender,age,birthdate)),location:(display),encounters:(display,encounterDatetime,voided,encounterType:(display),encounterProviders),attributes)`;
         return this.http.get(url);
     }
     /**
@@ -230,8 +236,8 @@ class VisitService {
     * @param {string} id - Patient uuid
     * @return {Observable<any>}
     */
-    recentVisits(baseURL, id) {
-        const url = `${baseURL}/visit?patient=${id}&v=full`;
+    recentVisits(id) {
+        const url = `${this.baseURL}/visit?patient=${id}&v=full`;
         return this.http.get(url);
     }
     /**
@@ -240,9 +246,9 @@ class VisitService {
     * @param {string} v - response version format
     * @return {Observable<any>}
     */
-    fetchVisitDetails(baseURL, uuid, v = "custom:(location:(display),uuid,display,startDatetime,dateCreated,stopDatetime,encounters:(display,uuid,encounterDatetime,encounterType:(display),obs:(display,uuid,value,concept:(uuid,display)),encounterProviders:(display,provider:(uuid,attributes,person:(uuid,display,gender,age)))),patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),attributes,person:(display,gender,age)),attributes)") {
+    fetchVisitDetails(uuid, v = "custom:(location:(display),uuid,display,startDatetime,dateCreated,stopDatetime,encounters:(display,uuid,encounterDatetime,encounterType:(display),obs:(display,uuid,value,concept:(uuid,display)),encounterProviders:(display,provider:(uuid,attributes,person:(uuid,display,gender,age)))),patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),attributes,person:(display,gender,age)),attributes)") {
         // tslint:disable-next-line:max-line-length
-        const url = `${baseURL}/visit/${uuid}?v=${v}`;
+        const url = `${this.baseURL}/visit/${uuid}?v=${v}`;
         return this.http.get(url);
     }
     /**
@@ -251,11 +257,11 @@ class VisitService {
     * @param {string} v - response version format
     * @return {Observable<any>}
     */
-    fetchVisitDetails2(externalPrescriptionCred, baseURL, uuid, v = "custom:(location:(display),uuid,display,startDatetime,dateCreated,stopDatetime,encounters:(display,uuid,encounterDatetime,encounterType:(display),obs:(display,uuid,value,concept:(uuid,display)),encounterProviders:(display,provider:(uuid,attributes,person:(uuid,display,gender,age)))),patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),attributes,person:(display,gender,age)),attributes)") {
+    fetchVisitDetails2(externalPrescriptionCred, uuid, v = "custom:(location:(display),uuid,display,startDatetime,dateCreated,stopDatetime,encounters:(display,uuid,encounterDatetime,encounterType:(display),obs:(display,uuid,value,concept:(uuid,display)),encounterProviders:(display,provider:(uuid,attributes,person:(uuid,display,gender,age)))),patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),attributes,person:(display,gender,age)),attributes)") {
         // tslint:disable-next-line:max-line-length
         let headers = new HttpHeaders();
         headers = headers.append('Authorization', 'Basic ' + externalPrescriptionCred);
-        const url = `${baseURL}/visit/${uuid}?v=${v}`;
+        const url = `${this.baseURL}/visit/${uuid}?v=${v}`;
         return this.http.get(url, { headers });
     }
     /**
@@ -264,10 +270,10 @@ class VisitService {
     * @param {string} v - response format
     * @return {Observable<any>}
     */
-    fetchVisitPatient(externalPrescriptionCred, baseURL, uuid, v = "custom:(uuid,patient:(attributes,identifiers:(identifier,identifierType:(name,uuid,display))))") {
+    fetchVisitPatient(externalPrescriptionCred, uuid, v = "custom:(uuid,patient:(attributes,identifiers:(identifier,identifierType:(name,uuid,display))))") {
         let headers = new HttpHeaders();
         headers = headers.append('Authorization', 'Basic ' + externalPrescriptionCred);
-        const url = `${baseURL}/visit/${uuid}?v=${v}`;
+        const url = `${this.baseURL}/visit/${uuid}?v=${v}`;
         return this.http.get(url, { headers });
     }
     /**
@@ -276,9 +282,9 @@ class VisitService {
     * @param {string} v - response version format
     * @return {Observable<any>}
     */
-    getVisitDetails(baseURL, uuid, v = "custom:(location:(display),uuid,display,startDatetime,stopDatetime,encounters:(display,uuid,encounterDatetime,encounterType:(display),obs:(display,uuid,value),encounterProviders:(display,provider:(uuid,person:(uuid,display,gender,age),attributes))),patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),person:(display,gender,age)))") {
+    getVisitDetails(uuid, v = "custom:(location:(display),uuid,display,startDatetime,stopDatetime,encounters:(display,uuid,encounterDatetime,encounterType:(display),obs:(display,uuid,value),encounterProviders:(display,provider:(uuid,person:(uuid,display,gender,age),attributes))),patient:(uuid,identifiers:(identifier,identifierType:(name,uuid,display)),person:(display,gender,age)))") {
         // tslint:disable-next-line:max-line-length
-        const url = `${baseURL}/visit/${uuid}?v=${v}`;
+        const url = `${this.baseURL}/visit/${uuid}?v=${v}`;
         return this.http.get(url);
     }
     /**
@@ -286,8 +292,8 @@ class VisitService {
     * @param {string} visitId - Visit uuid
     * @return {Observable<any>}
     */
-    getAttribute(baseURL, visitId) {
-        const url = `${baseURL}/visit/${visitId}/attribute`;
+    getAttribute(visitId) {
+        const url = `${this.baseURL}/visit/${visitId}/attribute`;
         return this.http.get(url);
     }
     /**
@@ -296,8 +302,8 @@ class VisitService {
     * @param {any} json - Attribute payload
     * @return {Observable<any>}
     */
-    postAttribute(baseURL, visitId, json) {
-        const url = `${baseURL}/visit/${visitId}/attribute`;
+    postAttribute(visitId, json) {
+        const url = `${this.baseURL}/visit/${visitId}/attribute`;
         return this.http.post(url, json);
     }
     /**
@@ -307,8 +313,8 @@ class VisitService {
     * @param {any} json - Attribute payload
     * @return {Observable<any>}
     */
-    updateAttribute(baseURL, visitId, attributeUuid, json) {
-        const url = `${baseURL}/visit/${visitId}/attribute/${attributeUuid}`;
+    updateAttribute(visitId, attributeUuid, json) {
+        const url = `${this.baseURL}/visit/${visitId}/attribute/${attributeUuid}`;
         return this.http.post(url, json);
     }
     /**
@@ -317,8 +323,8 @@ class VisitService {
     * @param {string} uuid - Visit attribute uuid
     * @return {Observable<any>}
     */
-    deleteAttribute(baseURL, visitId, uuid) {
-        const url = `${baseURL}/visit/${visitId}/attribute/${uuid}`;
+    deleteAttribute(visitId, uuid) {
+        const url = `${this.baseURL}/visit/${visitId}/attribute/${uuid}`;
         return this.http.delete(url);
     }
     /**
@@ -327,9 +333,9 @@ class VisitService {
     * @param {string} v - response format
     * @return {Observable<any>}
     */
-    patientInfo(baseURL, id, v = 'custom:(uuid,attributes,identifiers,person:(uuid,display,gender,preferredName:(givenName,familyName,middleName),birthdate,age,preferredAddress:(cityVillage,address1,address2,country,stateProvince,countyDistrict,postalCode),attributes:(value,attributeType:(display))))') {
+    patientInfo(id, v = 'custom:(uuid,attributes,identifiers,person:(uuid,display,gender,preferredName:(givenName,familyName,middleName),birthdate,age,preferredAddress:(cityVillage,address1,address2,country,stateProvince,countyDistrict,postalCode),attributes:(value,attributeType:(display))))') {
         // tslint:disable-next-line: max-line-length
-        const url = `${baseURL}/patient/${id}?v=${v}`;
+        const url = `${this.baseURL}/patient/${id}?v=${v}`;
         return this.http.get(url);
     }
     /**
@@ -373,8 +379,8 @@ class VisitService {
     * @param {number} page - Page number
     * @return {Observable<any>}
     */
-    getAwaitingVisits(mindmapURL, speciality, page = 1) {
-        return this.http.get(`${mindmapURL}/openmrs/getAwaitingVisits?speciality=${speciality}&page=${page}`);
+    getAwaitingVisits(speciality, page = 1) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getAwaitingVisits?speciality=${speciality}&page=${page}`);
     }
     /**
     * Get priority visits
@@ -382,8 +388,8 @@ class VisitService {
     * @param {number} page - Page number
     * @return {Observable<any>}
     */
-    getPriorityVisits(mindmapURL, speciality, page = 1) {
-        return this.http.get(`${mindmapURL}/openmrs/getPriorityVisits?speciality=${speciality}&page=${page}`);
+    getPriorityVisits(speciality, page = 1) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getPriorityVisits?speciality=${speciality}&page=${page}`);
     }
     /**
     * Get inprogress visits
@@ -391,8 +397,8 @@ class VisitService {
     * @param {number} page - Page number
     * @return {Observable<any>}
     */
-    getInProgressVisits(mindmapURL, speciality, page = 1) {
-        return this.http.get(`${mindmapURL}/openmrs/getInProgressVisits?speciality=${speciality}&page=${page}`);
+    getInProgressVisits(speciality, page = 1) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getInProgressVisits?speciality=${speciality}&page=${page}`);
     }
     /**
     * Get completed visits
@@ -400,8 +406,8 @@ class VisitService {
     * @param {number} page - Page number
     * @return {Observable<any>}
     */
-    getCompletedVisits(mindmapURL, speciality, page = 1, countOnly = false) {
-        return this.http.get(`${mindmapURL}/openmrs/getCompletedVisits?speciality=${speciality}&page=${page}&countOnly=${countOnly}`);
+    getCompletedVisits(speciality, page = 1, countOnly = false) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getCompletedVisits?speciality=${speciality}&page=${page}&countOnly=${countOnly}`);
     }
     /**
      * Get follow up visits
@@ -409,8 +415,8 @@ class VisitService {
      * @param {number} page - Page number
      * @return {Observable<any>}
      */
-    getFollowUpVisits(mindmapURL, speciality, page = 1, countOnly = false) {
-        return this.http.get(`${mindmapURL}/openmrs/getFollowUpVisits?speciality=${speciality}&page=${page}&countOnly=${countOnly}`);
+    getFollowUpVisits(speciality, page = 1, countOnly = false) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getFollowUpVisits?speciality=${speciality}&page=${page}&countOnly=${countOnly}`);
     }
     /**
     * Get ended visits
@@ -418,19 +424,19 @@ class VisitService {
     * @param {number} page - Page number
     * @return {Observable<any>}
     */
-    getEndedVisits(mindmapURL, speciality, page = 1) {
-        return this.http.get(`${mindmapURL}/openmrs/getEndedVisits?speciality=${speciality}&page=${page}`);
+    getEndedVisits(speciality, page = 1) {
+        return this.http.get(`${this.mindmapURL}/openmrs/getEndedVisits?speciality=${speciality}&page=${page}`);
     }
     /**
      * Post visit data to abdm
      * @param {any} json - Attribute payload
      * @return {Observable<any>}
      */
-    postVisitToABDM(baseURLAbha, json) {
-        const url = `${baseURLAbha}/abha/post-care-context`;
+    postVisitToABDM(json) {
+        const url = `${this.baseURLAbha}/abha/post-care-context`;
         return this.http.post(url, json);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: VisitService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: VisitService, deps: [{ token: i1.HttpClient }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Injectable });
     static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: VisitService, providedIn: "root" });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: VisitService, decorators: [{
@@ -438,7 +444,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
             args: [{
                     providedIn: "root",
                 }]
-        }], ctorParameters: function () { return [{ type: i1.HttpClient }]; } });
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['environment']
+                }] }]; } });
 
 class RescheduleAppointmentConfirmComponent {
     data;
@@ -456,7 +465,7 @@ class RescheduleAppointmentConfirmComponent {
         this.dialogRef.close(val);
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: RescheduleAppointmentConfirmComponent, deps: [{ token: MAT_DIALOG_DATA }, { token: i1$1.MatDialogRef }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: RescheduleAppointmentConfirmComponent, selector: "app-reschedule-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/appointment.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Reschedule the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to reschedule appointment?'|translate }} </p>\r\n    <div class=\"slot-con d-flex justify-content-center align-items-center py-3\">\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.appointment?.slotJsDate|date:'dd MMMM'}}</b>\r\n        <b>{{data?.appointment?.slotTime}}</b>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <span class=\"text-muted\">to</span>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.newSlot?.date|date:'dd MMMM'}}</b>\r\n        <b>{{data?.newSlot?.slot}}</b>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnCancel\">{{'Go Back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"close(true)\" data-test-id=\"btnSubmit\">{{'Confirm'|translate}}</button>\r\n  </div>\r\n</div>\r\n", styles: [".slot-con{font-size:18px;line-height:150%;color:var(--color-darkestBlue)}\n"], dependencies: [{ kind: "pipe", type: i9.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: RescheduleAppointmentConfirmComponent, selector: "app-reschedule-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/appointment.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Reschedule the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to reschedule appointment?'|translate }} </p>\r\n    <div class=\"slot-con d-flex justify-content-center align-items-center py-3\">\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.appointment?.slotJsDate|date:'dd MMMM'}}</b>\r\n        <b>{{data?.appointment?.slotTime}}</b>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <span class=\"text-muted\">to</span>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.newSlot?.date|date:'dd MMMM'}}</b>\r\n        <b>{{data?.newSlot?.slot}}</b>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnCancel\">{{'Go Back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"close(true)\" data-test-id=\"btnSubmit\">{{'Confirm'|translate}}</button>\r\n  </div>\r\n</div>\r\n", styles: [".slot-con{font-size:18px;line-height:150%;color:var(--color-darkestBlue)}\n"], dependencies: [{ kind: "pipe", type: i11.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: RescheduleAppointmentConfirmComponent, decorators: [{
             type: Component,
@@ -863,7 +872,7 @@ class CancelAppointmentConfirmComponent {
             visitUuid: this.data.visitUuid,
             hwUUID: this.userId,
         };
-        this.appointmentService.cancelAppointment(this.data?.mindmapURL, payload).subscribe((res) => {
+        this.appointmentService.cancelAppointment(payload).subscribe((res) => {
             if (res) {
                 if (res.status) {
                     this.close(true);
@@ -891,7 +900,7 @@ class CancelAppointmentConfirmComponent {
         this.dialogRef.close(val);
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CancelAppointmentConfirmComponent, deps: [{ token: MAT_DIALOG_DATA }, { token: i1$1.MatDialogRef }, { token: AppointmentService }, { token: i3.ToastrService }, { token: i4.TranslateService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: CancelAppointmentConfirmComponent, selector: "app-cancel-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\" data-test-id=\"btnCloseCancelAppConfirm\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/video-pink.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Cancel the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to cancel your appointment on'|translate}} <b>{{data?.slotJsDate|date:'dd MMMM'}}</b> {{'at'|translate}} <b>{{data?.slotTime}}</b>?</p>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnGoBackCancelAppConfirm\">{{'Go back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"cancel()\" data-test-id=\"btnCancelAppConfirm\">{{'Cancel'|translate}}</button>\r\n  </div>\r\n</div>\r\n", dependencies: [{ kind: "pipe", type: i9.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: CancelAppointmentConfirmComponent, selector: "app-cancel-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\" data-test-id=\"btnCloseCancelAppConfirm\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/video-pink.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Cancel the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to cancel your appointment on'|translate}} <b>{{data?.slotJsDate|date:'dd MMMM'}}</b> {{'at'|translate}} <b>{{data?.slotTime}}</b>?</p>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnGoBackCancelAppConfirm\">{{'Go back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"cancel()\" data-test-id=\"btnCancelAppConfirm\">{{'Cancel'|translate}}</button>\r\n  </div>\r\n</div>\r\n", dependencies: [{ kind: "pipe", type: i11.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CancelAppointmentConfirmComponent, decorators: [{
             type: Component,
@@ -969,7 +978,7 @@ class RescheduleAppointmentComponent {
             afternoon: [],
             evening: []
         };
-        this.appointmentService.getAppointmentSlots(this.data?.mindmapURL, moment(fromDate).format("DD/MM/YYYY"), moment(toDate).format("DD/MM/YYYY"), speciality).subscribe((res) => {
+        this.appointmentService.getAppointmentSlots(moment(fromDate).format("DD/MM/YYYY"), moment(toDate).format("DD/MM/YYYY"), speciality).subscribe((res) => {
             this.slots = res.dates;
             this.slots.forEach((slot) => {
                 if (moment(slot.slotTime, "LT").isBefore(moment("12:00 PM", "LT"))) {
@@ -1008,7 +1017,7 @@ class RescheduleAppointmentComponent {
     static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: RescheduleAppointmentComponent, selector: "app-reschedule-appointment", providers: [
             { provide: DateAdapter, useClass: PickDateAdapter },
             { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
-        ], ngImport: i0, template: "<div class=\"reschedule-modal\">\r\n  <div class=\"modal-title\">\r\n    <h6 class=\"mb-0\">{{ 'Reschedule appointment' | translate }}</h6>\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/Close.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-12 p-0\">\r\n          <div class=\"select-date-con\">\r\n            <div class=\"form-group row\">\r\n              <label for=\"expiryDate\" class=\"col-sm-3 col-form-label\">{{ 'Select Date' | translate }}</label>\r\n              <div class=\"col-sm-6\">\r\n                <div class=\"input-group\">\r\n                  <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selectedDate\" (dateChange)=\"dateChanged($event)\" [min]=\"minDate\" [matDatepicker]=\"dp1\" placeholder=\"{{'Select date'|translate}}\" aria-label=\"Date\"\r\n                    aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\">\r\n                  <mat-datepicker #dp1></mat-datepicker>\r\n                  <div class=\"input-group-append\">\r\n                    <span class=\"input-group-text\" id=\"basic-addon1\">\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dp1\" data-test-id=\"dpDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"slots-con\">\r\n            <h6>{{ 'Select a timeslot' | translate }}</h6>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.morning.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunrise.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Morning' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.morning;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.afternoon.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sun.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Afternoon' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.afternoon;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.evening.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunset.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Evening' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.evening;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"d-flex justify-content-center py-2\">\r\n            <button class=\"confirm-btn\" type=\"button\" (click)=\"reschedule()\" data-test-id=\"btnSubmit\">{{ 'Reschedule' | translate }}</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".reschedule-modal{font-family:DM Sans}.reschedule-modal .modal-title{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:24px;width:100%;height:70px;background:var(--color-lightGray)}.reschedule-modal .modal-title h6{font-weight:700;font-size:20px;color:var(--color-darkestBlue)}.reschedule-modal .modal-title .modal-close-btn{border:none;background:transparent}.reschedule-modal .modal-body{padding:24px}.reschedule-modal .modal-body .select-date-con{border-bottom:1px solid rgba(178,175,190,.2);margin:10px 0}.reschedule-modal .modal-body .slots-con{max-height:55vh;overflow:auto}.reschedule-modal .modal-body .slots-con h6{font-weight:700;font-size:16px;color:var(--color-darkestBlue);display:flex;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section{padding:10px 0}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips{display:flex;flex-wrap:wrap;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item{padding:8px;background:var(--color-lightGray);border:1px solid rgba(178,175,190,.2);border-radius:6px;font-size:14px;line-height:150%;color:var(--color-darkestBlue);margin-right:5px;margin-bottom:5px;cursor:pointer}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item.selected{background:var(--color-darkBlue);border:none;border-radius:6px;color:var(--color-white)}.cancel-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-white);border:1px solid var(--color-lightGray);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-darkBlue);font-weight:700}.confirm-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-darkBlue);border:1px solid var(--color-darkBlue);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-white);font-weight:700}.form-group label{font-size:14px;color:var(--color-darkestBlue);font-weight:700}.form-group .input-group{border:1px solid rgba(178,175,190,.2);background:var(--color-offWhite);border-radius:8px;height:48px}.form-group .input-group .form-control{padding:14px 16px;height:48px;font-size:16px;color:var(--color-darkestBlue);border:none;background:transparent}.form-group .input-group .form-control:focus{box-shadow:none}.form-group .input-group .input-group-append .input-group-text{background:transparent;border:none;padding:0}\n"], dependencies: [{ kind: "directive", type: i5.MatSuffix, selector: "[matSuffix], [matIconSuffix], [matTextSuffix]" }, { kind: "directive", type: i9.NgForOf, selector: "[ngFor][ngForOf]" }, { kind: "directive", type: i9.NgIf, selector: "[ngIf]" }, { kind: "directive", type: i18.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i18.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i18.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+        ], ngImport: i0, template: "<div class=\"reschedule-modal\">\r\n  <div class=\"modal-title\">\r\n    <h6 class=\"mb-0\">{{ 'Reschedule appointment' | translate }}</h6>\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/Close.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-12 p-0\">\r\n          <div class=\"select-date-con\">\r\n            <div class=\"form-group row\">\r\n              <label for=\"expiryDate\" class=\"col-sm-3 col-form-label\">{{ 'Select Date' | translate }}</label>\r\n              <div class=\"col-sm-6\">\r\n                <div class=\"input-group\">\r\n                  <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selectedDate\" (dateChange)=\"dateChanged($event)\" [min]=\"minDate\" [matDatepicker]=\"dp1\" placeholder=\"{{'Select date'|translate}}\" aria-label=\"Date\"\r\n                    aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\">\r\n                  <mat-datepicker #dp1></mat-datepicker>\r\n                  <div class=\"input-group-append\">\r\n                    <span class=\"input-group-text\" id=\"basic-addon1\">\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dp1\" data-test-id=\"dpDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"slots-con\">\r\n            <h6>{{ 'Select a timeslot' | translate }}</h6>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.morning.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunrise.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Morning' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.morning;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.afternoon.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sun.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Afternoon' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.afternoon;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.evening.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunset.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Evening' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.evening;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"d-flex justify-content-center py-2\">\r\n            <button class=\"confirm-btn\" type=\"button\" (click)=\"reschedule()\" data-test-id=\"btnSubmit\">{{ 'Reschedule' | translate }}</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".reschedule-modal{font-family:DM Sans}.reschedule-modal .modal-title{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:24px;width:100%;height:70px;background:var(--color-lightGray)}.reschedule-modal .modal-title h6{font-weight:700;font-size:20px;color:var(--color-darkestBlue)}.reschedule-modal .modal-title .modal-close-btn{border:none;background:transparent}.reschedule-modal .modal-body{padding:24px}.reschedule-modal .modal-body .select-date-con{border-bottom:1px solid rgba(178,175,190,.2);margin:10px 0}.reschedule-modal .modal-body .slots-con{max-height:55vh;overflow:auto}.reschedule-modal .modal-body .slots-con h6{font-weight:700;font-size:16px;color:var(--color-darkestBlue);display:flex;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section{padding:10px 0}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips{display:flex;flex-wrap:wrap;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item{padding:8px;background:var(--color-lightGray);border:1px solid rgba(178,175,190,.2);border-radius:6px;font-size:14px;line-height:150%;color:var(--color-darkestBlue);margin-right:5px;margin-bottom:5px;cursor:pointer}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item.selected{background:var(--color-darkBlue);border:none;border-radius:6px;color:var(--color-white)}.cancel-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-white);border:1px solid var(--color-lightGray);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-darkBlue);font-weight:700}.confirm-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-darkBlue);border:1px solid var(--color-darkBlue);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-white);font-weight:700}.form-group label{font-size:14px;color:var(--color-darkestBlue);font-weight:700}.form-group .input-group{border:1px solid rgba(178,175,190,.2);background:var(--color-offWhite);border-radius:8px;height:48px}.form-group .input-group .form-control{padding:14px 16px;height:48px;font-size:16px;color:var(--color-darkestBlue);border:none;background:transparent}.form-group .input-group .form-control:focus{box-shadow:none}.form-group .input-group .input-group-append .input-group-text{background:transparent;border:none;padding:0}\n"], dependencies: [{ kind: "directive", type: i5.MatSuffix, selector: "[matSuffix], [matIconSuffix], [matTextSuffix]" }, { kind: "directive", type: i11.NgForOf, selector: "[ngFor][ngForOf]" }, { kind: "directive", type: i11.NgIf, selector: "[ngIf]" }, { kind: "directive", type: i20.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i20.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i20.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: RescheduleAppointmentComponent, decorators: [{
             type: Component,
@@ -1031,8 +1040,7 @@ class CoreService {
     * @param {any} data - Dialog data
     * @return {Observable<any>} - Dialog result
     */
-    openConfirmCancelAppointmentModal(mindmapURL, data) {
-        data["mindmapURL"] = mindmapURL;
+    openConfirmCancelAppointmentModal(data) {
         const dialogRef = this.dialog.open(CancelAppointmentConfirmComponent, { panelClass: "modal-md", data, hasBackdrop: true, disableClose: true });
         return dialogRef.afterClosed();
     }
@@ -1041,8 +1049,7 @@ class CoreService {
     * @param {any} data - Dialog data
     * @return {Observable<any>} - Dialog result
     */
-    openRescheduleAppointmentModal(mindmapURL, data) {
-        data["mindmapURL"] = mindmapURL;
+    openRescheduleAppointmentModal(data) {
         const dialogRef = this.dialog.open(RescheduleAppointmentComponent, { panelClass: "modal-md", data, hasBackdrop: true, disableClose: true });
         return dialogRef.afterClosed();
     }
@@ -1077,19 +1084,19 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
                 }]
         }], ctorParameters: function () { return [{ type: i1$1.MatDialog }]; } });
 
-// import { environment } from "src/environments/environment";
 class MindmapService {
     http;
-    // private baseURL = environment.mindmapURL;
-    constructor(http) {
+    mindmapURL;
+    constructor(http, environment) {
         this.http = http;
+        this.mindmapURL = environment.mindmapURL;
     }
     /**
     * Get mindmap keys
     * @return {Observable<any>}
     */
-    getMindmapKey(baseURL) {
-        const url = `${baseURL}/mindmap`;
+    getMindmapKey() {
+        const url = `${this.mindmapURL}/mindmap`;
         return this.http.get(url);
     }
     /**
@@ -1097,8 +1104,8 @@ class MindmapService {
     * @param {any} value - Payload for post mindmap
     * @return {Observable<any>}
     */
-    postMindmap(baseURL, value) {
-        const url = `${baseURL}/mindmap/upload`;
+    postMindmap(value) {
+        const url = `${this.mindmapURL}/mindmap/upload`;
         return this.http.post(url, value);
     }
     /**
@@ -1106,8 +1113,8 @@ class MindmapService {
     * @param {string} key - Mindmap key
     * @return {Observable<any>}
     */
-    detailsMindmap(baseURL, key) {
-        const url = `${baseURL}/mindmap/details/${key}`;
+    detailsMindmap(key) {
+        const url = `${this.mindmapURL}/mindmap/details/${key}`;
         return this.http.get(url);
     }
     /**
@@ -1115,8 +1122,8 @@ class MindmapService {
     * @param {any} payload - Payload for mindmap key to add/update
     * @return {Observable<any>}
     */
-    addUpdateLicenseKey(baseURL, payload) {
-        const url = `${baseURL}/mindmap/addUpdatekey`;
+    addUpdateLicenseKey(payload) {
+        const url = `${this.mindmapURL}/mindmap/addUpdatekey`;
         return this.http.post(url, payload);
     }
     /**
@@ -1126,8 +1133,8 @@ class MindmapService {
     * @param {string} value - Image base64
     * @return {Observable<any>}
     */
-    updateImage(baseURL, key, imageName, value) {
-        const url = `${baseURL}/mindmap/${key}/${imageName}`;
+    updateImage(key, imageName, value) {
+        const url = `${this.mindmapURL}/mindmap/${key}/${imageName}`;
         return this.http.put(url, value);
     }
     /**
@@ -1136,8 +1143,8 @@ class MindmapService {
     * @param {any} data - Mindmap data
     * @return {Observable<any>}
     */
-    deleteMindmap(baseURL, key, data) {
-        const url = `${baseURL}/mindmap/delete/${key}`;
+    deleteMindmap(key, data) {
+        const url = `${this.mindmapURL}/mindmap/delete/${key}`;
         return this.http.post(url, data);
     }
     /**
@@ -1145,8 +1152,8 @@ class MindmapService {
     * @param {any} data - Mindmap data
     * @return {Observable<any>}
     */
-    toggleMindmapStatus(baseURL, data) {
-        const url = `${baseURL}/mindmap/toggleStatus`;
+    toggleMindmapStatus(data) {
+        const url = `${this.mindmapURL}/mindmap/toggleStatus`;
         return this.http.post(url, data);
     }
     /**
@@ -1155,14 +1162,14 @@ class MindmapService {
   * @param {any} payload - Notifaication message
   * @return {Observable<any>}
   */
-    notifyApp(baseURL, hwUuid, payload) {
-        return this.http.post(`${baseURL}/mindmap/notify-app/${hwUuid}`, payload);
+    notifyApp(hwUuid, payload) {
+        return this.http.post(`${this.mindmapURL}/mindmap/notify-app/${hwUuid}`, payload);
     }
     /**
     * Send notification to health worker for available prescription
     * @returns {void}
     */
-    notifyHwForRescheduleAppointment(baseURL, appointment) {
+    notifyHwForRescheduleAppointment(appointment) {
         const hwUuid = appointment?.hwUUID;
         const openMRSID = appointment?.openMrsId;
         const payload = {
@@ -1177,9 +1184,9 @@ class MindmapService {
                 slotDateTime: appointment?.slotJsDate
             }
         };
-        this.notifyApp(baseURL, hwUuid, payload).subscribe();
+        this.notifyApp(hwUuid, payload).subscribe();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, deps: [{ token: i1.HttpClient }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, deps: [{ token: i1.HttpClient }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Injectable });
     static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, providedIn: "root" });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, decorators: [{
@@ -1187,7 +1194,87 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
             args: [{
                     providedIn: "root",
                 }]
-        }], ctorParameters: function () { return [{ type: i1.HttpClient }]; } });
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['environment']
+                }] }]; } });
+
+class AppConfigService {
+    http;
+    configURL;
+    version;
+    apiEndpoint;
+    specialization;
+    language;
+    patient_registration;
+    theme_config;
+    patient_vitals;
+    patient_diagnostics;
+    webrtc_section;
+    webrtc;
+    patient_visit_summary;
+    patient_vitals_section;
+    patient_reg_other;
+    patient_reg_address;
+    abha_section;
+    sidebar_menus;
+    patient_visit_sections;
+    constructor(http, environment) {
+        this.http = http;
+        this.configURL = environment.configURL;
+    }
+    load() {
+        const promise = this.http.get(`${this.configURL}/config/getPublishedConfig`)
+            .toPromise()
+            .then((data) => {
+            this.setPatientVisitSections(data);
+            Object.assign(this, data);
+            return data;
+        });
+        return promise;
+    }
+    setPatientVisitSections(data) {
+        data.patient_visit_sections = (data?.patient_visit_sections ?? [])
+            .map((pvs) => {
+            return {
+                ...pvs,
+                lang: pvs.lang ? (typeof pvs.lang === 'object' ? pvs.lang : JSON.parse(pvs.lang)) : null,
+            };
+        });
+    }
+    get tourConfig() {
+        try {
+            return JSON.parse(this.theme_config.find((config) => config.key === 'help_tour_config').value);
+        }
+        catch (error) {
+            return null;
+        }
+    }
+    get patientRegFields() {
+        const fields = [];
+        Object.keys(this.patient_registration).forEach(obj => {
+            console.log(obj, "OBJs");
+            fields.push(...this.patient_registration[obj]
+                .filter((e) => e.is_enabled)
+                .map((e) => e.name));
+        });
+        return fields;
+    }
+    checkPatientRegField(fieldName, fields) {
+        return fields.indexOf(fieldName) !== -1;
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppConfigService, deps: [{ token: i1.HttpClient }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppConfigService, providedIn: 'root' });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: AppConfigService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['environment']
+                }] }]; } });
 
 class DefaultImageDirective {
     src;
@@ -1223,6 +1310,8 @@ class TableGridComponent {
     translateService;
     mindmapService;
     sanitizer;
+    appConfigService;
+    rolesService;
     pluginConfigObs;
     displayedAppointmentColumns = [];
     displayedColumns = [];
@@ -1244,12 +1333,15 @@ class TableGridComponent {
     completedVisits = [];
     followUpVisits = [];
     specialization = '';
+    visitsCountDate = new EventEmitter();
     visitsLengthCount = 0;
     isFilterApplied = false;
+    pvs;
+    baseURL;
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
     }
-    constructor(appointmentService, visitService, coreService, toastr, translateService, mindmapService, sanitizer) {
+    constructor(appointmentService, visitService, coreService, toastr, translateService, mindmapService, sanitizer, appConfigService, rolesService, environment) {
         this.appointmentService = appointmentService;
         this.visitService = visitService;
         this.coreService = coreService;
@@ -1257,8 +1349,10 @@ class TableGridComponent {
         this.translateService = translateService;
         this.mindmapService = mindmapService;
         this.sanitizer = sanitizer;
+        this.appConfigService = appConfigService;
+        this.rolesService = rolesService;
+        this.baseURL = environment.baseURL;
         this.filteredDateAndRangeForm = this.createFilteredDateRangeForm();
-        this.displayedColumns = this.displayedColumns.filter(col => (col !== 'age' || this.checkPatientRegField('Age')));
     }
     /**
      * Creates a filtered date range form with required date fields
@@ -1272,6 +1366,27 @@ class TableGridComponent {
         });
     }
     ngOnInit() {
+        this.isMCCUser = !!this.rolesService.getRole('ORGANIZATIONAL:MCC');
+        this.appConfigService.load().then(() => {
+            this.displayedColumns = this.displayedColumns.filter(col => (col !== 'age' || this.checkPatientRegField('Age')));
+            Object.keys(this.appConfigService.patient_registration).forEach(obj => {
+                this.patientRegFields.push(...this.appConfigService.patient_registration[obj].filter((e) => e.is_enabled).map((e) => e.name));
+            });
+            this.pvs = { ...this.appConfigService.patient_visit_summary };
+            this.pvs.appointment_button = this.pvs.appointment_button;
+            this.displayedColumns = this.displayedColumns.filter(col => {
+                if (col === 'drName' && !this.isMCCUser)
+                    return false;
+                if (col === 'age')
+                    return this.checkPatientRegField('Age');
+                return true;
+            });
+            if (!this.pvs.awaiting_visits_patient_type_demarcation) {
+                this.displayedColumns = this.displayedColumns.filter(col => (col !== 'patient_type'));
+            }
+        }).catch((error) => {
+            console.error('Error loading app config', error);
+        });
         this.translateService.use(getCacheData(false, languages.SELECTED_LANGUAGE));
         let provider = getCacheData(true, doctorDetails.PROVIDER);
         if (provider) {
@@ -1308,39 +1423,6 @@ class TableGridComponent {
             this.displayedAppointmentColumns = this.pluginConfigObs.tableColumns || [];
             this.displayedColumns = this.displayedAppointmentColumns.map((column) => column.key);
         }
-    }
-    /**
-     * Get the patient type style
-     * @param type
-     */
-    getPatientTypeStyle(type) {
-        const typeConfig = this.pluginConfigObs.patientType.find((t) => t.key === type);
-        return typeConfig
-            ? typeConfig.style
-            : { color: "#000", backgroundColor: "#ccc" }; // Default fallback styling
-    }
-    /**
-     * Get the patient type either new or old
-     * @param type
-     */
-    getPatientTypeLabel(type) {
-        const typeConfig = this.pluginConfigObs.patientType.find((t) => t.key === type);
-        return typeConfig ? typeConfig.label : "Unknown"; // Default fallback label
-    }
-    getVisitTypeStyle(type) {
-        const visitType = this.pluginConfigObs.visitType.find((v) => v.type === type);
-        return visitType?.[type]?.style || { color: "#000", backgroundColor: "#ccc" }; // Default style
-    }
-    getVisitTypeLabel(type) {
-        const visitType = this.pluginConfigObs.visitType.find((v) => v.type === type);
-        return visitType?.[type]?.label || "Unknown"; // Default label
-    }
-    getVisitTypeIcon(type) {
-        const visitType = this.pluginConfigObs.visitType.find((v) => v.type === type);
-        return visitType?.[type]?.style?.icon || ""; // Default empty icon
-    }
-    formatVisitDate(date) {
-        return date ? formatDate(date, 'dd MMM, yyyy', 'en-US') : '';
     }
     /**
     * Retreive the chief complaints for the visit
@@ -1405,7 +1487,7 @@ class TableGridComponent {
             this.toastr.error(this.translateService.instant("Visit is in progress, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
         }
         else {
-            this.coreService.openRescheduleAppointmentModal(this.pluginConfigObs.mindmapURL, appointment).subscribe((res) => {
+            this.coreService.openRescheduleAppointmentModal(appointment).subscribe((res) => {
                 if (res) {
                     let newSlot = res;
                     this.coreService.openRescheduleAppointmentConfirmModal({ appointment, newSlot }).subscribe((result) => {
@@ -1413,10 +1495,10 @@ class TableGridComponent {
                             appointment.appointmentId = appointment.id;
                             appointment.slotDate = moment(newSlot.date, "YYYY-MM-DD").format('DD/MM/YYYY');
                             appointment.slotTime = newSlot.slot;
-                            this.appointmentService.rescheduleAppointment(this.pluginConfigObs.mindmapURL, appointment).subscribe((res) => {
+                            this.appointmentService.rescheduleAppointment(appointment).subscribe((res) => {
                                 const message = res.message;
                                 if (res.status) {
-                                    this.mindmapService.notifyHwForRescheduleAppointment(this.pluginConfigObs.mindmapURL, appointment);
+                                    this.mindmapService.notifyHwForRescheduleAppointment(appointment);
                                     this.getAppointments();
                                     this.toastr.success(this.translateService.instant("The appointment has been rescheduled successfully!"), this.translateService.instant('Rescheduling successful!'));
                                 }
@@ -1440,7 +1522,7 @@ class TableGridComponent {
             this.toastr.error(this.translateService.instant("Visit is in progress, it can't be cancelled."), this.translateService.instant('Canceling failed!'));
             return;
         }
-        this.coreService.openConfirmCancelAppointmentModal(this.pluginConfigObs?.mindmapURL, appointment).subscribe((res) => {
+        this.coreService.openConfirmCancelAppointmentModal(appointment).subscribe((res) => {
             if (res) {
                 this.toastr.success(this.translateService.instant('The Appointment has been successfully canceled.'), this.translateService.instant('Canceling successful'));
                 this.getAppointments();
@@ -1639,9 +1721,10 @@ class TableGridComponent {
     */
     getAppointments() {
         this.appointments = [];
-        this.appointmentService.getUserSlots(this.pluginConfigObs?.mindmapURL, getCacheData(true, doctorDetails.USER).uuid, moment().startOf('year').format('DD/MM/YYYY'), moment().endOf('year').format('DD/MM/YYYY'))
+        this.appointmentService.getUserSlots(getCacheData(true, doctorDetails.USER).uuid, moment().startOf('year').format('DD/MM/YYYY'), moment().endOf('year').format('DD/MM/YYYY'), this.isMCCUser ? this.specialization : null)
             .subscribe((res) => {
             this.visitsLengthCount = res.data?.length;
+            this.emitVisitsCount(this.visitsLengthCount);
             let appointmentsdata = res.data;
             appointmentsdata.forEach((appointment) => {
                 if (appointment.status == 'booked' && (appointment.visitStatus == 'Awaiting Consult' || appointment.visitStatus == 'Visit In Progress')) {
@@ -1649,8 +1732,10 @@ class TableGridComponent {
                         appointment.cheif_complaint = this.getCheifComplaint(appointment.visit);
                         appointment.starts_in = checkIfDateOldThanOneDay(appointment.slotJsDate);
                         appointment.telephone = this.getTelephoneNumber(appointment?.visit?.person);
-                        appointment.TMH_patient_id = this.getAttributeData(appointment.visit, "TMH Case Number");
+                        appointment.TMH_patient_id = this.getAttributeData(appointment.visit, "TMH Case Number")?.value;
                         appointment.uuid = appointment.visitUuid;
+                        appointment.location = appointment?.visit?.location?.name;
+                        appointment.age = appointment?.patientAge + ' ' + this.translateService.instant('y');
                         this.appointments.push(appointment);
                     }
                 }
@@ -1740,18 +1825,19 @@ class TableGridComponent {
     getAwaitingVisits(page = 1) {
         if (page == 1) {
             this.awaitingVisits = [];
-            // this.awatingRecordsFetched = 0;
         }
-        this.visitService.getAwaitingVisits(this.pluginConfigObs?.mindmapURL, this.specialization, page).subscribe((res) => {
+        this.visitService.getAwaitingVisits(this.specialization, page).subscribe((res) => {
             if (res.success) {
                 this.visitsLengthCount = res.totalCount;
-                // this.awatingRecordsFetched += this.offset;
+                this.emitVisitsCount(this.visitsLengthCount);
                 for (let i = 0; i < res.data.length; i++) {
                     let visit = res.data[i];
                     visit.cheif_complaint = this.getCheifComplaint(visit);
                     visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.ADULTINITIAL);
                     visit.person.age = this.calculateAge(visit.person.birthdate);
                     visit.patient_type = this.getDemarcation(visit?.encounters);
+                    visit.location = visit?.location?.name;
+                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
                     this.awaitingVisits.push(visit);
                 }
                 this.dataSource.data = [...this.awaitingVisits];
@@ -1774,20 +1860,20 @@ class TableGridComponent {
     getInProgressVisits(page = 1) {
         if (page == 1) {
             this.inProgressVisits = [];
-            // this.inprogressRecordsFetched = 0;
         }
-        this.visitService.getInProgressVisits(this.pluginConfigObs?.mindmapURL, this.specialization, page).subscribe((res) => {
+        this.visitService.getInProgressVisits(this.specialization, page).subscribe((res) => {
             if (res.success) {
                 this.visitsLengthCount = res.totalCount;
-                // this.inprogressVisitsCount = iv.totalCount;
-                // this.inprogressRecordsFetched += this.offset;
+                this.emitVisitsCount(this.visitsLengthCount);
                 for (let i = 0; i < res.data.length; i++) {
                     let visit = res.data[i];
                     visit.cheif_complaint = this.getCheifComplaint(visit);
                     visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.ADULTINITIAL);
                     visit.prescription_started = this.getEncounterCreated(visit, visitTypes.VISIT_NOTE);
                     visit.person.age = this.calculateAge(visit.person.birthdate);
-                    visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number");
+                    visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number")?.value;
+                    visit.location = visit?.location?.name;
+                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
                     this.inProgressVisits.push(visit);
                 }
                 this.inProgressVisits.sort((a, b) => {
@@ -1845,18 +1931,18 @@ class TableGridComponent {
     getPriorityVisits(page = 1) {
         if (page == 1) {
             this.priorityVisits = [];
-            // this.priorityRecordsFetched = 0;
         }
-        this.visitService.getPriorityVisits(this.pluginConfigObs?.mindmapURL, this.specialization, page).subscribe((res) => {
+        this.visitService.getPriorityVisits(this.specialization, page).subscribe((res) => {
             if (res.success) {
                 this.visitsLengthCount = res.totalCount;
-                // this.priorityVisitsCount = res.totalCount;
-                // this.priorityRecordsFetched += this.offset;
+                this.emitVisitsCount(this.visitsLengthCount);
                 for (let i = 0; i < res.data.length; i++) {
                     let visit = res.data[i];
                     visit.cheif_complaint = this.getCheifComplaint(visit);
                     visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.FLAGGED);
                     visit.person.age = this.calculateAge(visit.person.birthdate);
+                    visit.location = visit?.location?.name;
+                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
                     this.priorityVisits.push(visit);
                 }
                 this.dataSource.data = [...this.priorityVisits];
@@ -1876,18 +1962,19 @@ class TableGridComponent {
      * @return {void}
      */
     getCompletedVisits(page = 1) {
-        this.visitService.getEndedVisits(this.pluginConfigObs?.mindmapURL, this.specialization, page).subscribe((res) => {
+        this.visitService.getEndedVisits(this.specialization, page).subscribe((res) => {
             if (res.success) {
                 this.visitsLengthCount = res.totalCount;
-                // this.completedVisitsCount = res.totalCount;
-                // this.completedRecordsFetched += this.offset;
+                this.emitVisitsCount(this.visitsLengthCount);
                 for (let i = 0; i < res.data.length; i++) {
                     let visit = res.data[i];
                     visit.cheif_complaint = this.getCheifComplaint(visit);
                     visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.COMPLETED_VISIT);
                     visit.person.age = this.calculateAge(visit.person.birthdate);
                     visit.completed = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
-                    visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number");
+                    visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number")?.value;
+                    visit.location = visit?.location?.name;
+                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
                     this.completedVisits.push(visit);
                 }
                 this.dataSource.data = [...this.completedVisits];
@@ -1903,28 +1990,28 @@ class TableGridComponent {
         });
     }
     /**
-  * Get follow-up visits for a logged-in doctor
-  * @return {void}
-  */
+    * Get follow-up visits for a logged-in doctor
+    * @return {void}
+    */
     getFollowUpVisit(page = 1) {
-        this.visitService.getFollowUpVisits(this.pluginConfigObs?.mindmapURL, this.specialization).subscribe({
+        this.visitService.getFollowUpVisits(this.specialization).subscribe({
             next: (res) => {
                 if (res.success) {
-                    // this.followUpVisitsCount = 0;
-                    // this.completedRecordsFetched += this.offset;
                     for (let i = 0; i < res.data.length; i++) {
                         let visit = res.data[i];
                         if (visit?.encounters?.length) {
-                            // this.followUpVisitsCount += 1;
                             this.visitsLengthCount += 1;
                             visit.cheif_complaint = this.getCheifComplaint(visit);
                             visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.COMPLETED_VISIT);
                             visit.person.age = this.calculateAge(visit.person.birthdate);
                             visit.completed = this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
                             visit.followUp = this.processFollowUpDate(this.getEncounterObs(visit.encounters, visitTypes.VISIT_NOTE, 163345 /*Follow-up*/)?.value_text);
+                            visit.location = visit?.location?.name;
+                            visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
                             this.followUpVisits.push(visit);
                         }
                     }
+                    this.emitVisitsCount(this.visitsLengthCount);
                     this.dataSource.data = [...this.followUpVisits];
                     if (page == 1) {
                         this.dataSource.paginator = this.tempPaginator;
@@ -2007,13 +2094,27 @@ class TableGridComponent {
         const whatsappLink = `https://wa.me/${telephone}`;
         window.open(whatsappLink, '_blank', 'noopener,noreferrer');
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: TableGridComponent, deps: [{ token: AppointmentService }, { token: VisitService }, { token: CoreService }, { token: i3.ToastrService }, { token: i4.TranslateService }, { token: MindmapService }, { token: i7.DomSanitizer }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: TableGridComponent, selector: "lib-table-grid", inputs: { pluginConfigObs: "pluginConfigObs" }, viewQueries: [{ propertyName: "paginator", first: true, predicate: MatPaginator, descendants: true }, { propertyName: "searchElement", first: true, predicate: ["searchInput"], descendants: true, static: true }, { propertyName: "tempPaginator", first: true, predicate: ["tempPaginator"], descendants: true }, { propertyName: "menuTrigger", first: true, predicate: MatMenuTrigger, descendants: true }], usesOnChanges: true, ngImport: i0, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title>\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\"></div>\r\n      <div class=\"intel-accordion-title\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\">\r\n        <h6 class=\"mb-0 ml-2\">{{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})</h6>\r\n        <mat-icon aria-hidden=\"false\" aria-label=\"help icon\" matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" matTooltipPosition=\"right\" data-test-id=\"matIcoHelpAppointment\">help_outline</mat-icon>\r\n        <div class=\"ml-auto filter-search-container\">\r\n          <button *ngIf=\"pluginConfigObs.filterObs.filterFlag\" class=\"mat-stroked-button\"[matMenuTriggerFor]=\"filterMenu1\" class=\"filter-btn\" (click)=\"$event.stopPropagation();\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\"> {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n          <mat-menu #filterMenu1=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\">\r\n            <div class=\"toggle-buttons\">\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'date'\" (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Date' | translate}}</span></span></button>\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'range'\" (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Range' | translate}}</span></span></button>\r\n            </div>\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"date\" [matDatepicker]=\"dobdp\" placeholder=\"{{'Select date' | translate}}\" aria-label=\"Date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #dobdp></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dobdp\" data-test-id=\"dpDate\" class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n              </div>\r\n              <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\">\r\n                <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"startDate\" [matDatepicker]=\"picker1\" placeholder=\"{{'Select start date'|translate}}\" aria-label=\"Start date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etSelStartDate\">\r\n                        <mat-datepicker #picker1></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker1\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"endDate\" [matDatepicker]=\"picker2\" placeholder=\"{{'Select end date'|translate}}\" aria-label=\"End date\" aria-describedby=\"basic-addon2\" readonly data-test-id=\"etSelEndDate\">\r\n                        <mat-datepicker #picker2></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker2\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </form>\r\n              </div>\r\n            <div class=\"action-buttons\">\r\n              <button mat-button class=\"mat-focus-indicator reset-btn mat-button mat-button-base\" (click)=\"resetDate();\"><span class=\"mat-button-wrapper\">{{ 'Reset'| translate }}</span></button>\r\n              <button mat-button class=\"mat-focus-indicator apply-btn mat-button mat-button-base\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\"><span class=\"mat-button-wrapper\">{{ 'Apply'| translate }}</span></button>\r\n            </div>\r\n          </mat-menu>\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\">\r\n            <input type=\"text\" #searchInput class=\"form-control\" placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" aria-label=\"search1\" aria-describedby=\"basic-addon1\" (keyup)=\"applyFilter($event)\" (keydown.Space)=\"$event.stopPropagation()\" (keydown.Enter)=\"$event.stopPropagation()\" data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" id=\"basic-addon1\"  *ngIf=\"!isFilterApplied\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button data-test-id=\"btnResetApSerach\"  class=\"btnResetApSerach\" class=\"btnResetApSerach\" class=\"mat-icon-button\" aria-label=\"Reset appointment search\"  (click)=\"clearFilter()\"  *ngIf=\"isFilterApplied\">\r\n                <mat-icon class=\"ml-0\" style=\"line-height: normal;\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\">\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <th mat-header-cell *matHeaderCellDef>{{ column.label | translate }}</th>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\" [attr.data-test-id]=\"'td' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ pluginConfigObs.baseURL + '/personimage/' + element.patientId }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ pluginConfigObs.baseURL + '/personimage/' + element.person.uuid }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n              >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n    </table>\r\n    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]=\"[5, 10, 20]\" aria-label=\"Select page of periodic elements\"></mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>\r\n", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:-moz-fit-content;height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:-moz-fit-content;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:-moz-fit-content;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"], dependencies: [{ kind: "directive", type: i8$1.RouterLink, selector: "[routerLink]" }, { kind: "directive", type: i9.NgClass, selector: "[ngClass]" }, { kind: "directive", type: i9.NgForOf, selector: "[ngFor][ngForOf]" }, { kind: "directive", type: i9.NgIf, selector: "[ngIf]" }, { kind: "directive", type: i9.NgStyle, selector: "[ngStyle]" }, { kind: "component", type: i10.MatPaginator, selector: "mat-paginator", outputs: ["page"], exportAs: ["matPaginator"] }, { kind: "directive", type: i11.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }, { kind: "directive", type: i5.MatSuffix, selector: "[matSuffix], [matIconSuffix], [matTextSuffix]" }, { kind: "component", type: i13.MatExpansionPanel, selector: "mat-expansion-panel", outputs: ["afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { kind: "component", type: i13.MatExpansionPanelHeader, selector: "mat-expansion-panel-header" }, { kind: "directive", type: i13.MatExpansionPanelTitle, selector: "mat-panel-title" }, { kind: "component", type: i14.MatMenu, selector: "mat-menu", outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "directive", type: i14.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { kind: "component", type: i15.MatTable, selector: "mat-table, table[mat-table]", exportAs: ["matTable"] }, { kind: "directive", type: i15.MatHeaderCellDef, selector: "[matHeaderCellDef]" }, { kind: "directive", type: i15.MatHeaderRowDef, selector: "[matHeaderRowDef]" }, { kind: "directive", type: i15.MatColumnDef, selector: "[matColumnDef]" }, { kind: "directive", type: i15.MatCellDef, selector: "[matCellDef]" }, { kind: "directive", type: i15.MatRowDef, selector: "[matRowDef]" }, { kind: "directive", type: i15.MatHeaderCell, selector: "mat-header-cell, th[mat-header-cell]" }, { kind: "directive", type: i15.MatCell, selector: "mat-cell, td[mat-cell]" }, { kind: "component", type: i15.MatHeaderRow, selector: "mat-header-row, tr[mat-header-row]", exportAs: ["matHeaderRow"] }, { kind: "component", type: i15.MatRow, selector: "mat-row, tr[mat-row]", exportAs: ["matRow"] }, { kind: "directive", type: i15.MatNoDataRow, selector: "ng-template[matNoDataRow]" }, { kind: "component", type: i16.MatIcon, selector: "mat-icon", exportAs: ["matIcon"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "directive", type: i18.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i18.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i18.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i18.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i18.FormGroupDirective, selector: "[formGroup]", outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i18.FormControlName, selector: "[formControlName]", outputs: ["ngModelChange"] }, { kind: "directive", type: DefaultImageDirective, selector: "img[src]", inputs: ["src"] }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+    /**
+     * Emits the visits count data with the given table tag name and count
+     * @param {number} visitsCount - The total visits count for the specific table
+     */
+    emitVisitsCount(visitsCount) {
+        const visitsCountData = {
+            tableTagName: this.pluginConfigObs.pluginConfigObsFlag,
+            visitsCount: visitsCount
+        };
+        this.visitsCountDate.emit(visitsCountData);
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: TableGridComponent, deps: [{ token: AppointmentService }, { token: VisitService }, { token: CoreService }, { token: i3.ToastrService }, { token: i4.TranslateService }, { token: MindmapService }, { token: i7.DomSanitizer }, { token: AppConfigService }, { token: i9.NgxRolesService }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: TableGridComponent, selector: "lib-table-grid", inputs: { pluginConfigObs: "pluginConfigObs" }, outputs: { visitsCountDate: "visitsCountDate" }, viewQueries: [{ propertyName: "paginator", first: true, predicate: MatPaginator, descendants: true }, { propertyName: "searchElement", first: true, predicate: ["searchInput"], descendants: true, static: true }, { propertyName: "tempPaginator", first: true, predicate: ["tempPaginator"], descendants: true }, { propertyName: "menuTrigger", first: true, predicate: MatMenuTrigger, descendants: true }], usesOnChanges: true, ngImport: i0, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title>\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\"></div>\r\n      <div class=\"intel-accordion-title\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\">\r\n        <h6 class=\"mb-0 ml-2\">{{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})</h6>\r\n        <mat-icon aria-hidden=\"false\" aria-label=\"help icon\" matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" matTooltipPosition=\"right\" data-test-id=\"matIcoHelpAppointment\">help_outline</mat-icon>\r\n        <div class=\"ml-auto filter-search-container\">\r\n          <button *ngIf=\"pluginConfigObs.filterObs.filterFlag\" class=\"mat-stroked-button\"[matMenuTriggerFor]=\"filterMenu1\" class=\"filter-btn\" (click)=\"$event.stopPropagation();\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\"> {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n          <mat-menu #filterMenu1=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\">\r\n            <div class=\"toggle-buttons\">\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'date'\" (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Date' | translate}}</span></span></button>\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'range'\" (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Range' | translate}}</span></span></button>\r\n            </div>\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"date\" [matDatepicker]=\"dobdp\" placeholder=\"{{'Select date' | translate}}\" aria-label=\"Date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #dobdp></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dobdp\" data-test-id=\"dpDate\" class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n              </div>\r\n              <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\">\r\n                <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"startDate\" [matDatepicker]=\"picker1\" placeholder=\"{{'Select start date'|translate}}\" aria-label=\"Start date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etSelStartDate\">\r\n                        <mat-datepicker #picker1></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker1\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"endDate\" [matDatepicker]=\"picker2\" placeholder=\"{{'Select end date'|translate}}\" aria-label=\"End date\" aria-describedby=\"basic-addon2\" readonly data-test-id=\"etSelEndDate\">\r\n                        <mat-datepicker #picker2></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker2\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </form>\r\n              </div>\r\n            <div class=\"action-buttons\">\r\n              <button mat-button class=\"mat-focus-indicator reset-btn mat-button mat-button-base\" (click)=\"resetDate();\"><span class=\"mat-button-wrapper\">{{ 'Reset'| translate }}</span></button>\r\n              <button mat-button class=\"mat-focus-indicator apply-btn mat-button mat-button-base\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\"><span class=\"mat-button-wrapper\">{{ 'Apply'| translate }}</span></button>\r\n            </div>\r\n          </mat-menu>\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\">\r\n            <input type=\"text\" #searchInput class=\"form-control\" placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" aria-label=\"search1\" aria-describedby=\"basic-addon1\" (keyup)=\"applyFilter($event)\" (keydown.Space)=\"$event.stopPropagation()\" (keydown.Enter)=\"$event.stopPropagation()\" data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" id=\"basic-addon1\"  *ngIf=\"!isFilterApplied\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button data-test-id=\"btnResetApSerach\"  class=\"btnResetApSerach\" class=\"btnResetApSerach\" class=\"mat-icon-button\" aria-label=\"Reset appointment search\"  (click)=\"clearFilter()\"  *ngIf=\"isFilterApplied\">\r\n                <mat-icon class=\"ml-0\" style=\"line-height: normal;\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\">\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <th mat-header-cell *matHeaderCellDef>{{ column.label | translate }}</th>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\" [attr.data-test-id]=\"'td' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ baseURL + '/personimage/' + element.patientId }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ baseURL + '/personimage/' + element.person.uuid }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n              >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n    </table>\r\n    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]=\"[5, 10, 20]\" aria-label=\"Select page of periodic elements\"></mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>\r\n", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:-moz-fit-content;height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:-moz-fit-content;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:-moz-fit-content;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"], dependencies: [{ kind: "directive", type: i10.RouterLink, selector: "[routerLink]" }, { kind: "directive", type: i11.NgClass, selector: "[ngClass]" }, { kind: "directive", type: i11.NgForOf, selector: "[ngFor][ngForOf]" }, { kind: "directive", type: i11.NgIf, selector: "[ngIf]" }, { kind: "directive", type: i11.NgStyle, selector: "[ngStyle]" }, { kind: "component", type: i12.MatPaginator, selector: "mat-paginator", outputs: ["page"], exportAs: ["matPaginator"] }, { kind: "directive", type: i13.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }, { kind: "directive", type: i5.MatSuffix, selector: "[matSuffix], [matIconSuffix], [matTextSuffix]" }, { kind: "component", type: i15.MatExpansionPanel, selector: "mat-expansion-panel", outputs: ["afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { kind: "component", type: i15.MatExpansionPanelHeader, selector: "mat-expansion-panel-header" }, { kind: "directive", type: i15.MatExpansionPanelTitle, selector: "mat-panel-title" }, { kind: "component", type: i16.MatMenu, selector: "mat-menu", outputs: ["closed", "close"], exportAs: ["matMenu"] }, { kind: "directive", type: i16.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", outputs: ["menuOpened", "onMenuOpen", "menuClosed", "onMenuClose"], exportAs: ["matMenuTrigger"] }, { kind: "component", type: i17.MatTable, selector: "mat-table, table[mat-table]", exportAs: ["matTable"] }, { kind: "directive", type: i17.MatHeaderCellDef, selector: "[matHeaderCellDef]" }, { kind: "directive", type: i17.MatHeaderRowDef, selector: "[matHeaderRowDef]" }, { kind: "directive", type: i17.MatColumnDef, selector: "[matColumnDef]" }, { kind: "directive", type: i17.MatCellDef, selector: "[matCellDef]" }, { kind: "directive", type: i17.MatRowDef, selector: "[matRowDef]" }, { kind: "directive", type: i17.MatHeaderCell, selector: "mat-header-cell, th[mat-header-cell]" }, { kind: "directive", type: i17.MatCell, selector: "mat-cell, td[mat-cell]" }, { kind: "component", type: i17.MatHeaderRow, selector: "mat-header-row, tr[mat-header-row]", exportAs: ["matHeaderRow"] }, { kind: "component", type: i17.MatRow, selector: "mat-row, tr[mat-row]", exportAs: ["matRow"] }, { kind: "directive", type: i17.MatNoDataRow, selector: "ng-template[matNoDataRow]" }, { kind: "component", type: i18.MatIcon, selector: "mat-icon", exportAs: ["matIcon"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "directive", type: i20.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i20.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i20.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i20.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i20.FormGroupDirective, selector: "[formGroup]", outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i20.FormControlName, selector: "[formControlName]", outputs: ["ngModelChange"] }, { kind: "directive", type: DefaultImageDirective, selector: "img[src]", inputs: ["src"] }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }], changeDetection: i0.ChangeDetectionStrategy.OnPush });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: TableGridComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'lib-table-grid', template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title>\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\"></div>\r\n      <div class=\"intel-accordion-title\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\">\r\n        <h6 class=\"mb-0 ml-2\">{{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})</h6>\r\n        <mat-icon aria-hidden=\"false\" aria-label=\"help icon\" matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" matTooltipPosition=\"right\" data-test-id=\"matIcoHelpAppointment\">help_outline</mat-icon>\r\n        <div class=\"ml-auto filter-search-container\">\r\n          <button *ngIf=\"pluginConfigObs.filterObs.filterFlag\" class=\"mat-stroked-button\"[matMenuTriggerFor]=\"filterMenu1\" class=\"filter-btn\" (click)=\"$event.stopPropagation();\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\"> {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n          <mat-menu #filterMenu1=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\">\r\n            <div class=\"toggle-buttons\">\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'date'\" (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Date' | translate}}</span></span></button>\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'range'\" (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Range' | translate}}</span></span></button>\r\n            </div>\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"date\" [matDatepicker]=\"dobdp\" placeholder=\"{{'Select date' | translate}}\" aria-label=\"Date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #dobdp></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dobdp\" data-test-id=\"dpDate\" class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n              </div>\r\n              <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\">\r\n                <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"startDate\" [matDatepicker]=\"picker1\" placeholder=\"{{'Select start date'|translate}}\" aria-label=\"Start date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etSelStartDate\">\r\n                        <mat-datepicker #picker1></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker1\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"endDate\" [matDatepicker]=\"picker2\" placeholder=\"{{'Select end date'|translate}}\" aria-label=\"End date\" aria-describedby=\"basic-addon2\" readonly data-test-id=\"etSelEndDate\">\r\n                        <mat-datepicker #picker2></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker2\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </form>\r\n              </div>\r\n            <div class=\"action-buttons\">\r\n              <button mat-button class=\"mat-focus-indicator reset-btn mat-button mat-button-base\" (click)=\"resetDate();\"><span class=\"mat-button-wrapper\">{{ 'Reset'| translate }}</span></button>\r\n              <button mat-button class=\"mat-focus-indicator apply-btn mat-button mat-button-base\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\"><span class=\"mat-button-wrapper\">{{ 'Apply'| translate }}</span></button>\r\n            </div>\r\n          </mat-menu>\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\">\r\n            <input type=\"text\" #searchInput class=\"form-control\" placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" aria-label=\"search1\" aria-describedby=\"basic-addon1\" (keyup)=\"applyFilter($event)\" (keydown.Space)=\"$event.stopPropagation()\" (keydown.Enter)=\"$event.stopPropagation()\" data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" id=\"basic-addon1\"  *ngIf=\"!isFilterApplied\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button data-test-id=\"btnResetApSerach\"  class=\"btnResetApSerach\" class=\"btnResetApSerach\" class=\"mat-icon-button\" aria-label=\"Reset appointment search\"  (click)=\"clearFilter()\"  *ngIf=\"isFilterApplied\">\r\n                <mat-icon class=\"ml-0\" style=\"line-height: normal;\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\">\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <th mat-header-cell *matHeaderCellDef>{{ column.label | translate }}</th>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\" [attr.data-test-id]=\"'td' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ pluginConfigObs.baseURL + '/personimage/' + element.patientId }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ pluginConfigObs.baseURL + '/personimage/' + element.person.uuid }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n              >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n    </table>\r\n    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]=\"[5, 10, 20]\" aria-label=\"Select page of periodic elements\"></mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>\r\n", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:-moz-fit-content;height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:-moz-fit-content;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:-moz-fit-content;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"] }]
-        }], ctorParameters: function () { return [{ type: AppointmentService }, { type: VisitService }, { type: CoreService }, { type: i3.ToastrService }, { type: i4.TranslateService }, { type: MindmapService }, { type: i7.DomSanitizer }]; }, propDecorators: { pluginConfigObs: [{
+            args: [{ selector: 'lib-table-grid', changeDetection: ChangeDetectionStrategy.OnPush, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title>\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\"></div>\r\n      <div class=\"intel-accordion-title\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\">\r\n        <h6 class=\"mb-0 ml-2\">{{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})</h6>\r\n        <mat-icon aria-hidden=\"false\" aria-label=\"help icon\" matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" matTooltipPosition=\"right\" data-test-id=\"matIcoHelpAppointment\">help_outline</mat-icon>\r\n        <div class=\"ml-auto filter-search-container\">\r\n          <button *ngIf=\"pluginConfigObs.filterObs.filterFlag\" class=\"mat-stroked-button\"[matMenuTriggerFor]=\"filterMenu1\" class=\"filter-btn\" (click)=\"$event.stopPropagation();\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\"> {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n          <mat-menu #filterMenu1=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\">\r\n            <div class=\"toggle-buttons\">\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'date'\" (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Date' | translate}}</span></span></button>\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'range'\" (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Range' | translate}}</span></span></button>\r\n            </div>\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"date\" [matDatepicker]=\"dobdp\" placeholder=\"{{'Select date' | translate}}\" aria-label=\"Date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #dobdp></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dobdp\" data-test-id=\"dpDate\" class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n              </div>\r\n              <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\">\r\n                <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"startDate\" [matDatepicker]=\"picker1\" placeholder=\"{{'Select start date'|translate}}\" aria-label=\"Start date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etSelStartDate\">\r\n                        <mat-datepicker #picker1></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker1\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"endDate\" [matDatepicker]=\"picker2\" placeholder=\"{{'Select end date'|translate}}\" aria-label=\"End date\" aria-describedby=\"basic-addon2\" readonly data-test-id=\"etSelEndDate\">\r\n                        <mat-datepicker #picker2></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker2\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </form>\r\n              </div>\r\n            <div class=\"action-buttons\">\r\n              <button mat-button class=\"mat-focus-indicator reset-btn mat-button mat-button-base\" (click)=\"resetDate();\"><span class=\"mat-button-wrapper\">{{ 'Reset'| translate }}</span></button>\r\n              <button mat-button class=\"mat-focus-indicator apply-btn mat-button mat-button-base\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\"><span class=\"mat-button-wrapper\">{{ 'Apply'| translate }}</span></button>\r\n            </div>\r\n          </mat-menu>\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\">\r\n            <input type=\"text\" #searchInput class=\"form-control\" placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" aria-label=\"search1\" aria-describedby=\"basic-addon1\" (keyup)=\"applyFilter($event)\" (keydown.Space)=\"$event.stopPropagation()\" (keydown.Enter)=\"$event.stopPropagation()\" data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" id=\"basic-addon1\"  *ngIf=\"!isFilterApplied\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button data-test-id=\"btnResetApSerach\"  class=\"btnResetApSerach\" class=\"btnResetApSerach\" class=\"mat-icon-button\" aria-label=\"Reset appointment search\"  (click)=\"clearFilter()\"  *ngIf=\"isFilterApplied\">\r\n                <mat-icon class=\"ml-0\" style=\"line-height: normal;\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\">\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <th mat-header-cell *matHeaderCellDef>{{ column.label | translate }}</th>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\" [attr.data-test-id]=\"'td' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ baseURL + '/personimage/' + element.patientId }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ baseURL + '/personimage/' + element.person.uuid }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n              >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n    </table>\r\n    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]=\"[5, 10, 20]\" aria-label=\"Select page of periodic elements\"></mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>\r\n", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:-moz-fit-content;height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:-moz-fit-content;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:-moz-fit-content;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"] }]
+        }], ctorParameters: function () { return [{ type: AppointmentService }, { type: VisitService }, { type: CoreService }, { type: i3.ToastrService }, { type: i4.TranslateService }, { type: MindmapService }, { type: i7.DomSanitizer }, { type: AppConfigService }, { type: i9.NgxRolesService }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['environment']
+                }] }]; }, propDecorators: { pluginConfigObs: [{
                 type: Input
             }], paginator: [{
                 type: ViewChild,
@@ -2027,6 +2128,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
             }], menuTrigger: [{
                 type: ViewChild,
                 args: [MatMenuTrigger]
+            }], visitsCountDate: [{
+                type: Output
             }] } });
 
 class IhLibraryComponent {
@@ -2041,7 +2144,7 @@ class IhLibraryComponent {
     ngOnInit() {
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: IhLibraryComponent, deps: [{ token: i4.TranslateService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: IhLibraryComponent, selector: "lib-ih-library", ngImport: i0, template: "<lib-table-grid></lib-table-grid>", dependencies: [{ kind: "component", type: TableGridComponent, selector: "lib-table-grid", inputs: ["pluginConfigObs"] }] });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: IhLibraryComponent, selector: "lib-ih-library", ngImport: i0, template: "<lib-table-grid></lib-table-grid>", dependencies: [{ kind: "component", type: TableGridComponent, selector: "lib-table-grid", inputs: ["pluginConfigObs"], outputs: ["visitsCountDate"] }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: IhLibraryComponent, decorators: [{
             type: Component,
@@ -2123,7 +2226,7 @@ class IhLibraryModule {
             TableGridComponent,
             DefaultImageDirective], imports: [ModalComponentsModule,
             RouterModule,
-            CommonModule, i4.TranslateModule, i3.ToastrModule, i3$1.NgxPermissionsModule, MatPaginatorModule,
+            CommonModule, i4.TranslateModule, i3.ToastrModule, i9.NgxPermissionsModule, MatPaginatorModule,
             MatTooltipModule,
             MatInputModule,
             MatFormFieldModule,

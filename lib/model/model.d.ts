@@ -223,6 +223,8 @@ export interface AppointmentModel {
     priority_visit_type?: any;
     uuid: string;
     TMH_patient_id?: any;
+    location: string;
+    age: string;
 }
 export interface CustomVisitModel {
     uuid: string;
