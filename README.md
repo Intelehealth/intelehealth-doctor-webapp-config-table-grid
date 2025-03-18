@@ -33,7 +33,7 @@ To install the Ih Library, run the following command:
 ### Install from GitHub
 
 ```bash
-npm install git+https://github.com/Intelehealth/intelehealth-doctor-webapp-config-table-grid.git
+npm install git+https://github.com/Intelehealth/intelehealth-doctor-webapp-config-table-grid.git#v-0.0.2
 ```
 
 Note: The --force flag is used to override any dependency conflicts. Use it cautiously to avoid breaking changes in your project.
