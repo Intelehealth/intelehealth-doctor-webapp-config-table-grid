@@ -1,0 +1,18 @@
+.android-prompt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ios-prompt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn{
+  background: var(--color-darkBlue);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+}
