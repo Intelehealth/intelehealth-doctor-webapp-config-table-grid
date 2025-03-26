@@ -32,6 +32,7 @@ export class TableGridComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   patientRegFields: string[] = [];
   isMCCUser = false;
+  pageSizeOptions = [5, 10, 20];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('searchInput', { static: true }) searchElement: ElementRef;
@@ -137,6 +138,9 @@ export class TableGridComponent implements OnInit {
       }
     }
     this.maxDate = this.pluginConfigObs.filterObs.filterDateMax;
+    if(this.pluginConfigObs.hasOwnProperty("pageSizeOptions")){
+      this.pageSizeOptions = this.pluginConfigObs.pageSizeOptions
+    }
   }
 
   /**
@@ -149,6 +153,9 @@ export class TableGridComponent implements OnInit {
       this.displayedColumns = this.displayedAppointmentColumns.map(
         (column) => column.key
       );
+    }
+    if(this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader){
+      this.getAppointments();
     }
   }
 
@@ -465,7 +472,14 @@ export class TableGridComponent implements OnInit {
   */
   getAppointments() {
     this.appointments = [];
-    this.appointmentService.getUserSlots(getCacheData(true, doctorDetails.USER).uuid, moment().startOf('year').format('DD/MM/YYYY'), moment().endOf('year').format('DD/MM/YYYY'), this.isMCCUser ? this.specialization : null)
+    let fromDate = moment().startOf('year').format('DD/MM/YYYY');
+    let toDate = moment().endOf('year').format('DD/MM/YYYY');
+    let pending_visits = this.pluginConfigObs.filter?.hasOwnProperty("pending_visits")  ? this.pluginConfigObs.filter?.pending_visits : null;
+    if(this.pluginConfigObs?.filter){
+      fromDate = this.pluginConfigObs?.filter?.fromDate
+      toDate = this.pluginConfigObs?.filter?.toDate
+    }
+    this.appointmentService.getUserSlots(getCacheData(true, doctorDetails.USER).uuid, fromDate, toDate, this.isMCCUser ? this.specialization : null, pending_visits)
       .subscribe((res: ApiResponseModel) => {        
         this.visitsLengthCount = res.data?.length;
         this.emitVisitsCount(this.visitsLengthCount);

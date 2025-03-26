@@ -145,6 +145,6 @@
       <tr mat-row *matRowDef="let row; let x = index; columns: displayedColumns;" [attr.data-test-id]="'tr' + x" [routerLink]="['/dashboard/visit-summary', row.uuid]"></tr>
       
     </table>
-    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of periodic elements"></mat-paginator>
+    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]="pageSizeOptions" aria-label="Select page of periodic elements"></mat-paginator>
   </div>
 </mat-expansion-panel>
