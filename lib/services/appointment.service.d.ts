@@ -39,7 +39,7 @@ export declare class AppointmentService {
     * @param {string} toDate - To date
     * @return {Observable<any>}
     */
-    getUserSlots(userUuid: string, fromDate: string, toDate: string, speciality?: any): Observable<any>;
+    getUserSlots(userUuid: string, fromDate: string, toDate: string, speciality?: any, pending_visits?: any): Observable<any>;
     /**
     * Get user appointment slots
     * @param {string} fromDate - From date

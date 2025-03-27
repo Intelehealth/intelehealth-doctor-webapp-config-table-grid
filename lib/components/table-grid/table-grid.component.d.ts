@@ -30,6 +30,7 @@ export declare class TableGridComponent implements OnInit {
     dataSource: MatTableDataSource<any, MatPaginator>;
     patientRegFields: string[];
     isMCCUser: boolean;
+    pageSizeOptions: number[];
     paginator: MatPaginator;
     searchElement: ElementRef;
     filteredDateAndRangeForm: FormGroup;
