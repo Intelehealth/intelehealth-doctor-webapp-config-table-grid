@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Input, SimpleChanges, ChangeDetectionStrategy, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Input, SimpleChanges, ChangeDetectionStrategy, Inject, Output, EventEmitter, AfterViewInit} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiResponseModel, AppointmentModel, CustomEncounterModel, CustomObsModel, CustomVisitModel, ProviderAttributeModel, RescheduleAppointmentModalResponseModel, PatientVisitSummaryConfigModel } from '../../model/model';
@@ -24,7 +24,7 @@ import { NgxRolesService } from 'ngx-permissions';
   styleUrls: ['./table-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableGridComponent implements OnInit {
+export class TableGridComponent implements OnInit, AfterViewInit{
   
   @Input() pluginConfigObs: any;
   displayedAppointmentColumns: any = [];
@@ -33,7 +33,7 @@ export class TableGridComponent implements OnInit {
   patientRegFields: string[] = [];
   isMCCUser = false;
   pageSizeOptions = [5, 10, 20];
-
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('searchInput', { static: true }) searchElement: ElementRef;
   filteredDateAndRangeForm: FormGroup;
@@ -149,10 +149,8 @@ export class TableGridComponent implements OnInit {
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["pluginConfigObs"] && changes["pluginConfigObs"].currentValue) {
-      this.displayedAppointmentColumns = this.pluginConfigObs.tableColumns || [];
-      this.displayedColumns = this.displayedAppointmentColumns.map(
-        (column) => column.key
-      );
+      this.displayedAppointmentColumns = [...changes["pluginConfigObs"].currentValue?.tableColumns]
+      this.displayedColumns = this.displayedAppointmentColumns.map(column => column.key);
     }
     if( (!changes['pluginConfigObs'].firstChange) && this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader){
       this.getAppointments();
@@ -438,7 +436,7 @@ export class TableGridComponent implements OnInit {
   resetDate(flag: boolean = false) {
     this.filteredDateAndRangeForm.reset();
     this.dataSource.filter = '';
-    this.dataSource.filterPredicate = (data: any, filter: string) => true;
+    this.dataSource.filterPredicate = (data, filter: string) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1;
     if (!flag) {
       this.closeMenu();
     }
@@ -811,7 +809,7 @@ export class TableGridComponent implements OnInit {
    * @return {string} - Formatted HTML or element value
    */
   renderHtmlContent(column: any, element: any): string {
-    return typeof column.formatHtml === 'function' ? this.sanitizer.bypassSecurityTrustHtml(column.formatHtml(element)) : element[column.key];
+    return column.formatHtml && typeof column.formatHtml === 'function' ? this.sanitizer.bypassSecurityTrustHtml(column.formatHtml(element)) : element[column.key];
   }
     
   /**

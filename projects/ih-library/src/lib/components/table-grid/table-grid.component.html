@@ -37,7 +37,7 @@
                     <div class="input-date">
                       <label class="label-text">{{ 'Start date' | translate }}</label>
                       <div class="input-wrapper">
-                        <input type="text" class="form-control" [max]="maxDate" formControlName="startDate" [matDatepicker]="picker1" placeholder="{{'Select start date'|translate}}" aria-label="Start date" aria-describedby="basic-addon1" readonly data-test-id="etSelStartDate">
+                        <input type="text" class="form-control" [max]="filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate" formControlName="startDate" [matDatepicker]="picker1" placeholder="{{'Select start date'|translate}}" aria-label="Start date" aria-describedby="basic-addon1" readonly data-test-id="etSelStartDate">
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-datepicker-toggle matSuffix [for]="picker1" class="datepicker-icon">
                           <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="">
@@ -49,7 +49,7 @@
                     <div class="input-date">
                       <label class="label-text">{{ 'End date' | translate }}</label>
                       <div class="input-wrapper">
-                        <input type="text" class="form-control" [max]="maxDate" formControlName="endDate" [matDatepicker]="picker2" placeholder="{{'Select end date'|translate}}" aria-label="End date" aria-describedby="basic-addon2" readonly data-test-id="etSelEndDate">
+                        <input type="text" class="form-control" [min]="filteredDateAndRangeForm.value.startDate" [max]="maxDate" formControlName="endDate" [matDatepicker]="picker2" placeholder="{{'Select end date'|translate}}" aria-label="End date" aria-describedby="basic-addon2" readonly data-test-id="etSelEndDate">
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-datepicker-toggle matSuffix [for]="picker2" class="datepicker-icon">
                           <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="">
