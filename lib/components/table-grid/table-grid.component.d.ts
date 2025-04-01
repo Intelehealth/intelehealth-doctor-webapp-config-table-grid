@@ -1,4 +1,4 @@
-import { ElementRef, OnInit, SimpleChanges, EventEmitter } from '@angular/core';
+import { ElementRef, OnInit, SimpleChanges, EventEmitter, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AppointmentModel, CustomEncounterModel, CustomObsModel, CustomVisitModel, ProviderAttributeModel, PatientVisitSummaryConfigModel } from '../../model/model';
@@ -14,7 +14,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxRolesService } from 'ngx-permissions';
 import * as i0 from "@angular/core";
-export declare class TableGridComponent implements OnInit {
+export declare class TableGridComponent implements OnInit, AfterViewInit {
     private appointmentService;
     private visitService;
     private coreService;
