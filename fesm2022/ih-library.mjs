@@ -1493,7 +1493,7 @@ class TableGridComponent {
         if (isCompleted) {
             this.toastr.error(this.translateService.instant("Visit is already completed, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
         }
-        else if (appointment.visitStatus == 'Visit In Progress') {
+        else if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits") {
             this.toastr.error(this.translateService.instant("Visit is in progress, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
         }
         else {
