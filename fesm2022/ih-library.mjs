@@ -1528,7 +1528,7 @@ class TableGridComponent {
     * @return {void}
     */
     cancel(appointment) {
-        if (appointment.visitStatus == 'Visit In Progress') {
+        if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits") {
             this.toastr.error(this.translateService.instant("Visit is in progress, it can't be cancelled."), this.translateService.instant('Canceling failed!'));
             return;
         }
