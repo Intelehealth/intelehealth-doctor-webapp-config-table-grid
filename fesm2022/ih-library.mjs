@@ -1342,6 +1342,7 @@ class TableGridComponent {
     isFilterApplied = false;
     pvs;
     baseURL;
+    isBrandName;
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
     }
@@ -1357,6 +1358,7 @@ class TableGridComponent {
         this.rolesService = rolesService;
         this.baseURL = environment.baseURL;
         this.filteredDateAndRangeForm = this.createFilteredDateRangeForm();
+        this.isBrandName = environment.brandName;
     }
     /**
      * Creates a filtered date range form with required date fields
@@ -1493,7 +1495,7 @@ class TableGridComponent {
         if (isCompleted) {
             this.toastr.error(this.translateService.instant("Visit is already completed, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
         }
-        else if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits") {
+        else if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits" && this.isBrandName !== 'KCDO') {
             this.toastr.error(this.translateService.instant("Visit is in progress, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
         }
         else {

@@ -51,6 +51,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     isFilterApplied: boolean;
     pvs: PatientVisitSummaryConfigModel;
     baseURL: any;
+    isBrandName: string;
     ngAfterViewInit(): void;
     constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
     /**
