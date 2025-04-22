@@ -57,6 +57,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   isFilterApplied = false;
   pvs: PatientVisitSummaryConfigModel;
   baseURL: any;
+  isBrandName: string;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -76,6 +77,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   ) { 
     this.baseURL = environment.baseURL;
     this.filteredDateAndRangeForm = this.createFilteredDateRangeForm();
+    this.isBrandName = environment.brandName;
   }
 
   /**
@@ -215,7 +217,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     const isCompleted = Boolean(len);
     if (isCompleted) {
       this.toastr.error(this.translateService.instant("Visit is already completed, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
-    } else if(appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits") {
+    } else if(appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits" && this.isBrandName !== 'KCDO') {
       this.toastr.error(this.translateService.instant("Visit is in progress, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
     } else {
       this.coreService.openRescheduleAppointmentModal(appointment).subscribe((res: RescheduleAppointmentModalResponseModel) => {
@@ -249,7 +251,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   * @return {void}
   */
   cancel(appointment: AppointmentModel) {
-    if(appointment.visitStatus == 'Visit In Progress') {
+    if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits") {
       this.toastr.error(this.translateService.instant("Visit is in progress, it can't be cancelled."), this.translateService.instant('Canceling failed!'));
       return;
     }
