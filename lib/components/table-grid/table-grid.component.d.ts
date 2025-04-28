@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxRolesService } from 'ngx-permissions';
+import { MatSort } from '@angular/material/sort';
 import * as i0 from "@angular/core";
 export declare class TableGridComponent implements OnInit, AfterViewInit {
     private appointmentService;
@@ -27,7 +28,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
-    dataSource: MatTableDataSource<any, MatPaginator>;
+    dataSource: MatTableDataSource<any>;
     patientRegFields: string[];
     isMCCUser: boolean;
     pageSizeOptions: number[];
@@ -36,6 +37,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     filteredDateAndRangeForm: FormGroup;
     tempPaginator: MatPaginator;
     menuTrigger: MatMenuTrigger;
+    tableMatSort: MatSort;
     panelExpanded: boolean;
     mode: 'date' | 'range';
     maxDate: Date;
