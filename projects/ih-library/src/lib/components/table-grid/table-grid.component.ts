@@ -255,7 +255,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   * @return {void}
   */
   cancel(appointment: AppointmentModel) {
-    if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits") {
+    if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits" && this.isBrandName !== 'KCDO') {
       this.toastr.error(this.translateService.instant("Visit is in progress, it can't be cancelled."), this.translateService.instant('Canceling failed!'));
       return;
     }
