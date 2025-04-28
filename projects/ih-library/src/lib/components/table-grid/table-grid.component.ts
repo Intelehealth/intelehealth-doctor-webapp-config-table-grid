@@ -81,7 +81,6 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   ) { 
     this.baseURL = environment.baseURL;
     this.filteredDateAndRangeForm = this.createFilteredDateRangeForm();
-    this.isBrandName = environment.brandName;
   }
 
   /**
@@ -212,16 +211,17 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   /**
   * Reschedule appointment
   * @param {AppointmentModel} appointment - Appointment to be rescheduled
+  * @param {boolean} isValidationRequired - If true, validation is required
   * @return {void}
   */
-  reschedule(appointment: AppointmentModel) {
+  reschedule(appointment: AppointmentModel, isValidationRequired: boolean) {
     const len = appointment.visit.encounters.filter((e: CustomEncounterModel) => {
       return (e.type.name == visitTypes.PATIENT_EXIT_SURVEY || e.type.name == visitTypes.VISIT_COMPLETE);
     }).length;
     const isCompleted = Boolean(len);
     if (isCompleted) {
       this.toastr.error(this.translateService.instant("Visit is already completed, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
-    } else if(appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits" && this.isBrandName !== 'KCDO') {
+    } else if(appointment.visitStatus == 'Visit In Progress' && isValidationRequired) {
       this.toastr.error(this.translateService.instant("Visit is in progress, it can't be rescheduled."), this.translateService.instant('Rescheduling failed!'));
     } else {
       this.coreService.openRescheduleAppointmentModal(appointment).subscribe((res: RescheduleAppointmentModalResponseModel) => {
@@ -252,10 +252,11 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   /**
   * Cancel appointment
   * @param {AppointmentModel} appointment - Appointment to be rescheduled
+  * @param {boolean} isValidationRequired - If true, validation is required
   * @return {void}
   */
-  cancel(appointment: AppointmentModel) {
-    if (appointment.visitStatus == 'Visit In Progress' && this.pluginConfigObs.tableHeader !== "Pending Visits" && this.isBrandName !== 'KCDO') {
+  cancel(appointment: AppointmentModel, isValidationRequired: boolean) {
+    if (appointment.visitStatus == 'Visit In Progress' && isValidationRequired) {
       this.toastr.error(this.translateService.instant("Visit is in progress, it can't be cancelled."), this.translateService.instant('Canceling failed!'));
       return;
     }
@@ -857,10 +858,12 @@ export class TableGridComponent implements OnInit, AfterViewInit{
    * @param {any} element - Element to perform the action on
    */
   handleAction(action: any, element: any) {
+    const isValidationRequired = action.validationRequired !== undefined ? action.validationRequired : true;
+    
     if (action.label === 'Reschedule') {
-      this.reschedule(element);
+      this.reschedule(element, isValidationRequired);
     } else if (action.label === 'Cancel') {
-      this.cancel(element);
+      this.cancel(element, isValidationRequired);
     }
   }
 

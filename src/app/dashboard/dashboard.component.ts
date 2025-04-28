@@ -481,6 +481,7 @@ export class DashboardComponent implements OnInit {
         actionButtons: [
           {
             label: "Reschedule",
+            validationRequired: false,
             callBack: (element: any) => this.reschedule(element),
             style: {
               color: "#2e1e91",
@@ -489,6 +490,7 @@ export class DashboardComponent implements OnInit {
           },
           {
             label: "Cancel",
+            validationRequired: false,
             callBack: (element: any) => this.cancel(element),
             style: {
               color: "#ff475d",
