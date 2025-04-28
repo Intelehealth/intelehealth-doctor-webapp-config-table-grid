@@ -17,6 +17,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { formatDate } from '@angular/common';
 import { NgxRolesService } from 'ngx-permissions';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'lib-table-grid',
@@ -39,6 +40,8 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   filteredDateAndRangeForm: FormGroup;
   @ViewChild('tempPaginator') tempPaginator: MatPaginator;
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+  @ViewChild('tableMatSort',{ static: true }) tableMatSort: MatSort;
+
 
   panelExpanded: boolean = true;
   mode: 'date' | 'range' = 'date';
@@ -61,6 +64,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.tableMatSort;
   }
 
   constructor(
@@ -500,6 +504,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         });
         this.dataSource.data = [...this.appointments];
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.tableMatSort;
         this.dataSource.filterPredicate = (data, filter: string) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1;
       });
   }
@@ -607,6 +612,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         this.dataSource.data = [...this.awaitingVisits];
         if (page == 1) {
           this.dataSource.paginator = this.tempPaginator;
+          this.dataSource.sort = this.tableMatSort;
           this.dataSource.filterPredicate = (data, filter: string) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
         } else {
           this.tempPaginator.length = this.awaitingVisits.length;
@@ -677,6 +683,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         this.dataSource.data = [...this.inProgressVisits];
         if (page == 1) {
           this.dataSource.paginator = this.tempPaginator;
+          this.dataSource.sort = this.tableMatSort;
           this.dataSource.filterPredicate = (data, filter: string) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
         } else {
           this.tempPaginator.length = this.inProgressVisits.length;
@@ -711,6 +718,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         this.dataSource.data = [...this.priorityVisits];
         if (page == 1) {
           this.dataSource.paginator = this.tempPaginator;
+          this.dataSource.sort = this.tableMatSort;
           this.dataSource.filterPredicate = (data, filter: string) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
         } else {
           this.tempPaginator.length = this.priorityVisits.length;
@@ -743,6 +751,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         this.dataSource.data = [...this.completedVisits];
         if (page == 1) {
           this.dataSource.paginator = this.tempPaginator;
+          this.dataSource.sort = this.tableMatSort;
           this.dataSource.filterPredicate = (data: { patient: { identifier: string; }; patient_name: { given_name: string; middle_name: string; family_name: string; }; }, filter: string) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
         } else {
           this.tempPaginator.length = this.completedVisits.length;
@@ -778,6 +787,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
           this.dataSource.data = [...this.followUpVisits];
           if (page == 1) {
             this.dataSource.paginator = this.tempPaginator;
+            this.dataSource.sort = this.tableMatSort;
             this.dataSource.filterPredicate = (data: { patient: { identifier: string; }; patient_name: { given_name: string; middle_name: string; family_name: string; }; }, filter: string) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
           } else {
             this.tempPaginator.length = this.followUpVisits.length;

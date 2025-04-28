@@ -198,6 +198,7 @@ export class DashboardComponent implements OnInit {
           if (element?.patient_type?.toLowerCase() === "follow-up") return ["chip", "chip-item-blue", "blue"];
           return ["chip"]; // Default fallback class
         },
+        isSortable: true,
         // formatHtml: (element) => {
         //   return element?.patient_type || "N/A"; // Only return text
         // }
@@ -214,6 +215,7 @@ export class DashboardComponent implements OnInit {
             <span>${element?.visit_created}</span>
           `
         },
+        isSortable: true,
       },
     ],
   }; 
@@ -272,6 +274,7 @@ export class DashboardComponent implements OnInit {
             <span>${element?.visit_created}</span>
           `
         },
+        isSortable: true,
       }
     ],
   }; 
@@ -337,6 +340,7 @@ export class DashboardComponent implements OnInit {
             <span>${element?.completed}</span>
           `
         },
+        isSortable: true,
       }
     ],
   }; 
@@ -391,6 +395,7 @@ export class DashboardComponent implements OnInit {
             <span>${element?.followUp}</span>
           `
         },
+        isSortable: true,
       }
     ],
   }; 
@@ -554,6 +559,7 @@ export class DashboardComponent implements OnInit {
               <span>${element.prescription_started}</span>
             `
         },
+        isSortable: true,
       }
     ],
   }; 
