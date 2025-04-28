@@ -82,15 +82,17 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     /**
     * Reschedule appointment
     * @param {AppointmentModel} appointment - Appointment to be rescheduled
+    * @param {boolean} isValidationRequired - If true, validation is required
     * @return {void}
     */
-    reschedule(appointment: AppointmentModel): void;
+    reschedule(appointment: AppointmentModel, isValidationRequired: boolean): void;
     /**
     * Cancel appointment
     * @param {AppointmentModel} appointment - Appointment to be rescheduled
+    * @param {boolean} isValidationRequired - If true, validation is required
     * @return {void}
     */
-    cancel(appointment: AppointmentModel): void;
+    cancel(appointment: AppointmentModel, isValidationRequired: boolean): void;
     /**
     * Get user uuid from localstorage user
     * @return {string} - User uuid
