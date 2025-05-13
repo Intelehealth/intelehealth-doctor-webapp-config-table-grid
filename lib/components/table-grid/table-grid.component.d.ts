@@ -14,6 +14,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxRolesService } from 'ngx-permissions';
 import { MatSort } from '@angular/material/sort';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import * as i0 from "@angular/core";
 export declare class TableGridComponent implements OnInit, AfterViewInit {
     private appointmentService;
@@ -25,10 +26,11 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     private sanitizer;
     private appConfigService;
     private rolesService;
+    private ngxLoader;
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
-    dataSource: MatTableDataSource<any>;
+    dataSource: MatTableDataSource<any, MatPaginator>;
     patientRegFields: string[];
     isMCCUser: boolean;
     pageSizeOptions: number[];
@@ -55,7 +57,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     baseURL: any;
     isBrandName: string;
     ngAfterViewInit(): void;
-    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
+    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, ngxLoader: NgxUiLoaderService, environment: any);
     /**
      * Creates a filtered date range form with required date fields
      * @return {FormGroup} - The created form group
