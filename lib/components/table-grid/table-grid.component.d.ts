@@ -14,7 +14,6 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxRolesService } from 'ngx-permissions';
 import { MatSort } from '@angular/material/sort';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import * as i0 from "@angular/core";
 export declare class TableGridComponent implements OnInit, AfterViewInit {
     private appointmentService;
@@ -26,7 +25,6 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     private sanitizer;
     private appConfigService;
     private rolesService;
-    private ngxLoader;
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
@@ -57,7 +55,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     baseURL: any;
     isBrandName: string;
     ngAfterViewInit(): void;
-    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, ngxLoader: NgxUiLoaderService, environment: any);
+    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
     /**
      * Creates a filtered date range form with required date fields
      * @return {FormGroup} - The created form group
@@ -69,6 +67,10 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      * @param changes pluginConfigObs
      */
     ngOnChanges(changes: SimpleChanges): void;
+    /**
+    * Reset the date for appointments(Today's,upcoming,pending appoinments)
+    */
+    resetDateForm(): void;
     /**
     * Retreive the chief complaints for the visit
     * @param {CustomVisitModel} visit - Visit
