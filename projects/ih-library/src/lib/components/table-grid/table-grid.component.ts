@@ -164,7 +164,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     const curr = changes['pluginConfigObs'].currentValue;
     const prevType = prev?.filter?.filterType;
     const currType = curr?.filter?.filterType;
-console.log("prevType==",prevType);
+console.log("prevType is==",prevType);
 console.log("currType===",currType);
     if ( prevType !== currType) {
       this.resetDateForm(); // Reset only when type has changed
