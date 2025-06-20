@@ -68,7 +68,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      */
     ngOnChanges(changes: SimpleChanges): void;
     /**
-    * Reset the date for appointments(Today's,upcoming,pending appoinments)
+    * Reset the date for appointments(Today's,upcoming,pending appoinments)  g
     */
     resetDateForm(): void;
     /**
