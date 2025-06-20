@@ -124,7 +124,6 @@ export class TableGridComponent implements OnInit, AfterViewInit{
       if (provider.attributes.length) {
         this.specialization = this.getSpecialization(provider.attributes);
       }
-        
       if(this.pluginConfigObs?.pluginConfigObsFlag === "Appointment"){
         this.getAppointments();
       }
@@ -172,7 +171,7 @@ console.log("currType===",currType);
     }
   }
   /**
-  * Reset the date for sub appointments(Today's,upcoming,pending) 
+  * Reset the date for appointments(Today's,upcoming,pending appoinments)   
   */
   resetDateForm() {
   if (this.filteredDateAndRangeForm) {
