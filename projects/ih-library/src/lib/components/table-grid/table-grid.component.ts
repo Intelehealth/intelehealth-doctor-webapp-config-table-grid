@@ -160,8 +160,28 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     if( (!changes['pluginConfigObs'].firstChange) && this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader){
       this.getAppointments();
     }
+    const prev = changes['pluginConfigObs'].previousValue;
+    const curr = changes['pluginConfigObs'].currentValue;
+    const prevType = prev?.filter?.filterType;
+    const currType = curr?.filter?.filterType;
+console.log("prevType==",prevType);
+console.log("currType===",currType);
+    if (prevType && currType && prevType !== currType) {
+      this.resetDateForm(); // Reset only when type has changed
+    }
   }
-
+  /**
+  * Reset the date for appointments(Today's,upcoming,pending appoinments)   
+  */
+  resetDateForm() {
+  if (this.filteredDateAndRangeForm) {
+    this.filteredDateAndRangeForm.reset({
+      date: null,
+      startDate: null,
+      endDate: null
+    });
+  }
+}
   /**
   * Retreive the chief complaints for the visit
   * @param {CustomVisitModel} visit - Visit
