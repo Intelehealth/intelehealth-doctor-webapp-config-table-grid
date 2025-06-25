@@ -1442,8 +1442,6 @@ class TableGridComponent {
         const curr = changes['pluginConfigObs'].currentValue;
         const prevType = prev?.filter?.filterType;
         const currType = curr?.filter?.filterType;
-        console.log("prevType is==", prevType);
-        console.log("currType===", currType);
         if (prevType !== currType) {
             this.resetDateForm(); // Reset only when type has changed
         }
@@ -1460,6 +1458,9 @@ class TableGridComponent {
             });
         }
         this.mode = 'date';
+        this.searchElement.nativeElement.value = "";
+        this.isFilterApplied = false;
+        this.dataSource.filter = null;
     }
     /**
     * Retreive the chief complaints for the visit
@@ -1582,6 +1583,7 @@ class TableGridComponent {
     */
     applyFilter(event) {
         const filterValue = event.target.value;
+        console.log("filterValue==", filterValue);
         this.dataSource.filter = filterValue.trim().toLowerCase();
         this.isFilterApplied = true;
     }
@@ -1789,7 +1791,7 @@ class TableGridComponent {
             this.dataSource.data = [...this.appointments];
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.tableMatSort;
-            this.dataSource.filterPredicate = (data, filter) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1;
+            this.dataSource.filterPredicate = (data, filter) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1 || data?.TMH_patient_id?.toLowerCase().indexOf(filter) !== -1;
         });
     }
     /**
