@@ -1,6 +1,6 @@
 {
   "name": "intelehealth-webapp",
-  "version": "0.0.0",
+  "version": "0.2.4",
   "scripts": {
     "config-dev": "ts-node ./src/assets/scripts/setEnv.ts --environment=dev",
     "config-prod": "ts-node ./src/assets/scripts/setEnv.ts --environment=prod",

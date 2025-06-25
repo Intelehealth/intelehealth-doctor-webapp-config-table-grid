@@ -164,8 +164,6 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     const curr = changes['pluginConfigObs'].currentValue;
     const prevType = prev?.filter?.filterType;
     const currType = curr?.filter?.filterType;
-console.log("prevType is==",prevType);
-console.log("currType===",currType);
     if ( prevType !== currType) {
       this.resetDateForm(); // Reset only when type has changed
     }
@@ -182,7 +180,9 @@ console.log("currType===",currType);
     });
   }
     this.mode = 'date'; 
-
+    this.searchElement.nativeElement.value = "";
+    this.isFilterApplied = false;
+    this.dataSource.filter = null;
 }
   /**
   * Retreive the chief complaints for the visit
@@ -305,6 +305,7 @@ console.log("currType===",currType);
   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    console.log("filterValue==",filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.isFilterApplied = true;
   }
@@ -418,10 +419,8 @@ console.log("currType===",currType);
     const selectedDate = this.filteredDateAndRangeForm.get('date')?.value;
     const startDate = this.filteredDateAndRangeForm.get('startDate')?.value;
     const endDate = this.filteredDateAndRangeForm.get('endDate')?.value;
-  
     if (selectedDate) {
       const formattedDate = this.formatDate(selectedDate);
-
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         let itemDate;
         if(dateField === "followUp"){
@@ -528,7 +527,7 @@ console.log("currType===",currType);
         this.dataSource.data = [...this.appointments];
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.tableMatSort;
-        this.dataSource.filterPredicate = (data, filter: string) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1;
+        this.dataSource.filterPredicate = (data, filter: string) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1 || data?.TMH_patient_id?.toLowerCase().indexOf(filter) !== -1;
       });
   }
   
