@@ -1346,6 +1346,11 @@ class TableGridComponent {
     pvs;
     baseURL;
     isBrandName;
+    // to apply filter with date and text search
+    dateField;
+    dateFilter;
+    originalData;
+    filteredDataAfterDate;
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         // this.dataSource.sort = this.tableMatSort;
@@ -1403,6 +1408,7 @@ class TableGridComponent {
                 this.specialization = this.getSpecialization(provider.attributes);
             }
             if (this.pluginConfigObs?.pluginConfigObsFlag === "Appointment") {
+                console.log("aaaaaaaaaaaaaaaaaa");
                 this.getAppointments();
             }
             if (this.pluginConfigObs?.pluginConfigObsFlag === "Awaiting") {
@@ -1431,11 +1437,13 @@ class TableGridComponent {
      * @param changes pluginConfigObs
      */
     ngOnChanges(changes) {
+        console.log("ng on changeeeeeeeeeeeeeee....................");
         if (changes["pluginConfigObs"] && changes["pluginConfigObs"].currentValue) {
             this.displayedAppointmentColumns = [...changes["pluginConfigObs"].currentValue?.tableColumns];
             this.displayedColumns = this.displayedAppointmentColumns.map(column => column.key);
         }
         if ((!changes['pluginConfigObs'].firstChange) && this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader) {
+            console.log("cccccccccccccccccccc");
             this.getAppointments();
         }
         const prev = changes['pluginConfigObs'].previousValue;
@@ -1443,6 +1451,7 @@ class TableGridComponent {
         const prevType = prev?.filter?.filterType;
         const currType = curr?.filter?.filterType;
         if (prevType !== currType) {
+            console.log("tab changed");
             this.resetDateForm(); // Reset only when type has changed
         }
     }
@@ -1582,10 +1591,21 @@ class TableGridComponent {
     * @return {void}
     */
     applyFilter(event) {
-        const filterValue = event.target.value;
-        console.log("filterValue==", filterValue);
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+        const filterValue = event.target.value.trim().toLowerCase();
+        const customPredicate = (data, filter) => {
+            return (data?.openMrsId?.toLowerCase().includes(filter) ||
+                data?.patientName?.toLowerCase().includes(filter) ||
+                data?.TMH_patient_id?.toLowerCase().includes(filter));
+        };
+        // Always filter from the full original data
+        this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
+        this.dataSource.data = this.filteredDataAfterDate;
         this.isFilterApplied = true;
+        console.log("Filtered data after search:", this.filteredDataAfterDate);
+    }
+    // Call this once after loading appointments
+    storeOriginalData() {
+        this.originalData = [...this.dataSource.data]; // Backup full data
     }
     /**
     * Clear filter from a datasource
@@ -1595,6 +1615,12 @@ class TableGridComponent {
         this.dataSource.filter = null;
         this.searchElement.nativeElement.value = "";
         this.isFilterApplied = false;
+        this.filteredDateAndRangeForm.reset({
+            date: null,
+            startDate: null,
+            endDate: null
+        });
+        this.mode = 'date';
     }
     /**
      * Checks if the field is in patient registration fields
@@ -1682,11 +1708,13 @@ class TableGridComponent {
      * @param {string} dateField - The field name for the date to filter
      */
     applyDateOrRangeFilter(dateField) {
+        console.log("apply filtre................");
         const selectedDate = this.filteredDateAndRangeForm.get('date')?.value;
         const startDate = this.filteredDateAndRangeForm.get('startDate')?.value;
         const endDate = this.filteredDateAndRangeForm.get('endDate')?.value;
         if (selectedDate) {
             const formattedDate = this.formatDate(selectedDate);
+            this.dateFilter = this.formatDate(selectedDate);
             this.dataSource.filterPredicate = (data, filter) => {
                 let itemDate;
                 if (dateField === "followUp") {
@@ -1719,10 +1747,15 @@ class TableGridComponent {
                 return itemDate >= formattedStartDate && itemDate <= formattedEndDate;
             };
             this.dataSource.filter = `${formattedStartDate}:${formattedEndDate}`;
+            this.dateFilter = `${this.formatDate(startDate)}:${this.formatDate(endDate)}`;
         }
         else {
             this.dataSource.filter = '';
+            this.dateFilter = '';
         }
+        console.log("this.dataSource.filte inside filter==", this.dataSource);
+        this.dateField = dateField;
+        //this.updateCombinedFilter();
         this.tempPaginator.firstPage();
         this.closeMenu();
     }
@@ -1761,6 +1794,7 @@ class TableGridComponent {
     * @return {void}
     */
     getAppointments() {
+        console.log("inside appointments.............");
         this.appointments = [];
         let fromDate = moment().startOf('year').format('DD/MM/YYYY');
         let toDate = moment().endOf('year').format('DD/MM/YYYY');
@@ -1789,9 +1823,12 @@ class TableGridComponent {
                 }
             });
             this.dataSource.data = [...this.appointments];
+            this.storeOriginalData(); // ← store full data here
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.tableMatSort;
             this.dataSource.filterPredicate = (data, filter) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1 || data?.TMH_patient_id?.toLowerCase().indexOf(filter) !== -1;
+            // //////
+            /////
         });
     }
     /**

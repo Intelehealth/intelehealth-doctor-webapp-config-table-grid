@@ -54,6 +54,10 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     pvs: PatientVisitSummaryConfigModel;
     baseURL: any;
     isBrandName: string;
+    dateField: string;
+    dateFilter: string;
+    originalData: any[];
+    filteredDataAfterDate: any[];
     ngAfterViewInit(): void;
     constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
     /**
@@ -108,6 +112,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     * @return {void}
     */
     applyFilter(event: Event): void;
+    storeOriginalData(): void;
     /**
     * Clear filter from a datasource
     * @return {void}
