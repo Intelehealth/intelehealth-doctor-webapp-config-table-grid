@@ -315,6 +315,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   */
  applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
   const customPredicate = (data: any, filter: string): boolean => {
     return (
       data?.openMrsId?.toLowerCase().includes(filter) ||
@@ -346,6 +347,7 @@ storeOriginalData() {
       endDate: null
     });
     this.mode = 'date'; 
+    this.dataSource.data = [...this.originalData];
   }
 
   /**
