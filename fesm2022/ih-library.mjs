@@ -1408,7 +1408,6 @@ class TableGridComponent {
                 this.specialization = this.getSpecialization(provider.attributes);
             }
             if (this.pluginConfigObs?.pluginConfigObsFlag === "Appointment") {
-                console.log("aaaaaaaaaaaaaaaaaa");
                 this.getAppointments();
             }
             if (this.pluginConfigObs?.pluginConfigObsFlag === "Awaiting") {
@@ -1437,13 +1436,11 @@ class TableGridComponent {
      * @param changes pluginConfigObs
      */
     ngOnChanges(changes) {
-        console.log("ng on changeeeeeeeeeeeeeee....................");
         if (changes["pluginConfigObs"] && changes["pluginConfigObs"].currentValue) {
             this.displayedAppointmentColumns = [...changes["pluginConfigObs"].currentValue?.tableColumns];
             this.displayedColumns = this.displayedAppointmentColumns.map(column => column.key);
         }
         if ((!changes['pluginConfigObs'].firstChange) && this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader) {
-            console.log("cccccccccccccccccccc");
             this.getAppointments();
         }
         const prev = changes['pluginConfigObs'].previousValue;
@@ -1601,7 +1598,6 @@ class TableGridComponent {
         this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
         this.dataSource.data = this.filteredDataAfterDate;
         this.isFilterApplied = true;
-        console.log("Filtered data after search:", this.filteredDataAfterDate);
     }
     // Call this once after loading appointments
     storeOriginalData() {
@@ -1621,6 +1617,7 @@ class TableGridComponent {
             endDate: null
         });
         this.mode = 'date';
+        this.dataSource.data = [...this.originalData];
     }
     /**
      * Checks if the field is in patient registration fields
@@ -1794,7 +1791,6 @@ class TableGridComponent {
     * @return {void}
     */
     getAppointments() {
-        console.log("inside appointments.............");
         this.appointments = [];
         let fromDate = moment().startOf('year').format('DD/MM/YYYY');
         let toDate = moment().endOf('year').format('DD/MM/YYYY');
@@ -1827,8 +1823,6 @@ class TableGridComponent {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.tableMatSort;
             this.dataSource.filterPredicate = (data, filter) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1 || data?.TMH_patient_id?.toLowerCase().indexOf(filter) !== -1;
-            // //////
-            /////
         });
     }
     /**
