@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxRolesService } from 'ngx-permissions';
+import { MatSort } from '@angular/material/sort';
 import * as i0 from "@angular/core";
 export declare class TableGridComponent implements OnInit, AfterViewInit {
     private appointmentService;
@@ -27,7 +28,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
-    dataSource: MatTableDataSource<any, MatPaginator>;
+    dataSource: MatTableDataSource<any>;
     patientRegFields: string[];
     isMCCUser: boolean;
     pageSizeOptions: number[];
@@ -36,6 +37,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     filteredDateAndRangeForm: FormGroup;
     tempPaginator: MatPaginator;
     menuTrigger: MatMenuTrigger;
+    tableMatSort: MatSort;
     panelExpanded: boolean;
     mode: 'date' | 'range';
     maxDate: Date;
@@ -51,6 +53,11 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     isFilterApplied: boolean;
     pvs: PatientVisitSummaryConfigModel;
     baseURL: any;
+    isBrandName: string;
+    dateField: string;
+    dateFilter: string;
+    originalData: any[];
+    filteredDataAfterDate: any[];
     ngAfterViewInit(): void;
     constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
     /**
@@ -64,6 +71,10 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      * @param changes pluginConfigObs
      */
     ngOnChanges(changes: SimpleChanges): void;
+    /**
+    * Reset the date for appointments(Today's,upcoming,pending appoinments)  g
+    */
+    resetDateForm(): void;
     /**
     * Retreive the chief complaints for the visit
     * @param {CustomVisitModel} visit - Visit
@@ -79,15 +90,17 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     /**
     * Reschedule appointment
     * @param {AppointmentModel} appointment - Appointment to be rescheduled
+    * @param {boolean} isValidationRequired - If true, validation is required
     * @return {void}
     */
-    reschedule(appointment: AppointmentModel): void;
+    reschedule(appointment: AppointmentModel, isValidationRequired: boolean): void;
     /**
     * Cancel appointment
     * @param {AppointmentModel} appointment - Appointment to be rescheduled
+    * @param {boolean} isValidationRequired - If true, validation is required
     * @return {void}
     */
-    cancel(appointment: AppointmentModel): void;
+    cancel(appointment: AppointmentModel, isValidationRequired: boolean): void;
     /**
     * Get user uuid from localstorage user
     * @return {string} - User uuid
@@ -99,6 +112,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     * @return {void}
     */
     applyFilter(event: Event): void;
+    storeOriginalData(): void;
     /**
     * Clear filter from a datasource
     * @return {void}
