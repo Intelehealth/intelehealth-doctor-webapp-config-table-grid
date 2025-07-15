@@ -80,6 +80,20 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div class="mat-elevation-z8">
+    <span *ngIf="tableLoader">
+      <ngx-ui-loader 
+        [loaderId]="'table-loader-' + pluginConfigObs.pluginConfigObsFlag" 
+        [fgsType]="'ball-spin-clockwise'" 
+        [fgsColor]="'#aba4a4'" 
+        [fgsPosition]="'center-center'" 
+        [fgsSize]="50" 
+        [overlayColor]="'rgb(255, 255, 255)'" 
+        [hasProgressBar]="false"
+        [text]="('Loading'|translate) + ' ' + (pluginConfigObs.pluginConfigObsFlag|translate) + ' ' + ('data'|translate) + '...'"
+        [textColor]="'#333'"
+        [textPosition]="'center-center'"
+      ></ngx-ui-loader>
+    </span>
     <table mat-table [dataSource]="dataSource" #tableMatSort="matSort" matSort>
 
       <ng-container *ngFor="let column of displayedAppointmentColumns" [matColumnDef]="column.key">
