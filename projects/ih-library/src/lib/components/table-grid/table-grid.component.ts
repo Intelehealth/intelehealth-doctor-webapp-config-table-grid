@@ -62,6 +62,12 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   pvs: PatientVisitSummaryConfigModel;
   baseURL: any;
   isBrandName: string;
+
+  // to apply filter with date and text search
+  dateField: string;
+  dateFilter: string;
+  originalData: any[];
+  filteredDataAfterDate: any[];
   tableLoader: boolean;
 
   ngAfterViewInit() {
@@ -164,8 +170,31 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     if( (!changes['pluginConfigObs'].firstChange) && this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader){
       this.getAppointments();
     }
+    const prev = changes['pluginConfigObs'].previousValue;
+    const curr = changes['pluginConfigObs'].currentValue;
+    const prevType = prev?.filter?.filterType;
+    const currType = curr?.filter?.filterType;
+    if ( prevType !== currType) {
+      console.log("tab changed");
+      this.resetDateForm(); // Reset only when type has changed
+    }
   }
-
+  /**
+  * Reset the date for appointments(Today's,upcoming,pending appoinments)  g
+  */
+  resetDateForm() {
+  if (this.filteredDateAndRangeForm) {
+    this.filteredDateAndRangeForm.reset({
+      date: null,
+      startDate: null,
+      endDate: null
+    });
+  }
+    this.mode = 'date'; 
+    this.searchElement.nativeElement.value = "";
+    this.isFilterApplied = false;
+    this.dataSource.filter = null;
+}
   /**
   * Retreive the chief complaints for the visit
   * @param {CustomVisitModel} visit - Visit
@@ -285,12 +314,25 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   * @param {Event} event - Input's change event
   * @return {void}
   */
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.isFilterApplied = true;
-  }
+ applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
 
+  const customPredicate = (data: any, filter: string): boolean => {
+    return (
+      data?.openMrsId?.toLowerCase().includes(filter) ||
+      data?.patientName?.toLowerCase().includes(filter) ||
+      data?.TMH_patient_id?.toLowerCase().includes(filter)
+    );
+  };
+  // Always filter from the full original data
+  this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
+  this.dataSource.data = this.filteredDataAfterDate;
+   this.isFilterApplied = true;
+}
+// Call this once after loading appointments
+storeOriginalData() {
+  this.originalData = [...this.dataSource.data]; // Backup full data
+}
   /**
   * Clear filter from a datasource
   * @return {void}
@@ -299,6 +341,13 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     this.dataSource.filter = null;
     this.searchElement.nativeElement.value = "";
     this.isFilterApplied = false;
+    this.filteredDateAndRangeForm.reset({
+      date: null,
+      startDate: null,
+      endDate: null
+    });
+    this.mode = 'date'; 
+    this.dataSource.data = [...this.originalData];
   }
 
   /**
@@ -397,12 +446,14 @@ export class TableGridComponent implements OnInit, AfterViewInit{
    * @param {string} dateField - The field name for the date to filter
    */
   applyDateOrRangeFilter(dateField: string) {
+    console.log("apply filtre................");
     const selectedDate = this.filteredDateAndRangeForm.get('date')?.value;
     const startDate = this.filteredDateAndRangeForm.get('startDate')?.value;
     const endDate = this.filteredDateAndRangeForm.get('endDate')?.value;
-  
+
     if (selectedDate) {
       const formattedDate = this.formatDate(selectedDate);
+    this.dateFilter = this.formatDate(selectedDate);
 
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         let itemDate;
@@ -416,6 +467,7 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         return itemDate === filter;
       };
       this.dataSource.filter = formattedDate;
+      
     } else if (startDate && endDate) {
       const formattedStartDate = this.formatDate(startDate);
       const formattedEndDate = this.formatDate(endDate);
@@ -433,9 +485,17 @@ export class TableGridComponent implements OnInit, AfterViewInit{
       };
 
       this.dataSource.filter = `${formattedStartDate}:${formattedEndDate}`;
+      this.dateFilter = `${this.formatDate(startDate)}:${this.formatDate(endDate)}`;
+
     } else {
       this.dataSource.filter = '';
+    this.dateFilter = '';
+
     }
+    console.log("this.dataSource.filte inside filter==",this.dataSource);
+     this.dateField = dateField;
+       //this.updateCombinedFilter();
+
     this.tempPaginator.firstPage();
     this.closeMenu();
   }
@@ -519,7 +579,6 @@ export class TableGridComponent implements OnInit, AfterViewInit{
         }
     });
   }
-  
   
   /**
   * Get doctor speciality
