@@ -316,18 +316,22 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   */
  applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-
-  const customPredicate = (data: any, filter: string): boolean => {
-    return (
-      data?.openMrsId?.toLowerCase().includes(filter) ||
-      data?.patientName?.toLowerCase().includes(filter) ||
-      data?.TMH_patient_id?.toLowerCase().includes(filter)
-    );
-  };
-  // Always filter from the full original data
-  this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
-  this.dataSource.data = this.filteredDataAfterDate;
-   this.isFilterApplied = true;
+  if(this.pluginConfigObs?.pluginConfigObsFlag === "Appointment"){
+    const customPredicate = (data: any, filter: string): boolean => {
+      return (
+        data?.openMrsId?.toLowerCase().includes(filter) ||
+        data?.patientName?.toLowerCase().includes(filter) ||
+        data?.TMH_patient_id?.toLowerCase().includes(filter)
+      );
+    };
+    // Always filter from the full original data
+    this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
+    this.dataSource.data = this.filteredDataAfterDate;
+  }
+  else {
+    this.dataSource.filter = filterValue;
+  }
+  this.isFilterApplied = true;
 }
 // Call this once after loading appointments
 storeOriginalData() {
@@ -573,6 +577,7 @@ storeOriginalData() {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.tableMatSort;
           this.dataSource.filterPredicate = (data, filter: string) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1;
+          this.storeOriginalData();
         },
         complete: () => {
           this.ngxLoader.stopLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag); // Stop section loader
