@@ -11,7 +11,7 @@
     "build": "npm run config-prod && ng build --configuration production --aot",
     "test": "ng test --include src/app/admin/admin-actions/webrtc",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "ng e2e",  
     "prepare": "husky install",
     "build-library": "ng build ih-library --watch",
     "build-library-no-watch": "ng build ih-library"
