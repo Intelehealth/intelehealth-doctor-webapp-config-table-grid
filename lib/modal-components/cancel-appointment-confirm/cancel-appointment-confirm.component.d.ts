@@ -2,6 +2,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { AppointmentService } from '../../services/appointment.service';
+import { MindmapService } from '../../services/mindmap.service';
 import * as i0 from "@angular/core";
 export declare class CancelAppointmentConfirmComponent {
     data: any;
@@ -9,7 +10,8 @@ export declare class CancelAppointmentConfirmComponent {
     private appointmentService;
     private toastr;
     private translateService;
-    constructor(data: any, dialogRef: MatDialogRef<CancelAppointmentConfirmComponent>, appointmentService: AppointmentService, toastr: ToastrService, translateService: TranslateService);
+    private mindmapService;
+    constructor(data: any, dialogRef: MatDialogRef<CancelAppointmentConfirmComponent>, appointmentService: AppointmentService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService);
     /**
     * Cancel appointment
     * @return {void}
