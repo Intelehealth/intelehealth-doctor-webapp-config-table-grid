@@ -109,14 +109,23 @@
         </ng-template>
 
         <td mat-cell *matCellDef="let element; let j = index;" [attr.data-test-id]="'td' + j">
-          <ng-container *ngIf="column.key !== 'patient_name'">
-            <div class="float-left" 
-                [innerHTML]="renderHtmlContent(column, element)" 
-                [ngClass]="getClasses(column, element)">
-            </div>
-          </ng-container>
+        <ng-container *ngIf="column.key !== 'patient_name' && column.key !== 'visit_completed'">
+          <div class="float-left"
+              [innerHTML]="renderHtmlContent(column, element)"
+              [ngClass]="getClasses(column, element)">
+          </div>
+        </ng-container>
 
-          <!-- Patient Name Column -->
+      <ng-container *ngIf="column.key === 'visit_completed'">
+        <div class="d-flex align-items-center visit-completed-cell">
+          <img src="assets/svgs/green-pad.svg" alt="Completed" class="mr-2" />
+          <span class="text-success">
+          {{ element.completed }}
+        </span>
+        </div>
+      </ng-container>
+
+              <!-- Patient Name Column -->
           <ng-container *ngIf="column.key === 'patient_name'">
             <div class="d-flex align-items-center">
               <img *ngIf="element.patientId" src="{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.patientId : '' }}" alt="" width="32px" height="32px" style="border-radius: 50%;">
