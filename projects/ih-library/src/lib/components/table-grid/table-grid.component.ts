@@ -26,7 +26,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
   styleUrls: ['./table-grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableGridComponent implements OnInit, AfterViewInit{
+export class TableGridComponent implements OnInit, AfterViewInit {
   
   @Input() pluginConfigObs: any;
   displayedAppointmentColumns: any = [];
