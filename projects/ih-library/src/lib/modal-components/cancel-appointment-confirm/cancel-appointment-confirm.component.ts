@@ -19,7 +19,7 @@ export class CancelAppointmentConfirmComponent {
     private appointmentService: AppointmentService,
     private toastr: ToastrService, 
     private translateService: TranslateService,
-     private mindmapService: MindmapService
+    private mindmapService: MindmapService
   ) { }
 
   /**

@@ -8,7 +8,7 @@ import moment from 'moment';
 import { CoreService } from '../../services/core.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { getCacheData, checkIfDateOldThanOneDay } from '../../utils/utility-functions';
+import { getCacheData, checkIfDateOldThanOneDay, isFeaturePresent } from '../../utils/utility-functions';
 import { doctorDetails, languages, visitTypes } from '../../config/constant';
 import { MindmapService } from '../../services/mindmap.service';
 import { AppConfigService } from '../../services/app-config.service';
@@ -87,8 +87,8 @@ export class TableGridComponent implements OnInit, AfterViewInit{
     private rolesService: NgxRolesService,
     private ngxLoader: NgxUiLoaderService,
     @Inject('environment') environment
-  ) {
-    this.tableLoader = environment.tableLoader;
+  ) { 
+    this.tableLoader = isFeaturePresent(environment.featureList, 'tableLoader');
     this.baseURL = environment.baseURL;
     this.filteredDateAndRangeForm = this.createFilteredDateRangeForm();
   }
@@ -179,22 +179,24 @@ export class TableGridComponent implements OnInit, AfterViewInit{
       this.resetDateForm(); // Reset only when type has changed
     }
   }
+
   /**
   * Reset the date for appointments(Today's,upcoming,pending appoinments)  g
   */
   resetDateForm() {
-  if (this.filteredDateAndRangeForm) {
-    this.filteredDateAndRangeForm.reset({
-      date: null,
-      startDate: null,
-      endDate: null
-    });
-  }
+    if (this.filteredDateAndRangeForm) {
+      this.filteredDateAndRangeForm.reset({
+        date: null,
+        startDate: null,
+        endDate: null
+      });
+    }
     this.mode = 'date'; 
     this.searchElement.nativeElement.value = "";
     this.isFilterApplied = false;
     this.dataSource.filter = null;
-}
+  }
+
   /**
   * Retreive the chief complaints for the visit
   * @param {CustomVisitModel} visit - Visit
@@ -314,29 +316,30 @@ export class TableGridComponent implements OnInit, AfterViewInit{
   * @param {Event} event - Input's change event
   * @return {void}
   */
- applyFilter(event: Event) {
-  const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-  if(this.pluginConfigObs?.pluginConfigObsFlag === "Appointment"){
-    const customPredicate = (data: any, filter: string): boolean => {
-      return (
-        data?.openMrsId?.toLowerCase().includes(filter) ||
-        data?.patientName?.toLowerCase().includes(filter) ||
-        data?.TMH_patient_id?.toLowerCase().includes(filter)
-      );
-    };
-    // Always filter from the full original data
-    this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
-    this.dataSource.data = this.filteredDataAfterDate;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    if(this.pluginConfigObs?.pluginConfigObsFlag === "Appointment"){
+      const customPredicate = (data: any, filter: string): boolean => {
+        return (
+          data?.openMrsId?.toLowerCase().includes(filter) ||
+          data?.patientName?.toLowerCase().includes(filter) ||
+          data?.TMH_patient_id?.toLowerCase().includes(filter)
+        );
+      };
+      // Always filter from the full original data
+      this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
+      this.dataSource.data = this.filteredDataAfterDate;
+    }
+    else {
+      this.dataSource.filter = filterValue;
+    }
+    this.isFilterApplied = true;
   }
-  else {
-    this.dataSource.filter = filterValue;
+
+  // Call this once after loading appointments
+  storeOriginalData() {
+    this.originalData = [...this.dataSource.data]; // Backup full data
   }
-  this.isFilterApplied = true;
-}
-// Call this once after loading appointments
-storeOriginalData() {
-  this.originalData = [...this.dataSource.data]; // Backup full data
-}
   /**
   * Clear filter from a datasource
   * @return {void}
@@ -450,14 +453,13 @@ storeOriginalData() {
    * @param {string} dateField - The field name for the date to filter
    */
   applyDateOrRangeFilter(dateField: string) {
-    console.log("apply filtre................");
     const selectedDate = this.filteredDateAndRangeForm.get('date')?.value;
     const startDate = this.filteredDateAndRangeForm.get('startDate')?.value;
     const endDate = this.filteredDateAndRangeForm.get('endDate')?.value;
 
     if (selectedDate) {
       const formattedDate = this.formatDate(selectedDate);
-    this.dateFilter = this.formatDate(selectedDate);
+      this.dateFilter = this.formatDate(selectedDate);
 
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         let itemDate;
@@ -471,7 +473,6 @@ storeOriginalData() {
         return itemDate === filter;
       };
       this.dataSource.filter = formattedDate;
-      
     } else if (startDate && endDate) {
       const formattedStartDate = this.formatDate(startDate);
       const formattedEndDate = this.formatDate(endDate);
@@ -490,16 +491,12 @@ storeOriginalData() {
 
       this.dataSource.filter = `${formattedStartDate}:${formattedEndDate}`;
       this.dateFilter = `${this.formatDate(startDate)}:${this.formatDate(endDate)}`;
-
     } else {
       this.dataSource.filter = '';
-    this.dateFilter = '';
-
+      this.dateFilter = '';
     }
-    console.log("this.dataSource.filte inside filter==",this.dataSource);
-     this.dateField = dateField;
-       //this.updateCombinedFilter();
-
+    this.dateField = dateField;
+    //this.updateCombinedFilter();
     this.tempPaginator.firstPage();
     this.closeMenu();
   }
@@ -921,9 +918,9 @@ storeOriginalData() {
    * Renders HTML content for a column, sanitized for security
    * @param {any} column - Column definition
    * @param {any} element - Data element to render
-   * @return {string} - Formatted HTML or element value
+   * @return {SafeHtml | string} - Formatted HTML or element value
    */
-  renderHtmlContent(column: any, element: any): string {
+  renderHtmlContent(column: any, element: any): import('@angular/platform-browser').SafeHtml | string {
     return column.formatHtml && typeof column.formatHtml === 'function' ? this.sanitizer.bypassSecurityTrustHtml(column.formatHtml(element)) : element[column.key];
   }
     
