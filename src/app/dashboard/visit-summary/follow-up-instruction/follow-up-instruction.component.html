@@ -1,29 +1,31 @@
-<mat-expansion-panel [expanded]="true" #panel3 hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="intel-accordion-title">
-          <img src="assets/svgs/note.svg" alt="" width="44px" />
-          <h6 class="mb-0 ml-2">{{title|translate}}</h6>
-        </div>
-      </mat-panel-title>
-      <mat-icon>{{ panel3.expanded ? "remove" : "add" }}</mat-icon>
-    </mat-expansion-panel-header>
-    <form
-      *ngIf="!isMCCUser"
-      class="mt-3"
-      [formGroup]="addInstructionForm"
-      (ngSubmit)="addInstructions()"
-    >
-      <div class="form-group">
-        <textarea
-          class="form-control"
-          rows="3"
-          placeholder="{{'Type here'|translate}}"
-          formControlName="instructions"
-          data-test-id="etNote"
-          (keyup)="autoGrowTextZone($event)"
-          [attr.disabled]="(isMCCUser || !isVisitNoteProvider || visitEnded)? 'disabled' : null"
-        ></textarea>
+<mat-expansion-panel [expanded]="true" #panel3 hideToggle data-test-id="expPanelInstructions">
+  <mat-expansion-panel-header data-test-id="expPanelHeaderInstructions">
+    <mat-panel-title data-test-id="expPanelTitleInstructions">
+      <div class="intel-accordion-title" data-test-id="accordionTitleInstructions">
+        <img src="assets/svgs/note.svg" alt="" width="44px" data-test-id="icnInstructionNote" />
+        <h6 class="mb-0 ml-2" data-test-id="lblInstructionTitle">{{title|translate}}</h6>
       </div>
-    </form>
-  </mat-expansion-panel>
+    </mat-panel-title>
+    <mat-icon data-test-id="icnExpandCollapseInstruction">{{ panel3.expanded ? "remove" : "add" }}</mat-icon>
+  </mat-expansion-panel-header>
+
+  <form
+    *ngIf="!isMCCUser"
+    class="mt-3"
+    [formGroup]="addInstructionForm"
+    (ngSubmit)="addInstructions()"
+    data-test-id="formAddInstruction"
+  >
+    <div class="form-group" data-test-id="grpInstructionTextarea">
+      <textarea
+        class="form-control"
+        rows="3"
+        placeholder="{{'Type here'|translate}}"
+        formControlName="instructions"
+        data-test-id="etInstruction"
+        (keyup)="autoGrowTextZone($event)"
+        [attr.disabled]="(isMCCUser || !isVisitNoteProvider || visitEnded)? 'disabled' : null"
+      ></textarea>
+    </div>
+  </form>
+</mat-expansion-panel>
