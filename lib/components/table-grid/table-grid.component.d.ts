@@ -262,9 +262,9 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      * Renders HTML content for a column, sanitized for security
      * @param {any} column - Column definition
      * @param {any} element - Data element to render
-     * @return {string} - Formatted HTML or element value
+     * @return {SafeHtml | string} - Formatted HTML or element value
      */
-    renderHtmlContent(column: any, element: any): string;
+    renderHtmlContent(column: any, element: any): import('@angular/platform-browser').SafeHtml | string;
     /**
      * Returns a string of CSS classes for the column
      * @param {any} column - Column definition
