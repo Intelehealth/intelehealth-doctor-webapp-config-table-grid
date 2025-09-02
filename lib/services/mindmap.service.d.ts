@@ -62,9 +62,9 @@ export declare class MindmapService {
     */
     notifyHwForRescheduleAppointment(appointment: any): void;
     /**
-    * Send cancel notification to health worker
-    * @returns {void}
-    */
+   * Send cancel notification to health worker
+   * @returns {void}
+   */
     notifyHwForCancelAppointment(appointment: any): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<MindmapService, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<MindmapService>;
