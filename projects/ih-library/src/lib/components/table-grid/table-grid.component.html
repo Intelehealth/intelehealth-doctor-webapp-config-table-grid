@@ -4,7 +4,7 @@
       <div id="{{pluginConfigObs.anchorId}}" class="anchor-con" data-test-id="divAnchorAppointment"></div>
       <div class="intel-accordion-title" data-test-id="divAccordionTitleAppointment">
         <img src="{{ pluginConfigObs.tableHeaderIcon }}" alt="" width="44px" data-test-id="imgTableHeaderIconAppointment">
-        <h6 class="mb-0 ml-2" data-test-id="pluginConfigObs.tableHeader">
+        <h6 class="mb-0 ml-2" data-test-id="{{pluginConfigObs.tableHeader}}">
           {{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})
         </h6>
         <mat-icon 
