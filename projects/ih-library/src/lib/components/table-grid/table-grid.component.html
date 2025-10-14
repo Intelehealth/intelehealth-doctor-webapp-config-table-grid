@@ -5,7 +5,7 @@
       <div class="intel-accordion-title" data-test-id="divAccordionTitleAppointment">
         <img src="{{ pluginConfigObs.tableHeaderIcon }}" alt="" width="44px" data-test-id="imgTableHeaderIconAppointment">
         <h6 class="mb-0 ml-2" [attr.data-test-id]="pluginConfigObs.tableHeader"> 
-          {{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})
+          {{ pluginConfigObs.tableHeader - shaheen | translate }} ({{ visitsLengthCount }})
         </h6>
         <mat-icon 
           aria-hidden="false" 
@@ -181,12 +181,12 @@
 
       <ng-container *ngFor="let column of displayedAppointmentColumns" [matColumnDef]="column.key">
         <ng-container *ngIf="column.isSortable; else noSort">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header matSortDirection="asc" [attr.data-test-id]="'th-' + column.key">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header matSortDirection="asc" [attr.data-test-id]="'th-' + column.key + '-' + pluginConfigObs.pluginConfigObsFlag">
             {{ column.label | translate }}
           </th>
         </ng-container>
         <ng-template #noSort>
-          <th mat-header-cell *matHeaderCellDef  [attr.data-test-id]="'th-' + column.key">
+          <th mat-header-cell *matHeaderCellDef  [attr.data-test-id]="'th-' + column.key+ '-' + pluginConfigObs.pluginConfigObsFlag">
             {{ column.label | translate }}
           </th>
         </ng-template>
