@@ -46,9 +46,7 @@
                     <img src="{{ checkPatientRegField('Profile Photo') ? baseUrl + '/personimage/' + element.person.uuid : '' }}"
                       alt="" width="32px" height="32px" style="border-radius: 50%;" data-test-id="imgCompPatient{{j}}">
                     <span class="font-bold ml-2" data-test-id="lblCompPatientName{{j}}">
-                      {{element.patient_name.given_name}}
-                      {{checkPatientRegField('Middle Name') && element.patient_name?.middle_name ? element.patient_name?.middle_name+" " : ""}}
-                      {{element.patient_name.family_name}} ({{(element.person.gender) | translate}})
+                      {{getPatientFullName(element)}} ({{(element.person.gender) | translate}})
                     </span>
                   </div>
                 </td>
@@ -118,14 +116,11 @@
               <tr mat-row *matRowDef="let row; let x=index; columns: displayedColumns;" [attr.data-test-id]="'comp'+x"
                 [routerLink]="['/dashboard/visit-summary', row?.uuid]"></tr>
             </table>
-
-            <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]="[5, 10, 20]"
-              aria-label="Select page of periodic elements" data-test-id="matPaginatorCompTemp"></mat-paginator>
-            <!-- <mat-paginator #completedPaginator hidePageSize [pageSizeOptions]="[5, 10, 20]"
+             <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]="[5, 10, 20]"
             [length]="completedVisitsCount" [pageIndex]="pageIndex" [pageSize]="pageSize"
             (page)="pageEvent = getData($event)" aria-label="Select page of periodic elements"
-            data-test-id="matPaginatorCompleted">
-            </mat-paginator> -->
+            data-test-id="matPaginatorCompTemp">
+            </mat-paginator>
           </div>
 
         </mat-expansion-panel>

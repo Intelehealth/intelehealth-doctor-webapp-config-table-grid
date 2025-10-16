@@ -3,6 +3,12 @@
     width: 100%;
     overflow-x: auto;
   }
+
+  .table-container {
+    max-height: 440px; /* 5 rows * 88px (row height) = 440px */
+    overflow-y: auto;
+    overflow-x: auto;
+  }
   
   table {
     width: 100%;

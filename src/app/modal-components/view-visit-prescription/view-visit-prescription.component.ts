@@ -11,7 +11,7 @@ import { Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { conceptIds, doctorDetails, visitTypes } from 'src/config/constant';
 import { DiagnosisModel, DiagnosticName, DiagnosticUnit, EncounterModel, EncounterProviderModel, FollowUpDataModel, MedicineModel, ObsApiResponseModel, ObsModel, PatientHistoryModel, PatientIdentifierModel, PatientModel, PatientRegistrationFieldsModel, PatientVisitSection, PersonAttributeModel, ProviderAttributeModel, ReferralModel, TestModel, VisitAttributeModel, VisitModel, VitalModel } from 'src/app/model/model';
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+// (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 import { precription } from "../../utils/base64"
 import { AppConfigService } from 'src/app/services/app-config.service';
 import { calculateBMI, getFieldValueByLanguage, isFeaturePresent, obsParse } from 'src/app/utils/utility-functions';

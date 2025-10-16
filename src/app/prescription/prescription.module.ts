@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PrescriptionRoutingModule } from './prescription-routing.module';
@@ -51,6 +51,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: MatPaginationIntlService },
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class PrescriptionModule { }
