@@ -1,6 +1,5 @@
 import { ElementRef, OnInit, SimpleChanges, EventEmitter, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { AppointmentModel, CustomEncounterModel, CustomObsModel, CustomVisitModel, ProviderAttributeModel, PatientVisitSummaryConfigModel } from '../../model/model';
 import { AppointmentService } from '../../services/appointment.service';
 import { VisitService } from '../../services/visit.service';
@@ -13,7 +12,7 @@ import { FormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxRolesService } from 'ngx-permissions';
-import { MatSort } from '@angular/material/sort';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import * as i0 from "@angular/core";
 export declare class TableGridComponent implements OnInit, AfterViewInit {
     private appointmentService;
@@ -25,19 +24,31 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     private sanitizer;
     private appConfigService;
     private rolesService;
+    private ngxLoader;
+    private static readonly DEFAULT_PAGE_SIZE_OPTIONS;
+    private static readonly APPOINTMENT_PAGE_SIZE;
+    private static readonly SPECIALIZATION_UUID;
+    private static readonly TELEPHONE_ATTRIBUTE_ID;
+    private static readonly FOLLOW_UP_CONCEPT_ID;
+    private static readonly CHIEF_COMPLAINT_CONCEPT_ID;
     pluginConfigObs: any;
     displayedAppointmentColumns: any;
     displayedColumns: string[];
-    dataSource: MatTableDataSource<any>;
+    dataSource: any[];
+    filteredDataSource: any[];
+    paginatedDataSource: any[];
     patientRegFields: string[];
     isMCCUser: boolean;
     pageSizeOptions: number[];
-    paginator: MatPaginator;
+    componentId: string;
     searchElement: ElementRef;
     filteredDateAndRangeForm: FormGroup;
     tempPaginator: MatPaginator;
     menuTrigger: MatMenuTrigger;
-    tableMatSort: MatSort;
+    datePicker: any;
+    startDatePicker: any;
+    endDatePicker: any;
+    filterMenu: any;
     panelExpanded: boolean;
     mode: 'date' | 'range';
     maxDate: Date;
@@ -49,7 +60,11 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     followUpVisits: CustomVisitModel[];
     specialization: string;
     visitsCountDate: EventEmitter<any>;
-    visitsLengthCount: number;
+    pageIndex: number;
+    pageSize: number;
+    pageEvent: PageEvent;
+    recordsFetched: number;
+    totalRecords: number;
     isFilterApplied: boolean;
     pvs: PatientVisitSummaryConfigModel;
     baseURL: any;
@@ -58,13 +73,65 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     dateFilter: string;
     originalData: any[];
     filteredDataAfterDate: any[];
+    tableLoader: boolean;
+    currentPage: number;
+    itemsPerPage: number;
+    searchTerm: string;
+    currentDateFilter: any;
+    filteredTotalCount: number;
+    isFilterActive: boolean;
+    paginationDisabled: boolean;
     ngAfterViewInit(): void;
-    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, environment: any);
+    constructor(appointmentService: AppointmentService, visitService: VisitService, coreService: CoreService, toastr: ToastrService, translateService: TranslateService, mindmapService: MindmapService, sanitizer: DomSanitizer, appConfigService: AppConfigService, rolesService: NgxRolesService, ngxLoader: NgxUiLoaderService, environment: any);
     /**
      * Creates a filtered date range form with required date fields
      * @return {FormGroup} - The created form group
      */
     createFilteredDateRangeForm(): FormGroup;
+    /**
+     * Initialize component-specific state to prevent conflicts between multiple instances
+     */
+    private initializeComponentState;
+    /**
+     * Apply custom pagination to the filtered data
+     */
+    private applyPagination;
+    /**
+     * Calculate pagination indices
+     */
+    private getPaginationIndices;
+    /**
+     * Restore current page data from original data
+     */
+    private restoreCurrentPageData;
+    /**
+     * Apply search filter to the current page data only
+     */
+    private applySearchFilter;
+    /**
+     * Get formatted date for an item based on the date field
+     */
+    private getItemDate;
+    /**
+     * Check if item matches search term
+     */
+    private matchesSearchTerm;
+    /**
+     * Apply multiple filters efficiently
+     */
+    private applyFilters;
+    /**
+     * Update paginator length based on filter state
+     */
+    private updatePaginatorLength;
+    /**
+     * Check if pagination should be disabled
+     */
+    isPaginationDisabled(): boolean;
+    /**
+     * Get the current total count (filtered or original)
+     */
+    getCurrentTotalCount(): number;
     ngOnInit(): void;
     /**
      * Dynmaic label Display
@@ -112,9 +179,9 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     * @return {void}
     */
     applyFilter(event: Event): void;
-    storeOriginalData(): void;
+    storeOriginalData(originalData?: any[]): void;
     /**
-    * Clear filter from a datasource
+    * Clear filter from current page data
     * @return {void}
     */
     clearFilter(): void;
@@ -259,9 +326,9 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      * Renders HTML content for a column, sanitized for security
      * @param {any} column - Column definition
      * @param {any} element - Data element to render
-     * @return {string} - Formatted HTML or element value
+     * @return {SafeHtml | string} - Formatted HTML or element value
      */
-    renderHtmlContent(column: any, element: any): string;
+    renderHtmlContent(column: any, element: any): import('@angular/platform-browser').SafeHtml | string;
     /**
      * Returns a string of CSS classes for the column
      * @param {any} column - Column definition
@@ -291,6 +358,49 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      * @param {number} visitsCount - The total visits count for the specific table
      */
     emitVisitsCount(visitsCount: number): void;
+    getData(event?: PageEvent): PageEvent;
+    /**
+     * Fetch more data from API based on current plugin type
+     */
+    private fetchMoreData;
+    /**
+     * Handle client-side pagination for already loaded data
+     */
+    private handleClientSidePagination;
+    /**
+     * Handle sorting for current page data only
+     * @param {string} column - Column to sort by
+     * @param {string} direction - Sort direction ('asc' or 'desc')
+     */
+    handleSort(column: string, direction: string): void;
+    /**
+     * Get sort value for an item based on column
+     */
+    private getSortValue;
+    /**
+     * Process visit data with common fields
+     */
+    private processVisitData;
+    /**
+     * Generic data loading method
+     */
+    private loadVisitData;
+    /**
+     * Update all data sources with new data
+     */
+    private updateDataSources;
+    /**
+     * Custom sorting for in-progress visits by prescription time
+     */
+    private sortInProgressVisits;
+    /**
+     * Process follow-up visit data with special handling
+     */
+    private processFollowUpVisitData;
+    /**
+     * Scroll to top of the table container
+     */
+    private scrollToTop;
     static ɵfac: i0.ɵɵFactoryDeclaration<TableGridComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<TableGridComponent, "lib-table-grid", never, { "pluginConfigObs": "pluginConfigObs"; }, { "visitsCountDate": "visitsCountDate"; }, never, never, false>;
 }

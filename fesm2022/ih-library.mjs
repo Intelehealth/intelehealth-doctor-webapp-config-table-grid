@@ -2,41 +2,41 @@ import * as i0 from '@angular/core';
 import { Injectable, Inject, Component, Directive, Input, EventEmitter, ChangeDetectionStrategy, ViewChild, Output, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import * as i4 from '@ngx-translate/core';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import * as i12 from '@angular/material/paginator';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import * as i17 from '@angular/material/table';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import * as i13 from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import * as i1 from '@angular/common/http';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import moment from 'moment';
 import * as i1$1 from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import * as i11 from '@angular/common';
+import * as i12 from '@angular/common';
 import { DecimalPipe, formatDate, CommonModule, registerLocaleData } from '@angular/common';
 import * as i3 from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import * as i5 from '@angular/material/form-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import * as i20 from '@angular/forms';
+import * as i21 from '@angular/forms';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as i8 from '@angular/material/datepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import * as i16 from '@angular/material/menu';
+import * as i17 from '@angular/material/menu';
 import { MatMenuTrigger, MatMenuModule } from '@angular/material/menu';
 import * as i7 from '@angular/platform-browser';
 import * as i9 from 'ngx-permissions';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import * as i21 from '@angular/material/sort';
-import { MatSortModule } from '@angular/material/sort';
-import * as i10 from '@angular/router';
+import * as i10 from 'ngx-ui-loader';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import * as i11 from '@angular/router';
 import { RouterModule } from '@angular/router';
-import * as i13 from '@angular/material/tooltip';
+import * as i14 from '@angular/material/tooltip';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import * as i15 from '@angular/material/expansion';
+import * as i16 from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
-import * as i18 from '@angular/material/icon';
+import * as i18 from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import * as i19 from '@angular/material/icon';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import localeRu from '@angular/common/locales/ru';
@@ -51,6 +51,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatSortModule } from '@angular/material/sort';
 
 class IhLibraryService {
     constructor() { }
@@ -470,11 +471,11 @@ class RescheduleAppointmentConfirmComponent {
         this.dialogRef.close(val);
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: RescheduleAppointmentConfirmComponent, deps: [{ token: MAT_DIALOG_DATA }, { token: i1$1.MatDialogRef }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: RescheduleAppointmentConfirmComponent, selector: "app-reschedule-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/appointment.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Reschedule the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to reschedule appointment?'|translate }} </p>\r\n    <div class=\"slot-con d-flex justify-content-center align-items-center py-3\">\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.appointment?.slotJsDate|date:'dd MMMM'}}</b>\r\n        <b>{{data?.appointment?.slotTime}}</b>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <span class=\"text-muted\">to</span>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.newSlot?.date|date:'dd MMMM'}}</b>\r\n        <b>{{data?.newSlot?.slot}}</b>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnCancel\">{{'Go Back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"close(true)\" data-test-id=\"btnSubmit\">{{'Confirm'|translate}}</button>\r\n  </div>\r\n</div>\r\n", styles: [".slot-con{font-size:18px;line-height:150%;color:var(--color-darkestBlue)}\n"], dependencies: [{ kind: "pipe", type: i11.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: RescheduleAppointmentConfirmComponent, selector: "app-reschedule-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\" data-test-id=\"rescheduleConfirmModal\">\r\n  <!-- Close Button -->\r\n  <div class=\"close-btn-con\" data-test-id=\"rescheduleConfirmCloseContainer\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnCloseRescheduleConfirm\">\r\n      <img src=\"assets/svgs/CloseX.svg\" alt=\"close icon\" data-test-id=\"rescheduleConfirmCloseIcon\">\r\n    </button>\r\n  </div>\r\n\r\n  <!-- Modal Content -->\r\n  <div class=\"modal-con mt-4\" data-test-id=\"rescheduleConfirmContent\">\r\n    <img src=\"assets/svgs/appointment.svg\" alt=\"appointment icon\" width=\"80px\" height=\"80px\" data-test-id=\"rescheduleConfirmIcon\">\r\n    <h6 class=\"mt-3\" data-test-id=\"rescheduleConfirmTitle\">{{'Reschedule the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\" data-test-id=\"rescheduleConfirmMessage\">\r\n      {{'Are you sure you want to reschedule appointment?'|translate }}\r\n    </p>\r\n\r\n    <!-- Slot Comparison -->\r\n    <div class=\"slot-con d-flex justify-content-center align-items-center py-3\" data-test-id=\"rescheduleConfirmSlotContainer\">\r\n      <!-- Old Slot -->\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\" data-test-id=\"rescheduleOldSlot\">\r\n        <b data-test-id=\"rescheduleOldSlotDate\">{{data?.appointment?.slotJsDate|date:'dd MMMM'}}</b>\r\n        <b data-test-id=\"rescheduleOldSlotTime\">{{data?.appointment?.slotTime}}</b>\r\n      </div>\r\n      <!-- To Label -->\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\" data-test-id=\"rescheduleToLabel\">\r\n        <span class=\"text-muted\">to</span>\r\n      </div>\r\n      <!-- New Slot -->\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\" data-test-id=\"rescheduleNewSlot\">\r\n        <b data-test-id=\"rescheduleNewSlotDate\">{{data?.newSlot?.date|date:'dd MMMM'}}</b>\r\n        <b data-test-id=\"rescheduleNewSlotTime\">{{data?.newSlot?.slot}}</b>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Action Buttons -->\r\n  <div class=\"modal-action-btn-con\" data-test-id=\"rescheduleConfirmActionContainer\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnCancelRescheduleConfirm\">\r\n      {{'Go Back'|translate}}\r\n    </button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"close(true)\" data-test-id=\"btnSubmitRescheduleConfirm\">\r\n      {{'Confirm'|translate}}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".slot-con{font-size:18px;line-height:150%;color:var(--color-darkestBlue)}\n"], dependencies: [{ kind: "pipe", type: i12.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: RescheduleAppointmentConfirmComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'app-reschedule-appointment-confirm', template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/appointment.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Reschedule the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to reschedule appointment?'|translate }} </p>\r\n    <div class=\"slot-con d-flex justify-content-center align-items-center py-3\">\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.appointment?.slotJsDate|date:'dd MMMM'}}</b>\r\n        <b>{{data?.appointment?.slotTime}}</b>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <span class=\"text-muted\">to</span>\r\n      </div>\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\">\r\n        <b>{{data?.newSlot?.date|date:'dd MMMM'}}</b>\r\n        <b>{{data?.newSlot?.slot}}</b>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnCancel\">{{'Go Back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"close(true)\" data-test-id=\"btnSubmit\">{{'Confirm'|translate}}</button>\r\n  </div>\r\n</div>\r\n", styles: [".slot-con{font-size:18px;line-height:150%;color:var(--color-darkestBlue)}\n"] }]
+            args: [{ selector: 'app-reschedule-appointment-confirm', template: "<div class=\"intel-con-modal\" data-test-id=\"rescheduleConfirmModal\">\r\n  <!-- Close Button -->\r\n  <div class=\"close-btn-con\" data-test-id=\"rescheduleConfirmCloseContainer\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnCloseRescheduleConfirm\">\r\n      <img src=\"assets/svgs/CloseX.svg\" alt=\"close icon\" data-test-id=\"rescheduleConfirmCloseIcon\">\r\n    </button>\r\n  </div>\r\n\r\n  <!-- Modal Content -->\r\n  <div class=\"modal-con mt-4\" data-test-id=\"rescheduleConfirmContent\">\r\n    <img src=\"assets/svgs/appointment.svg\" alt=\"appointment icon\" width=\"80px\" height=\"80px\" data-test-id=\"rescheduleConfirmIcon\">\r\n    <h6 class=\"mt-3\" data-test-id=\"rescheduleConfirmTitle\">{{'Reschedule the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\" data-test-id=\"rescheduleConfirmMessage\">\r\n      {{'Are you sure you want to reschedule appointment?'|translate }}\r\n    </p>\r\n\r\n    <!-- Slot Comparison -->\r\n    <div class=\"slot-con d-flex justify-content-center align-items-center py-3\" data-test-id=\"rescheduleConfirmSlotContainer\">\r\n      <!-- Old Slot -->\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\" data-test-id=\"rescheduleOldSlot\">\r\n        <b data-test-id=\"rescheduleOldSlotDate\">{{data?.appointment?.slotJsDate|date:'dd MMMM'}}</b>\r\n        <b data-test-id=\"rescheduleOldSlotTime\">{{data?.appointment?.slotTime}}</b>\r\n      </div>\r\n      <!-- To Label -->\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\" data-test-id=\"rescheduleToLabel\">\r\n        <span class=\"text-muted\">to</span>\r\n      </div>\r\n      <!-- New Slot -->\r\n      <div class=\"d-flex flex-column align-items-center justify-content-center px-2\" data-test-id=\"rescheduleNewSlot\">\r\n        <b data-test-id=\"rescheduleNewSlotDate\">{{data?.newSlot?.date|date:'dd MMMM'}}</b>\r\n        <b data-test-id=\"rescheduleNewSlotTime\">{{data?.newSlot?.slot}}</b>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Action Buttons -->\r\n  <div class=\"modal-action-btn-con\" data-test-id=\"rescheduleConfirmActionContainer\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnCancelRescheduleConfirm\">\r\n      {{'Go Back'|translate}}\r\n    </button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"close(true)\" data-test-id=\"btnSubmitRescheduleConfirm\">\r\n      {{'Confirm'|translate}}\r\n    </button>\r\n  </div>\r\n</div>\r\n", styles: [".slot-con{font-size:18px;line-height:150%;color:var(--color-darkestBlue)}\n"] }]
         }], ctorParameters: function () { return [{ type: undefined, decorators: [{
                     type: Inject,
                     args: [MAT_DIALOG_DATA]
@@ -854,18 +855,156 @@ function getCallDuration(given_seconds) {
         seconds.toString().padStart(2, '0');
 }
 
+class MindmapService {
+    http;
+    mindmapURL;
+    constructor(http, environment) {
+        this.http = http;
+        this.mindmapURL = environment.mindmapURL;
+    }
+    /**
+    * Get mindmap keys
+    * @return {Observable<any>}
+    */
+    getMindmapKey() {
+        const url = `${this.mindmapURL}/mindmap`;
+        return this.http.get(url);
+    }
+    /**
+    * Post mindmap
+    * @param {any} value - Payload for post mindmap
+    * @return {Observable<any>}
+    */
+    postMindmap(value) {
+        const url = `${this.mindmapURL}/mindmap/upload`;
+        return this.http.post(url, value);
+    }
+    /**
+    * Get mindmap details from key
+    * @param {string} key - Mindmap key
+    * @return {Observable<any>}
+    */
+    detailsMindmap(key) {
+        const url = `${this.mindmapURL}/mindmap/details/${key}`;
+        return this.http.get(url);
+    }
+    /**
+    * Add/update mindmap license key
+    * @param {any} payload - Payload for mindmap key to add/update
+    * @return {Observable<any>}
+    */
+    addUpdateLicenseKey(payload) {
+        const url = `${this.mindmapURL}/mindmap/addUpdatekey`;
+        return this.http.post(url, payload);
+    }
+    /**
+    * Update mindmap key image
+    * @param {string} key - Mindmap key
+    * @param {string} imageName - Image name
+    * @param {string} value - Image base64
+    * @return {Observable<any>}
+    */
+    updateImage(key, imageName, value) {
+        const url = `${this.mindmapURL}/mindmap/${key}/${imageName}`;
+        return this.http.put(url, value);
+    }
+    /**
+    * Delete mindmap
+    * @param {string} key - Mindmap key
+    * @param {any} data - Mindmap data
+    * @return {Observable<any>}
+    */
+    deleteMindmap(key, data) {
+        const url = `${this.mindmapURL}/mindmap/delete/${key}`;
+        return this.http.post(url, data);
+    }
+    /**
+    * Toggle mindmap status
+    * @param {any} data - Mindmap data
+    * @return {Observable<any>}
+    */
+    toggleMindmapStatus(data) {
+        const url = `${this.mindmapURL}/mindmap/toggleStatus`;
+        return this.http.post(url, data);
+    }
+    /**
+  * Notify App side
+  * @param {any} hwUuid - Healthworker Id
+  * @param {any} payload - Notifaication message
+  * @return {Observable<any>}
+  */
+    notifyApp(hwUuid, payload) {
+        return this.http.post(`${this.mindmapURL}/mindmap/notify-app/${hwUuid}`, payload);
+    }
+    /**
+    * Send notification to health worker for available prescription
+    * @returns {void}
+    */
+    notifyHwForRescheduleAppointment(appointment) {
+        const hwUuid = appointment?.hwUUID;
+        const openMRSID = appointment?.openMrsId;
+        const payload = {
+            title: `Appointment rescheduled for ${appointment?.patientName || 'Patient'}`,
+            body: "Click notification to see!",
+            type: "appointment",
+            data: {
+                patientFirstName: appointment?.patientName ?? '',
+                patientUuid: appointment?.patientId,
+                patientOpenMrsId: openMRSID,
+                visitUuid: appointment?.visitUuid,
+                slotDateTime: appointment?.slotJsDate
+            }
+        };
+        this.notifyApp(hwUuid, payload).subscribe();
+    }
+    /**
+   * Send cancel notification to health worker
+   * @returns {void}
+   */
+    notifyHwForCancelAppointment(appointment) {
+        const hwUuid = appointment?.hwUUID;
+        const openMRSID = appointment?.openMrsId;
+        const payload = {
+            title: `Appointment cancelled for ${appointment?.patientName || 'Patient'}`,
+            body: "Click notification to see!",
+            type: "cancel",
+            data: {
+                patientFirstName: appointment?.patientName ?? '',
+                patientUuid: appointment?.patientId,
+                patientOpenMrsId: openMRSID,
+                visitUuid: appointment?.visitUuid,
+                slotDateTime: appointment?.slotJsDate
+            }
+        };
+        this.notifyApp(hwUuid, payload).subscribe();
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, deps: [{ token: i1.HttpClient }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, providedIn: "root" });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: "root",
+                }]
+        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
+                    type: Inject,
+                    args: ['environment']
+                }] }]; } });
+
 class CancelAppointmentConfirmComponent {
     data;
     dialogRef;
     appointmentService;
     toastr;
     translateService;
-    constructor(data, dialogRef, appointmentService, toastr, translateService) {
+    mindmapService;
+    constructor(data, dialogRef, appointmentService, toastr, translateService, mindmapService) {
         this.data = data;
         this.dialogRef = dialogRef;
         this.appointmentService = appointmentService;
         this.toastr = toastr;
         this.translateService = translateService;
+        this.mindmapService = mindmapService;
     }
     /**
     * Cancel appointment
@@ -880,6 +1019,7 @@ class CancelAppointmentConfirmComponent {
         this.appointmentService.cancelAppointment(payload).subscribe((res) => {
             if (res) {
                 if (res.status) {
+                    this.mindmapService.notifyHwForCancelAppointment(this.data);
                     this.close(true);
                 }
                 else {
@@ -904,16 +1044,16 @@ class CancelAppointmentConfirmComponent {
     close(val) {
         this.dialogRef.close(val);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CancelAppointmentConfirmComponent, deps: [{ token: MAT_DIALOG_DATA }, { token: i1$1.MatDialogRef }, { token: AppointmentService }, { token: i3.ToastrService }, { token: i4.TranslateService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: CancelAppointmentConfirmComponent, selector: "app-cancel-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\" data-test-id=\"btnCloseCancelAppConfirm\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/video-pink.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Cancel the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to cancel your appointment on'|translate}} <b>{{data?.slotJsDate|date:'dd MMMM'}}</b> {{'at'|translate}} <b>{{data?.slotTime}}</b>?</p>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnGoBackCancelAppConfirm\">{{'Go back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"cancel()\" data-test-id=\"btnCancelAppConfirm\">{{'Cancel'|translate}}</button>\r\n  </div>\r\n</div>\r\n", dependencies: [{ kind: "pipe", type: i11.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CancelAppointmentConfirmComponent, deps: [{ token: MAT_DIALOG_DATA }, { token: i1$1.MatDialogRef }, { token: AppointmentService }, { token: i3.ToastrService }, { token: i4.TranslateService }, { token: MindmapService }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: CancelAppointmentConfirmComponent, selector: "app-cancel-appointment-confirm", ngImport: i0, template: "<div class=\"intel-con-modal\" data-test-id=\"cancelAppConfirmModal\">\r\n  <div class=\"close-btn-con\" data-test-id=\"cancelAppConfirmCloseContainer\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnCloseCancelAppConfirm\">\r\n      <img src=\"assets/svgs/CloseX.svg\" alt=\"close icon\" />\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"modal-con mt-4\" data-test-id=\"cancelAppConfirmContent\">\r\n    <img src=\"assets/svgs/video-pink.svg\" alt=\"video-icon\" width=\"80px\" height=\"80px\" data-test-id=\"imgCancelAppConfirmIcon\">\r\n    <h6 class=\"mt-3\" data-test-id=\"titleCancelAppConfirm\">{{'Cancel the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\" data-test-id=\"msgCancelAppConfirm\">\r\n      {{'Are you sure you want to cancel your appointment on'|translate}} \r\n      <b data-test-id=\"cancelAppConfirmDate\">{{data?.slotJsDate|date:'dd MMMM'}}</b> \r\n      {{'at'|translate}} \r\n      <b data-test-id=\"cancelAppConfirmTime\">{{data?.slotTime}}</b>?\r\n    </p>\r\n  </div>\r\n\r\n  <div class=\"modal-action-btn-con\" data-test-id=\"cancelAppConfirmActions\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnGoBackCancelAppConfirm\">\r\n      {{'Go back'|translate}}\r\n    </button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"cancel()\" data-test-id=\"btnCancelAppConfirm\">\r\n      {{'Cancel'|translate}}\r\n    </button>\r\n  </div>\r\n</div>\r\n", dependencies: [{ kind: "pipe", type: i12.DatePipe, name: "date" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CancelAppointmentConfirmComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'app-cancel-appointment-confirm', template: "<div class=\"intel-con-modal\">\r\n  <div class=\"close-btn-con\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\"><img src=\"assets/svgs/CloseX.svg\" alt=\"\" data-test-id=\"btnCloseCancelAppConfirm\"></button>\r\n  </div>\r\n  <div class=\"modal-con mt-4\">\r\n    <img src=\"assets/svgs/video-pink.svg\" alt=\"\" width=\"80px\" height=\"80px\">\r\n    <h6 class=\"mt-3\">{{'Cancel the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\">{{'Are you sure you want to cancel your appointment on'|translate}} <b>{{data?.slotJsDate|date:'dd MMMM'}}</b> {{'at'|translate}} <b>{{data?.slotTime}}</b>?</p>\r\n  </div>\r\n  <div class=\"modal-action-btn-con\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnGoBackCancelAppConfirm\">{{'Go back'|translate}}</button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"cancel()\" data-test-id=\"btnCancelAppConfirm\">{{'Cancel'|translate}}</button>\r\n  </div>\r\n</div>\r\n" }]
+            args: [{ selector: 'app-cancel-appointment-confirm', template: "<div class=\"intel-con-modal\" data-test-id=\"cancelAppConfirmModal\">\r\n  <div class=\"close-btn-con\" data-test-id=\"cancelAppConfirmCloseContainer\">\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnCloseCancelAppConfirm\">\r\n      <img src=\"assets/svgs/CloseX.svg\" alt=\"close icon\" />\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"modal-con mt-4\" data-test-id=\"cancelAppConfirmContent\">\r\n    <img src=\"assets/svgs/video-pink.svg\" alt=\"video-icon\" width=\"80px\" height=\"80px\" data-test-id=\"imgCancelAppConfirmIcon\">\r\n    <h6 class=\"mt-3\" data-test-id=\"titleCancelAppConfirm\">{{'Cancel the appointment'|translate}}</h6>\r\n    <p class=\"mt-2 text-center\" data-test-id=\"msgCancelAppConfirm\">\r\n      {{'Are you sure you want to cancel your appointment on'|translate}} \r\n      <b data-test-id=\"cancelAppConfirmDate\">{{data?.slotJsDate|date:'dd MMMM'}}</b> \r\n      {{'at'|translate}} \r\n      <b data-test-id=\"cancelAppConfirmTime\">{{data?.slotTime}}</b>?\r\n    </p>\r\n  </div>\r\n\r\n  <div class=\"modal-action-btn-con\" data-test-id=\"cancelAppConfirmActions\">\r\n    <button class=\"modal-btn white-btn mr-3\" type=\"button\" (click)=\"close(false)\" data-test-id=\"btnGoBackCancelAppConfirm\">\r\n      {{'Go back'|translate}}\r\n    </button>\r\n    <button class=\"modal-btn blue-btn\" type=\"button\" (click)=\"cancel()\" data-test-id=\"btnCancelAppConfirm\">\r\n      {{'Cancel'|translate}}\r\n    </button>\r\n  </div>\r\n</div>\r\n" }]
         }], ctorParameters: function () { return [{ type: undefined, decorators: [{
                     type: Inject,
                     args: [MAT_DIALOG_DATA]
-                }] }, { type: i1$1.MatDialogRef }, { type: AppointmentService }, { type: i3.ToastrService }, { type: i4.TranslateService }]; } });
+                }] }, { type: i1$1.MatDialogRef }, { type: AppointmentService }, { type: i3.ToastrService }, { type: i4.TranslateService }, { type: MindmapService }]; } });
 
 const PICK_FORMATS = {
     parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -1022,14 +1162,14 @@ class RescheduleAppointmentComponent {
     static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: RescheduleAppointmentComponent, selector: "app-reschedule-appointment", providers: [
             { provide: DateAdapter, useClass: PickDateAdapter },
             { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
-        ], ngImport: i0, template: "<div class=\"reschedule-modal\">\r\n  <div class=\"modal-title\">\r\n    <h6 class=\"mb-0\">{{ 'Reschedule appointment' | translate }}</h6>\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/Close.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-12 p-0\">\r\n          <div class=\"select-date-con\">\r\n            <div class=\"form-group row\">\r\n              <label for=\"expiryDate\" class=\"col-sm-3 col-form-label\">{{ 'Select Date' | translate }}</label>\r\n              <div class=\"col-sm-6\">\r\n                <div class=\"input-group\">\r\n                  <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selectedDate\" (dateChange)=\"dateChanged($event)\" [min]=\"minDate\" [matDatepicker]=\"dp1\" placeholder=\"{{'Select date'|translate}}\" aria-label=\"Date\"\r\n                    aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\">\r\n                  <mat-datepicker #dp1></mat-datepicker>\r\n                  <div class=\"input-group-append\">\r\n                    <span class=\"input-group-text\" id=\"basic-addon1\">\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dp1\" data-test-id=\"dpDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"slots-con\">\r\n            <h6>{{ 'Select a timeslot' | translate }}</h6>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.morning.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunrise.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Morning' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.morning;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.afternoon.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sun.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Afternoon' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.afternoon;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.evening.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunset.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Evening' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.evening;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"d-flex justify-content-center py-2\">\r\n            <button class=\"confirm-btn\" type=\"button\" (click)=\"reschedule()\" data-test-id=\"btnSubmit\">{{ 'Reschedule' | translate }}</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".reschedule-modal{font-family:DM Sans}.reschedule-modal .modal-title{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:24px;width:100%;height:70px;background:var(--color-lightGray)}.reschedule-modal .modal-title h6{font-weight:700;font-size:20px;color:var(--color-darkestBlue)}.reschedule-modal .modal-title .modal-close-btn{border:none;background:transparent}.reschedule-modal .modal-body{padding:24px}.reschedule-modal .modal-body .select-date-con{border-bottom:1px solid rgba(178,175,190,.2);margin:10px 0}.reschedule-modal .modal-body .slots-con{max-height:55vh;overflow:auto}.reschedule-modal .modal-body .slots-con h6{font-weight:700;font-size:16px;color:var(--color-darkestBlue);display:flex;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section{padding:10px 0}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips{display:flex;flex-wrap:wrap;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item{padding:8px;background:var(--color-lightGray);border:1px solid rgba(178,175,190,.2);border-radius:6px;font-size:14px;line-height:150%;color:var(--color-darkestBlue);margin-right:5px;margin-bottom:5px;cursor:pointer}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item.selected{background:var(--color-darkBlue);border:none;border-radius:6px;color:var(--color-white)}.cancel-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-white);border:1px solid var(--color-lightGray);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-darkBlue);font-weight:700}.confirm-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-darkBlue);border:1px solid var(--color-darkBlue);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-white);font-weight:700}.form-group label{font-size:14px;color:var(--color-darkestBlue);font-weight:700}.form-group .input-group{border:1px solid rgba(178,175,190,.2);background:var(--color-offWhite);border-radius:8px;height:48px}.form-group .input-group .form-control{padding:14px 16px;height:48px;font-size:16px;color:var(--color-darkestBlue);border:none;background:transparent}.form-group .input-group .form-control:focus{box-shadow:none}.form-group .input-group .input-group-append .input-group-text{background:transparent;border:none;padding:0}\n"], dependencies: [{ kind: "directive", type: i5.MatSuffix, selector: "[matSuffix]" }, { kind: "directive", type: i11.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i11.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i20.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i20.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i20.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", inputs: ["matDatepicker", "min", "max", "matDatepickerFilter"], exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", inputs: ["for", "tabIndex", "aria-label", "disabled", "disableRipple"], exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
+        ], ngImport: i0, template: "<div class=\"reschedule-modal\" data-test-id=\"rescheduleModal\">\r\n  <div class=\"modal-title\" data-test-id=\"rescheduleModalTitleContainer\">\r\n    <h6 class=\"mb-0\" data-test-id=\"rescheduleModalTitle\">{{ 'Reschedule appointment' | translate }}</h6>\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnCloseRescheduleModal\">\r\n      <img src=\"assets/svgs/Close.svg\" alt=\"close icon\">\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"modal-body\" data-test-id=\"rescheduleModalBody\">\r\n    <div class=\"container-fluid\" data-test-id=\"rescheduleModalContainer\">\r\n      <div class=\"row\" data-test-id=\"rescheduleModalRow\">\r\n        <div class=\"col-md-12 p-0\" data-test-id=\"rescheduleModalCol\">\r\n\r\n          <div class=\"select-date-con\" data-test-id=\"dateSelectionContainer\">\r\n            <div class=\"form-group row\" data-test-id=\"dateSelectionFormGroup\">\r\n              <label for=\"expiryDate\" class=\"col-sm-3 col-form-label\" data-test-id=\"lblSelectDate\">\r\n                {{ 'Select Date' | translate }}\r\n              </label>\r\n              <div class=\"col-sm-6\" data-test-id=\"dateInputCol\">\r\n                <div class=\"input-group\" data-test-id=\"dateInputGroup\">\r\n                  <input\r\n                    type=\"text\"\r\n                    class=\"form-control\"\r\n                    [(ngModel)]=\"selectedDate\"\r\n                    (dateChange)=\"dateChanged($event)\"\r\n                    [min]=\"minDate\"\r\n                    [matDatepicker]=\"dp1\"\r\n                    placeholder=\"{{'Select date'|translate}}\"\r\n                    aria-label=\"Date\"\r\n                    aria-describedby=\"basic-addon1\"\r\n                    readonly\r\n                    data-test-id=\"etDate\"\r\n                  >\r\n                  <mat-datepicker #dp1 data-test-id=\"matDatepicker\"></mat-datepicker>\r\n                  <div class=\"input-group-append\" data-test-id=\"datePickerAppend\">\r\n                    <span class=\"input-group-text\" id=\"basic-addon1\" data-test-id=\"datePickerIconWrapper\">\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dp1\" data-test-id=\"dpDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"calendar icon\" data-test-id=\"dpDateIcon\">\r\n                      </mat-datepicker-toggle>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"slots-con\" data-test-id=\"slotsContainer\">\r\n            <h6 data-test-id=\"slotsTitle\">{{ 'Select a timeslot' | translate }}</h6>\r\n\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.morning.length;\" data-test-id=\"slotSectionMorning\">\r\n              <h6 data-test-id=\"slotMorningTitle\">\r\n                <img src=\"assets/svgs/sunrise.svg\" alt=\"morning icon\" class=\"mr-2\" data-test-id=\"slotMorningIcon\" />\r\n                {{ 'Morning' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\" data-test-id=\"slotMorningChips\">\r\n                <div\r\n                  class=\"slot-chip-item\"\r\n                  [class.selected]=\"selectedSlot == s\"\r\n                  *ngFor=\"let s of scheduleData.morning;\"\r\n                  (click)=\"selectedSlot = s\"\r\n                  data-test-id=\"slotMorningChip\"\r\n                >\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.afternoon.length;\" data-test-id=\"slotSectionAfternoon\">\r\n              <h6 data-test-id=\"slotAfternoonTitle\">\r\n                <img src=\"assets/svgs/sun.svg\" alt=\"afternoon icon\" class=\"mr-2\" data-test-id=\"slotAfternoonIcon\" />\r\n                {{ 'Afternoon' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\" data-test-id=\"slotAfternoonChips\">\r\n                <div\r\n                  class=\"slot-chip-item\"\r\n                  [class.selected]=\"selectedSlot == s\"\r\n                  *ngFor=\"let s of scheduleData.afternoon;\"\r\n                  (click)=\"selectedSlot = s\"\r\n                  data-test-id=\"slotAfternoonChip\"\r\n                >\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.evening.length;\" data-test-id=\"slotSectionEvening\">\r\n              <h6 data-test-id=\"slotEveningTitle\">\r\n                <img src=\"assets/svgs/sunset.svg\" alt=\"evening icon\" class=\"mr-2\" data-test-id=\"slotEveningIcon\" />\r\n                {{ 'Evening' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\" data-test-id=\"slotEveningChips\">\r\n                <div\r\n                  class=\"slot-chip-item\"\r\n                  [class.selected]=\"selectedSlot == s\"\r\n                  *ngFor=\"let s of scheduleData.evening;\"\r\n                  (click)=\"selectedSlot = s\"\r\n                  data-test-id=\"slotEveningChip\"\r\n                >\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"d-flex justify-content-center py-2\" data-test-id=\"rescheduleActionContainer\">\r\n            <button class=\"confirm-btn\" type=\"button\" (click)=\"reschedule()\" data-test-id=\"btnSubmitRescheduleModal\">\r\n              {{ 'Reschedule' | translate }}\r\n            </button>\r\n          </div>\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".reschedule-modal{font-family:DM Sans}.reschedule-modal .modal-title{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:24px;width:100%;height:70px;background:var(--color-lightGray)}.reschedule-modal .modal-title h6{font-weight:700;font-size:20px;color:var(--color-darkestBlue)}.reschedule-modal .modal-title .modal-close-btn{border:none;background:transparent}.reschedule-modal .modal-body{padding:24px}.reschedule-modal .modal-body .select-date-con{border-bottom:1px solid rgba(178,175,190,.2);margin:10px 0}.reschedule-modal .modal-body .slots-con{max-height:55vh;overflow:auto}.reschedule-modal .modal-body .slots-con h6{font-weight:700;font-size:16px;color:var(--color-darkestBlue);display:flex;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section{padding:10px 0}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips{display:flex;flex-wrap:wrap;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item{padding:8px;background:var(--color-lightGray);border:1px solid rgba(178,175,190,.2);border-radius:6px;font-size:14px;line-height:150%;color:var(--color-darkestBlue);margin-right:5px;margin-bottom:5px;cursor:pointer}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item.selected{background:var(--color-darkBlue);border:none;border-radius:6px;color:var(--color-white)}.cancel-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-white);border:1px solid var(--color-lightGray);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-darkBlue);font-weight:700}.confirm-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-darkBlue);border:1px solid var(--color-darkBlue);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-white);font-weight:700}.form-group label{font-size:14px;color:var(--color-darkestBlue);font-weight:700}.form-group .input-group{border:1px solid rgba(178,175,190,.2);background:var(--color-offWhite);border-radius:8px;height:48px}.form-group .input-group .form-control{padding:14px 16px;height:48px;font-size:16px;color:var(--color-darkestBlue);border:none;background:transparent}.form-group .input-group .form-control:focus{box-shadow:none}.form-group .input-group .input-group-append .input-group-text{background:transparent;border:none;padding:0}\n"], dependencies: [{ kind: "directive", type: i5.MatSuffix, selector: "[matSuffix]" }, { kind: "directive", type: i12.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i12.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i21.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i21.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i21.NgModel, selector: "[ngModel]:not([formControlName]):not([formControl])", inputs: ["name", "disabled", "ngModel", "ngModelOptions"], outputs: ["ngModelChange"], exportAs: ["ngModel"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", inputs: ["matDatepicker", "min", "max", "matDatepickerFilter"], exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", inputs: ["for", "tabIndex", "aria-label", "disabled", "disableRipple"], exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }] });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: RescheduleAppointmentComponent, decorators: [{
             type: Component,
             args: [{ selector: 'app-reschedule-appointment', providers: [
                         { provide: DateAdapter, useClass: PickDateAdapter },
                         { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
-                    ], template: "<div class=\"reschedule-modal\">\r\n  <div class=\"modal-title\">\r\n    <h6 class=\"mb-0\">{{ 'Reschedule appointment' | translate }}</h6>\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnClose\"><img src=\"assets/svgs/Close.svg\" alt=\"\"></button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-12 p-0\">\r\n          <div class=\"select-date-con\">\r\n            <div class=\"form-group row\">\r\n              <label for=\"expiryDate\" class=\"col-sm-3 col-form-label\">{{ 'Select Date' | translate }}</label>\r\n              <div class=\"col-sm-6\">\r\n                <div class=\"input-group\">\r\n                  <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selectedDate\" (dateChange)=\"dateChanged($event)\" [min]=\"minDate\" [matDatepicker]=\"dp1\" placeholder=\"{{'Select date'|translate}}\" aria-label=\"Date\"\r\n                    aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\">\r\n                  <mat-datepicker #dp1></mat-datepicker>\r\n                  <div class=\"input-group-append\">\r\n                    <span class=\"input-group-text\" id=\"basic-addon1\">\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dp1\" data-test-id=\"dpDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"slots-con\">\r\n            <h6>{{ 'Select a timeslot' | translate }}</h6>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.morning.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunrise.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Morning' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.morning;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.afternoon.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sun.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Afternoon' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.afternoon;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.evening.length;\">\r\n              <h6>\r\n                <img src=\"assets/svgs/sunset.svg\" alt=\"\" class=\"mr-2\" />\r\n                {{ 'Evening' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\">\r\n                <div class=\"slot-chip-item\" [class.selected]=\"selectedSlot == s\" *ngFor=\"let s of scheduleData.evening;\" (click)=\"selectedSlot = s\">\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"d-flex justify-content-center py-2\">\r\n            <button class=\"confirm-btn\" type=\"button\" (click)=\"reschedule()\" data-test-id=\"btnSubmit\">{{ 'Reschedule' | translate }}</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".reschedule-modal{font-family:DM Sans}.reschedule-modal .modal-title{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:24px;width:100%;height:70px;background:var(--color-lightGray)}.reschedule-modal .modal-title h6{font-weight:700;font-size:20px;color:var(--color-darkestBlue)}.reschedule-modal .modal-title .modal-close-btn{border:none;background:transparent}.reschedule-modal .modal-body{padding:24px}.reschedule-modal .modal-body .select-date-con{border-bottom:1px solid rgba(178,175,190,.2);margin:10px 0}.reschedule-modal .modal-body .slots-con{max-height:55vh;overflow:auto}.reschedule-modal .modal-body .slots-con h6{font-weight:700;font-size:16px;color:var(--color-darkestBlue);display:flex;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section{padding:10px 0}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips{display:flex;flex-wrap:wrap;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item{padding:8px;background:var(--color-lightGray);border:1px solid rgba(178,175,190,.2);border-radius:6px;font-size:14px;line-height:150%;color:var(--color-darkestBlue);margin-right:5px;margin-bottom:5px;cursor:pointer}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item.selected{background:var(--color-darkBlue);border:none;border-radius:6px;color:var(--color-white)}.cancel-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-white);border:1px solid var(--color-lightGray);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-darkBlue);font-weight:700}.confirm-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-darkBlue);border:1px solid var(--color-darkBlue);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-white);font-weight:700}.form-group label{font-size:14px;color:var(--color-darkestBlue);font-weight:700}.form-group .input-group{border:1px solid rgba(178,175,190,.2);background:var(--color-offWhite);border-radius:8px;height:48px}.form-group .input-group .form-control{padding:14px 16px;height:48px;font-size:16px;color:var(--color-darkestBlue);border:none;background:transparent}.form-group .input-group .form-control:focus{box-shadow:none}.form-group .input-group .input-group-append .input-group-text{background:transparent;border:none;padding:0}\n"] }]
+                    ], template: "<div class=\"reschedule-modal\" data-test-id=\"rescheduleModal\">\r\n  <div class=\"modal-title\" data-test-id=\"rescheduleModalTitleContainer\">\r\n    <h6 class=\"mb-0\" data-test-id=\"rescheduleModalTitle\">{{ 'Reschedule appointment' | translate }}</h6>\r\n    <button class=\"modal-close-btn\" (click)=\"close(false)\" data-test-id=\"btnCloseRescheduleModal\">\r\n      <img src=\"assets/svgs/Close.svg\" alt=\"close icon\">\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"modal-body\" data-test-id=\"rescheduleModalBody\">\r\n    <div class=\"container-fluid\" data-test-id=\"rescheduleModalContainer\">\r\n      <div class=\"row\" data-test-id=\"rescheduleModalRow\">\r\n        <div class=\"col-md-12 p-0\" data-test-id=\"rescheduleModalCol\">\r\n\r\n          <div class=\"select-date-con\" data-test-id=\"dateSelectionContainer\">\r\n            <div class=\"form-group row\" data-test-id=\"dateSelectionFormGroup\">\r\n              <label for=\"expiryDate\" class=\"col-sm-3 col-form-label\" data-test-id=\"lblSelectDate\">\r\n                {{ 'Select Date' | translate }}\r\n              </label>\r\n              <div class=\"col-sm-6\" data-test-id=\"dateInputCol\">\r\n                <div class=\"input-group\" data-test-id=\"dateInputGroup\">\r\n                  <input\r\n                    type=\"text\"\r\n                    class=\"form-control\"\r\n                    [(ngModel)]=\"selectedDate\"\r\n                    (dateChange)=\"dateChanged($event)\"\r\n                    [min]=\"minDate\"\r\n                    [matDatepicker]=\"dp1\"\r\n                    placeholder=\"{{'Select date'|translate}}\"\r\n                    aria-label=\"Date\"\r\n                    aria-describedby=\"basic-addon1\"\r\n                    readonly\r\n                    data-test-id=\"etDate\"\r\n                  >\r\n                  <mat-datepicker #dp1 data-test-id=\"matDatepicker\"></mat-datepicker>\r\n                  <div class=\"input-group-append\" data-test-id=\"datePickerAppend\">\r\n                    <span class=\"input-group-text\" id=\"basic-addon1\" data-test-id=\"datePickerIconWrapper\">\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dp1\" data-test-id=\"dpDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"calendar icon\" data-test-id=\"dpDateIcon\">\r\n                      </mat-datepicker-toggle>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"slots-con\" data-test-id=\"slotsContainer\">\r\n            <h6 data-test-id=\"slotsTitle\">{{ 'Select a timeslot' | translate }}</h6>\r\n\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.morning.length;\" data-test-id=\"slotSectionMorning\">\r\n              <h6 data-test-id=\"slotMorningTitle\">\r\n                <img src=\"assets/svgs/sunrise.svg\" alt=\"morning icon\" class=\"mr-2\" data-test-id=\"slotMorningIcon\" />\r\n                {{ 'Morning' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\" data-test-id=\"slotMorningChips\">\r\n                <div\r\n                  class=\"slot-chip-item\"\r\n                  [class.selected]=\"selectedSlot == s\"\r\n                  *ngFor=\"let s of scheduleData.morning;\"\r\n                  (click)=\"selectedSlot = s\"\r\n                  data-test-id=\"slotMorningChip\"\r\n                >\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.afternoon.length;\" data-test-id=\"slotSectionAfternoon\">\r\n              <h6 data-test-id=\"slotAfternoonTitle\">\r\n                <img src=\"assets/svgs/sun.svg\" alt=\"afternoon icon\" class=\"mr-2\" data-test-id=\"slotAfternoonIcon\" />\r\n                {{ 'Afternoon' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\" data-test-id=\"slotAfternoonChips\">\r\n                <div\r\n                  class=\"slot-chip-item\"\r\n                  [class.selected]=\"selectedSlot == s\"\r\n                  *ngFor=\"let s of scheduleData.afternoon;\"\r\n                  (click)=\"selectedSlot = s\"\r\n                  data-test-id=\"slotAfternoonChip\"\r\n                >\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"slot-section\" *ngIf=\"scheduleData.evening.length;\" data-test-id=\"slotSectionEvening\">\r\n              <h6 data-test-id=\"slotEveningTitle\">\r\n                <img src=\"assets/svgs/sunset.svg\" alt=\"evening icon\" class=\"mr-2\" data-test-id=\"slotEveningIcon\" />\r\n                {{ 'Evening' | translate }}\r\n              </h6>\r\n              <div class=\"slot-chips\" data-test-id=\"slotEveningChips\">\r\n                <div\r\n                  class=\"slot-chip-item\"\r\n                  [class.selected]=\"selectedSlot == s\"\r\n                  *ngFor=\"let s of scheduleData.evening;\"\r\n                  (click)=\"selectedSlot = s\"\r\n                  data-test-id=\"slotEveningChip\"\r\n                >\r\n                  {{s}}\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"d-flex justify-content-center py-2\" data-test-id=\"rescheduleActionContainer\">\r\n            <button class=\"confirm-btn\" type=\"button\" (click)=\"reschedule()\" data-test-id=\"btnSubmitRescheduleModal\">\r\n              {{ 'Reschedule' | translate }}\r\n            </button>\r\n          </div>\r\n\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n", styles: [".reschedule-modal{font-family:DM Sans}.reschedule-modal .modal-title{display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:24px;width:100%;height:70px;background:var(--color-lightGray)}.reschedule-modal .modal-title h6{font-weight:700;font-size:20px;color:var(--color-darkestBlue)}.reschedule-modal .modal-title .modal-close-btn{border:none;background:transparent}.reschedule-modal .modal-body{padding:24px}.reschedule-modal .modal-body .select-date-con{border-bottom:1px solid rgba(178,175,190,.2);margin:10px 0}.reschedule-modal .modal-body .slots-con{max-height:55vh;overflow:auto}.reschedule-modal .modal-body .slots-con h6{font-weight:700;font-size:16px;color:var(--color-darkestBlue);display:flex;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section{padding:10px 0}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips{display:flex;flex-wrap:wrap;align-items:center}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item{padding:8px;background:var(--color-lightGray);border:1px solid rgba(178,175,190,.2);border-radius:6px;font-size:14px;line-height:150%;color:var(--color-darkestBlue);margin-right:5px;margin-bottom:5px;cursor:pointer}.reschedule-modal .modal-body .slots-con .slot-section .slot-chips .slot-chip-item.selected{background:var(--color-darkBlue);border:none;border-radius:6px;color:var(--color-white)}.cancel-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-white);border:1px solid var(--color-lightGray);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-darkBlue);font-weight:700}.confirm-btn{padding:8px 24px;min-width:119px;height:48px;background:var(--color-darkBlue);border:1px solid var(--color-darkBlue);border-radius:8px;font-size:18px;line-height:150%;color:var(--color-white);font-weight:700}.form-group label{font-size:14px;color:var(--color-darkestBlue);font-weight:700}.form-group .input-group{border:1px solid rgba(178,175,190,.2);background:var(--color-offWhite);border-radius:8px;height:48px}.form-group .input-group .form-control{padding:14px 16px;height:48px;font-size:16px;color:var(--color-darkestBlue);border:none;background:transparent}.form-group .input-group .form-control:focus{box-shadow:none}.form-group .input-group .input-group-append .input-group-text{background:transparent;border:none;padding:0}\n"] }]
         }], ctorParameters: function () { return [{ type: undefined, decorators: [{
                     type: Inject,
                     args: [MAT_DIALOG_DATA]
@@ -1088,121 +1228,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
                     providedIn: 'root'
                 }]
         }], ctorParameters: function () { return [{ type: i1$1.MatDialog }]; } });
-
-class MindmapService {
-    http;
-    mindmapURL;
-    constructor(http, environment) {
-        this.http = http;
-        this.mindmapURL = environment.mindmapURL;
-    }
-    /**
-    * Get mindmap keys
-    * @return {Observable<any>}
-    */
-    getMindmapKey() {
-        const url = `${this.mindmapURL}/mindmap`;
-        return this.http.get(url);
-    }
-    /**
-    * Post mindmap
-    * @param {any} value - Payload for post mindmap
-    * @return {Observable<any>}
-    */
-    postMindmap(value) {
-        const url = `${this.mindmapURL}/mindmap/upload`;
-        return this.http.post(url, value);
-    }
-    /**
-    * Get mindmap details from key
-    * @param {string} key - Mindmap key
-    * @return {Observable<any>}
-    */
-    detailsMindmap(key) {
-        const url = `${this.mindmapURL}/mindmap/details/${key}`;
-        return this.http.get(url);
-    }
-    /**
-    * Add/update mindmap license key
-    * @param {any} payload - Payload for mindmap key to add/update
-    * @return {Observable<any>}
-    */
-    addUpdateLicenseKey(payload) {
-        const url = `${this.mindmapURL}/mindmap/addUpdatekey`;
-        return this.http.post(url, payload);
-    }
-    /**
-    * Update mindmap key image
-    * @param {string} key - Mindmap key
-    * @param {string} imageName - Image name
-    * @param {string} value - Image base64
-    * @return {Observable<any>}
-    */
-    updateImage(key, imageName, value) {
-        const url = `${this.mindmapURL}/mindmap/${key}/${imageName}`;
-        return this.http.put(url, value);
-    }
-    /**
-    * Delete mindmap
-    * @param {string} key - Mindmap key
-    * @param {any} data - Mindmap data
-    * @return {Observable<any>}
-    */
-    deleteMindmap(key, data) {
-        const url = `${this.mindmapURL}/mindmap/delete/${key}`;
-        return this.http.post(url, data);
-    }
-    /**
-    * Toggle mindmap status
-    * @param {any} data - Mindmap data
-    * @return {Observable<any>}
-    */
-    toggleMindmapStatus(data) {
-        const url = `${this.mindmapURL}/mindmap/toggleStatus`;
-        return this.http.post(url, data);
-    }
-    /**
-  * Notify App side
-  * @param {any} hwUuid - Healthworker Id
-  * @param {any} payload - Notifaication message
-  * @return {Observable<any>}
-  */
-    notifyApp(hwUuid, payload) {
-        return this.http.post(`${this.mindmapURL}/mindmap/notify-app/${hwUuid}`, payload);
-    }
-    /**
-    * Send notification to health worker for available prescription
-    * @returns {void}
-    */
-    notifyHwForRescheduleAppointment(appointment) {
-        const hwUuid = appointment?.hwUUID;
-        const openMRSID = appointment?.openMrsId;
-        const payload = {
-            title: `Appointment rescheduled for ${appointment?.patientName || 'Patient'}`,
-            body: "Click notification to see!",
-            type: "appointment",
-            data: {
-                patientFirstName: appointment?.patientName ?? '',
-                patientUuid: appointment?.patientId,
-                patientOpenMrsId: openMRSID,
-                visitUuid: appointment?.visitUuid,
-                slotDateTime: appointment?.slotJsDate
-            }
-        };
-        this.notifyApp(hwUuid, payload).subscribe();
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, deps: [{ token: i1.HttpClient }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, providedIn: "root" });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: MindmapService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: "root",
-                }]
-        }], ctorParameters: function () { return [{ type: i1.HttpClient }, { type: undefined, decorators: [{
-                    type: Inject,
-                    args: ['environment']
-                }] }]; } });
 
 class AppConfigService {
     http;
@@ -1317,19 +1342,35 @@ class TableGridComponent {
     sanitizer;
     appConfigService;
     rolesService;
+    ngxLoader;
+    // Constants
+    static DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 25];
+    static APPOINTMENT_PAGE_SIZE = 5;
+    static SPECIALIZATION_UUID = 'ed1715f5-93e2-404e-b3c9-2a2d9600f062';
+    static TELEPHONE_ATTRIBUTE_ID = 8;
+    static FOLLOW_UP_CONCEPT_ID = 163345;
+    static CHIEF_COMPLAINT_CONCEPT_ID = 163212;
     pluginConfigObs;
     displayedAppointmentColumns = [];
     displayedColumns = [];
-    dataSource = new MatTableDataSource();
+    dataSource = [];
+    filteredDataSource = [];
+    paginatedDataSource = [];
     patientRegFields = [];
     isMCCUser = false;
-    pageSizeOptions = [5, 10, 20];
-    paginator;
+    pageSizeOptions = TableGridComponent.DEFAULT_PAGE_SIZE_OPTIONS;
+    // Unique component instance ID
+    componentId;
+    // @ViewChild(MatPaginator) paginator: MatPaginator;
     searchElement;
     filteredDateAndRangeForm;
     tempPaginator;
     menuTrigger;
-    tableMatSort;
+    // Date picker ViewChild references
+    datePicker;
+    startDatePicker;
+    endDatePicker;
+    filterMenu;
     panelExpanded = true;
     mode = 'date';
     maxDate;
@@ -1341,7 +1382,11 @@ class TableGridComponent {
     followUpVisits = [];
     specialization = '';
     visitsCountDate = new EventEmitter();
-    visitsLengthCount = 0;
+    pageIndex = 0;
+    pageSize = 0;
+    pageEvent;
+    recordsFetched = 0;
+    totalRecords = 0;
     isFilterApplied = false;
     pvs;
     baseURL;
@@ -1351,11 +1396,20 @@ class TableGridComponent {
     dateFilter;
     originalData;
     filteredDataAfterDate;
+    tableLoader;
+    // Custom pagination properties
+    currentPage = 0;
+    itemsPerPage = 0;
+    searchTerm = '';
+    currentDateFilter = null;
+    // Filtered data properties
+    filteredTotalCount = 0;
+    isFilterActive = false;
+    paginationDisabled = false;
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.tableMatSort;
+        // Paginator will be set when data is loaded
     }
-    constructor(appointmentService, visitService, coreService, toastr, translateService, mindmapService, sanitizer, appConfigService, rolesService, environment) {
+    constructor(appointmentService, visitService, coreService, toastr, translateService, mindmapService, sanitizer, appConfigService, rolesService, ngxLoader, environment) {
         this.appointmentService = appointmentService;
         this.visitService = visitService;
         this.coreService = coreService;
@@ -1365,7 +1419,13 @@ class TableGridComponent {
         this.sanitizer = sanitizer;
         this.appConfigService = appConfigService;
         this.rolesService = rolesService;
+        this.ngxLoader = ngxLoader;
+        // Generate unique component ID
+        this.componentId = 'table-grid-' + Math.random().toString(36).substr(2, 9);
+        this.tableLoader = isFeaturePresent(environment.featureList, 'tableLoader');
         this.baseURL = environment.baseURL;
+        this.pageSize = environment.recordsPerPage;
+        this.itemsPerPage = environment.recordsPerPage;
         this.filteredDateAndRangeForm = this.createFilteredDateRangeForm();
     }
     /**
@@ -1379,8 +1439,171 @@ class TableGridComponent {
             endDate: new FormControl(null, Validators.required),
         });
     }
+    /**
+     * Initialize component-specific state to prevent conflicts between multiple instances
+     */
+    initializeComponentState() {
+        // Reset all component-specific arrays and objects
+        this.appointments = [];
+        this.priorityVisits = [];
+        this.awaitingVisits = [];
+        this.inProgressVisits = [];
+        this.completedVisits = [];
+        this.followUpVisits = [];
+        // Reset pagination state
+        this.pageIndex = 0;
+        this.recordsFetched = 0;
+        this.totalRecords = 0;
+        // Reset filter state
+        this.isFilterApplied = false;
+        this.isFilterActive = false;
+        this.filteredTotalCount = 0;
+        this.paginationDisabled = false;
+        this.originalData = [];
+        this.filteredDataAfterDate = [];
+        // Reset data arrays for this instance
+        this.dataSource = [];
+        this.filteredDataSource = [];
+        this.paginatedDataSource = [];
+        this.currentPage = 0;
+        this.searchTerm = '';
+        this.currentDateFilter = null;
+        if (this.pluginConfigObs?.pluginConfigObsFlag === 'Appointment') {
+            this.pageSize = TableGridComponent.APPOINTMENT_PAGE_SIZE;
+            this.itemsPerPage = TableGridComponent.APPOINTMENT_PAGE_SIZE;
+            console.log('itemsPerPage', this.itemsPerPage);
+        }
+    }
+    /**
+     * Apply custom pagination to the filtered data
+     */
+    applyPagination() {
+        const startIndex = this.currentPage * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.paginatedDataSource = this.filteredDataSource.slice(startIndex, endIndex);
+    }
+    /**
+     * Calculate pagination indices
+     */
+    getPaginationIndices() {
+        return {
+            startIndex: this.currentPage * this.itemsPerPage,
+            endIndex: (this.currentPage + 1) * this.itemsPerPage
+        };
+    }
+    /**
+     * Restore current page data from original data
+     */
+    restoreCurrentPageData() {
+        const { startIndex, endIndex } = this.getPaginationIndices();
+        this.paginatedDataSource = this.originalData.slice(startIndex, endIndex);
+    }
+    /**
+     * Apply search filter to the current page data only
+     */
+    applySearchFilter() {
+        if (!this.searchTerm.trim()) {
+            this.restoreCurrentPageData();
+        }
+        else {
+            const searchLower = this.searchTerm.toLowerCase();
+            this.paginatedDataSource = this.paginatedDataSource.filter((item) => this.matchesSearchTerm(item, searchLower));
+        }
+    }
+    /**
+     * Get formatted date for an item based on the date field
+     */
+    getItemDate(item, dateField) {
+        if (dateField === 'followUp') {
+            return this.formatDate(this.convertToISO(item.followUp));
+        }
+        else if (dateField === 'slotJsDate') {
+            return this.formatDate(item[dateField]);
+        }
+        else {
+            return item[dateField].includes(',') ? this.formatDate(item[dateField]) : this.convertToDate(item[dateField]);
+        }
+    }
+    /**
+     * Check if item matches search term
+     */
+    matchesSearchTerm(item, searchLower) {
+        if (this.pluginConfigObs?.pluginConfigObsFlag === 'Appointment') {
+            return (item?.openMrsId?.toLowerCase().includes(searchLower) ||
+                item?.patientName?.toLowerCase().includes(searchLower) ||
+                item?.TMH_patient_id?.toLowerCase().includes(searchLower));
+        }
+        else {
+            return (item?.patient?.identifier?.toLowerCase().includes(searchLower) ||
+                item?.patient_name?.given_name?.toLowerCase().includes(searchLower) ||
+                item?.patient_name?.family_name?.toLowerCase().includes(searchLower));
+        }
+    }
+    /**
+     * Apply multiple filters efficiently
+     */
+    applyFilters() {
+        // Check if any filters are active
+        this.isFilterActive = !!(this.searchTerm.trim() || this.currentDateFilter);
+        this.paginationDisabled = this.isFilterActive;
+        // If no search term and no date filter, restore current page data
+        if (!this.isFilterActive) {
+            this.restoreCurrentPageData();
+            this.updatePaginatorLength();
+            return;
+        }
+        // Always start with current page data from original data when applying filters
+        const { startIndex, endIndex } = this.getPaginationIndices();
+        let filteredData = this.originalData.slice(startIndex, endIndex);
+        // Apply date filter
+        if (this.currentDateFilter) {
+            const { dateField, filterValue, isRange, startDate, endDate } = this.currentDateFilter;
+            filteredData = filteredData.filter((item) => {
+                const itemDate = this.getItemDate(item, dateField);
+                if (isRange && startDate && endDate) {
+                    return itemDate >= startDate && itemDate <= endDate;
+                }
+                else if (filterValue) {
+                    return itemDate === filterValue;
+                }
+                return true;
+            });
+        }
+        // Apply search filter
+        if (this.searchTerm.trim()) {
+            const searchLower = this.searchTerm.toLowerCase();
+            filteredData = filteredData.filter((item) => this.matchesSearchTerm(item, searchLower));
+        }
+        // Update filtered count for current page
+        this.filteredTotalCount = filteredData.length;
+        this.paginatedDataSource = filteredData;
+        // Update paginator length
+        this.updatePaginatorLength();
+    }
+    /**
+     * Update paginator length based on filter state
+     */
+    updatePaginatorLength() {
+        if (this.tempPaginator) {
+            this.tempPaginator.length = this.isFilterActive ? this.filteredTotalCount : this.totalRecords;
+        }
+    }
+    /**
+     * Check if pagination should be disabled
+     */
+    isPaginationDisabled() {
+        return this.isFilterActive || this.paginationDisabled;
+    }
+    /**
+     * Get the current total count (filtered or original)
+     */
+    getCurrentTotalCount() {
+        return this.isFilterActive ? this.filteredTotalCount : this.totalRecords;
+    }
     ngOnInit() {
         this.isMCCUser = !!this.rolesService.getRole('ORGANIZATIONAL:MCC');
+        // Initialize component-specific state
+        this.initializeComponentState();
         this.appConfigService.load().then(() => {
             this.displayedColumns = this.displayedColumns.filter(col => (col !== 'age' || this.checkPatientRegField('Age')));
             Object.keys(this.appConfigService.patient_registration).forEach(obj => {
@@ -1420,10 +1643,10 @@ class TableGridComponent {
                 this.getInProgressVisits(1);
             }
             if (this.pluginConfigObs?.pluginConfigObsFlag === "Completed") {
-                this.getCompletedVisits();
+                this.getCompletedVisits(1);
             }
             if (this.pluginConfigObs?.pluginConfigObsFlag === "FollowUp") {
-                this.getFollowUpVisit();
+                this.getFollowUpVisit(1);
             }
         }
         this.maxDate = this.pluginConfigObs.filterObs.filterDateMax;
@@ -1441,6 +1664,8 @@ class TableGridComponent {
             this.displayedColumns = this.displayedAppointmentColumns.map(column => column.key);
         }
         if ((!changes['pluginConfigObs'].firstChange) && this.pluginConfigObs.pluginConfigObsFlag == "Appointment" && changes["pluginConfigObs"].currentValue?.tableHeader !== changes["pluginConfigObs"].previousValue?.tableHeader) {
+            this.pageSize = TableGridComponent.APPOINTMENT_PAGE_SIZE;
+            this.itemsPerPage = TableGridComponent.APPOINTMENT_PAGE_SIZE;
             this.getAppointments();
         }
         const prev = changes['pluginConfigObs'].previousValue;
@@ -1448,7 +1673,6 @@ class TableGridComponent {
         const prevType = prev?.filter?.filterType;
         const currType = curr?.filter?.filterType;
         if (prevType !== currType) {
-            console.log("tab changed");
             this.resetDateForm(); // Reset only when type has changed
         }
     }
@@ -1464,7 +1688,9 @@ class TableGridComponent {
             });
         }
         this.mode = 'date';
-        this.searchElement.nativeElement.value = "";
+        if (this.searchElement && this.searchElement.nativeElement) {
+            this.searchElement.nativeElement.value = "";
+        }
         this.isFilterApplied = false;
         this.dataSource.filter = null;
     }
@@ -1481,7 +1707,7 @@ class TableGridComponent {
             if (display.match(visitTypes.ADULTINITIAL) !== null) {
                 const obs = encounter.obs;
                 obs.forEach((currentObs) => {
-                    if (currentObs.concept_id == 163212) {
+                    if (currentObs.concept_id == TableGridComponent.CHIEF_COMPLAINT_CONCEPT_ID) {
                         const currentComplaint = this.visitService.getData2(currentObs)?.value_text.replace(new RegExp('►', 'g'), '').split('<b>');
                         for (let i = 1; i < currentComplaint.length; i++) {
                             const obs1 = currentComplaint[i].split('<');
@@ -1588,36 +1814,37 @@ class TableGridComponent {
     * @return {void}
     */
     applyFilter(event) {
-        const filterValue = event.target.value.trim().toLowerCase();
-        const customPredicate = (data, filter) => {
-            return (data?.openMrsId?.toLowerCase().includes(filter) ||
-                data?.patientName?.toLowerCase().includes(filter) ||
-                data?.TMH_patient_id?.toLowerCase().includes(filter));
-        };
-        // Always filter from the full original data
-        this.filteredDataAfterDate = this.originalData.filter(item => customPredicate(item, filterValue));
-        this.dataSource.data = this.filteredDataAfterDate;
-        this.isFilterApplied = true;
+        this.searchTerm = event.target.value.trim();
+        this.isFilterApplied = this.searchTerm.length > 0;
+        this.applyFilters();
     }
     // Call this once after loading appointments
-    storeOriginalData() {
-        this.originalData = [...this.dataSource.data]; // Backup full data
+    storeOriginalData(originalData) {
+        this.originalData = originalData ? [...originalData] : [...this.dataSource]; // Backup full data
+        this.applyFilters(); // Apply any existing filters
     }
     /**
-    * Clear filter from a datasource
+    * Clear filter from current page data
     * @return {void}
     */
     clearFilter() {
-        this.dataSource.filter = null;
-        this.searchElement.nativeElement.value = "";
+        this.searchTerm = '';
+        this.currentDateFilter = null;
         this.isFilterApplied = false;
+        this.isFilterActive = false;
+        this.filteredTotalCount = 0;
+        this.paginationDisabled = false;
+        if (this.searchElement?.nativeElement) {
+            this.searchElement.nativeElement.value = "";
+        }
         this.filteredDateAndRangeForm.reset({
             date: null,
             startDate: null,
             endDate: null
         });
         this.mode = 'date';
-        this.dataSource.data = [...this.originalData];
+        this.restoreCurrentPageData();
+        this.updatePaginatorLength();
     }
     /**
      * Checks if the field is in patient registration fields
@@ -1641,7 +1868,7 @@ class TableGridComponent {
      * @return {string | undefined} - The person's telephone number or undefined if not found
      */
     getTelephoneNumber(person) {
-        return person?.person_attribute.find((v) => v.person_attribute_type_id == 8)?.value;
+        return person?.person_attribute.find((v) => v.person_attribute_type_id == TableGridComponent.TELEPHONE_ATTRIBUTE_ID)?.value;
     }
     /**
      * Closes the menu if it's open
@@ -1705,55 +1932,35 @@ class TableGridComponent {
      * @param {string} dateField - The field name for the date to filter
      */
     applyDateOrRangeFilter(dateField) {
-        console.log("apply filtre................");
         const selectedDate = this.filteredDateAndRangeForm.get('date')?.value;
         const startDate = this.filteredDateAndRangeForm.get('startDate')?.value;
         const endDate = this.filteredDateAndRangeForm.get('endDate')?.value;
         if (selectedDate) {
             const formattedDate = this.formatDate(selectedDate);
             this.dateFilter = this.formatDate(selectedDate);
-            this.dataSource.filterPredicate = (data, filter) => {
-                let itemDate;
-                if (dateField === "followUp") {
-                    itemDate = this.formatDate(this.convertToISO(data.followUp));
-                }
-                else if (dateField === "slotJsDate") {
-                    itemDate = this.formatDate(data[dateField]);
-                }
-                else {
-                    itemDate = data[dateField].includes(',') ? this.formatDate(data[dateField]) : this.convertToDate(data[dateField]);
-                }
-                return itemDate === filter;
+            this.currentDateFilter = {
+                dateField,
+                filterValue: formattedDate,
+                isRange: false
             };
-            this.dataSource.filter = formattedDate;
         }
         else if (startDate && endDate) {
             const formattedStartDate = this.formatDate(startDate);
             const formattedEndDate = this.formatDate(endDate);
-            this.dataSource.filterPredicate = (data, filter) => {
-                let itemDate;
-                if (dateField === "followUp") {
-                    itemDate = this.formatDate(this.convertToISO(data.followUp));
-                }
-                else if (dateField === "slotJsDate") {
-                    itemDate = this.formatDate(data[dateField]);
-                }
-                else {
-                    itemDate = data[dateField].includes(',') ? this.formatDate(data[dateField]) : this.convertToDate(data[dateField]);
-                }
-                return itemDate >= formattedStartDate && itemDate <= formattedEndDate;
-            };
-            this.dataSource.filter = `${formattedStartDate}:${formattedEndDate}`;
             this.dateFilter = `${this.formatDate(startDate)}:${this.formatDate(endDate)}`;
+            this.currentDateFilter = {
+                dateField,
+                startDate: formattedStartDate,
+                endDate: formattedEndDate,
+                isRange: true
+            };
         }
         else {
-            this.dataSource.filter = '';
             this.dateFilter = '';
+            this.currentDateFilter = null;
         }
-        console.log("this.dataSource.filte inside filter==", this.dataSource);
         this.dateField = dateField;
-        //this.updateCombinedFilter();
-        this.tempPaginator.firstPage();
+        this.applyFilters();
         this.closeMenu();
     }
     /**
@@ -1762,8 +1969,8 @@ class TableGridComponent {
      */
     resetDate(flag = false) {
         this.filteredDateAndRangeForm.reset();
-        this.dataSource.filter = '';
-        this.dataSource.filterPredicate = (data, filter) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1;
+        this.currentDateFilter = null;
+        this.applyFilters();
         if (!flag) {
             this.closeMenu();
         }
@@ -1791,6 +1998,7 @@ class TableGridComponent {
     * @return {void}
     */
     getAppointments() {
+        this.ngxLoader.startLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag); // Start section loader
         this.appointments = [];
         let fromDate = moment().startOf('year').format('DD/MM/YYYY');
         let toDate = moment().endOf('year').format('DD/MM/YYYY');
@@ -1800,29 +2008,33 @@ class TableGridComponent {
             toDate = this.pluginConfigObs?.filter?.toDate;
         }
         this.appointmentService.getUserSlots(getCacheData(true, doctorDetails.USER).uuid, fromDate, toDate, this.isMCCUser ? this.specialization : null, pending_visits)
-            .subscribe((res) => {
-            this.visitsLengthCount = res.data?.length;
-            this.emitVisitsCount(this.visitsLengthCount);
-            let appointmentsdata = res.data;
-            appointmentsdata.forEach((appointment) => {
-                if (appointment.status == 'booked' && (appointment.visitStatus == 'Awaiting Consult' || appointment.visitStatus == 'Visit In Progress')) {
-                    if (appointment.visit) {
-                        appointment.cheif_complaint = this.getCheifComplaint(appointment.visit);
-                        appointment.starts_in = checkIfDateOldThanOneDay(appointment.slotJsDate);
-                        appointment.telephone = this.getTelephoneNumber(appointment?.visit?.person);
-                        appointment.TMH_patient_id = this.getAttributeData(appointment.visit, "TMH Case Number")?.value;
-                        appointment.uuid = appointment.visitUuid;
-                        appointment.location = appointment?.visit?.location?.name;
-                        appointment.age = appointment?.patientAge + ' ' + this.translateService.instant('y');
-                        this.appointments.push(appointment);
+            .subscribe({
+            next: (res) => {
+                this.totalRecords = (res.data?.length > 1) ? res.data?.length - 1 : res.data?.length || 0;
+                this.emitVisitsCount(this.totalRecords);
+                let appointmentsdata = res.data;
+                appointmentsdata.forEach((appointment) => {
+                    if (appointment.status == 'booked' && (appointment.visitStatus == 'Awaiting Consult' || appointment.visitStatus == 'Visit In Progress')) {
+                        if (appointment.visit) {
+                            appointment.cheif_complaint = this.getCheifComplaint(appointment.visit);
+                            appointment.starts_in = checkIfDateOldThanOneDay(appointment.slotJsDate);
+                            appointment.telephone = this.getTelephoneNumber(appointment?.visit?.person);
+                            appointment.TMH_patient_id = this.getAttributeData(appointment.visit, "TMH Case Number")?.value;
+                            appointment.uuid = appointment.visitUuid;
+                            appointment.location = appointment?.visit?.location?.name;
+                            appointment.age = appointment?.patientAge + ' ' + this.translateService.instant('y');
+                            this.appointments.push(appointment);
+                        }
                     }
-                }
-            });
-            this.dataSource.data = [...this.appointments];
-            this.storeOriginalData(); // ← store full data here
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.tableMatSort;
-            this.dataSource.filterPredicate = (data, filter) => data?.openMrsId.toLowerCase().indexOf(filter) != -1 || data?.patientName.toLowerCase().indexOf(filter) != -1 || data?.TMH_patient_id?.toLowerCase().indexOf(filter) !== -1;
+                });
+                this.dataSource = [...this.appointments];
+                this.storeOriginalData();
+            },
+            complete: () => {
+                this.ngxLoader.stopLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag); // Stop section loader
+                // Scroll to top after data is loaded
+                this.scrollToTop();
+            }
         });
     }
     /**
@@ -1833,7 +2045,7 @@ class TableGridComponent {
     getSpecialization(attr) {
         let specialization = '';
         attr.forEach((a) => {
-            if (a.attributeType.uuid == 'ed1715f5-93e2-404e-b3c9-2a2d9600f062' && !a.voided) {
+            if (a.attributeType.uuid == TableGridComponent.SPECIALIZATION_UUID && !a.voided) {
                 specialization = a.value;
             }
         });
@@ -1903,35 +2115,7 @@ class TableGridComponent {
     * @return {void}
     */
     getAwaitingVisits(page = 1) {
-        if (page == 1) {
-            this.awaitingVisits = [];
-        }
-        this.visitService.getAwaitingVisits(this.specialization, page).subscribe((res) => {
-            if (res.success) {
-                this.visitsLengthCount = res.totalCount;
-                this.emitVisitsCount(this.visitsLengthCount);
-                for (let i = 0; i < res.data.length; i++) {
-                    let visit = res.data[i];
-                    visit.cheif_complaint = this.getCheifComplaint(visit);
-                    visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.ADULTINITIAL);
-                    visit.person.age = this.calculateAge(visit.person.birthdate);
-                    visit.patient_type = this.getDemarcation(visit?.encounters);
-                    visit.location = visit?.location?.name;
-                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
-                    this.awaitingVisits.push(visit);
-                }
-                this.dataSource.data = [...this.awaitingVisits];
-                if (page == 1) {
-                    this.dataSource.paginator = this.tempPaginator;
-                    this.dataSource.sort = this.tableMatSort;
-                    this.dataSource.filterPredicate = (data, filter) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
-                }
-                else {
-                    this.tempPaginator.length = this.awaitingVisits.length;
-                    this.tempPaginator.nextPage();
-                }
-            }
-        });
+        this.loadVisitData(page, this.awaitingVisits, this.visitService.getAwaitingVisits);
     }
     /**
     * Get inprogress visits for a given page number
@@ -1939,71 +2123,7 @@ class TableGridComponent {
     * @return {void}
     */
     getInProgressVisits(page = 1) {
-        if (page == 1) {
-            this.inProgressVisits = [];
-        }
-        this.visitService.getInProgressVisits(this.specialization, page).subscribe((res) => {
-            if (res.success) {
-                this.visitsLengthCount = res.totalCount;
-                this.emitVisitsCount(this.visitsLengthCount);
-                for (let i = 0; i < res.data.length; i++) {
-                    let visit = res.data[i];
-                    visit.cheif_complaint = this.getCheifComplaint(visit);
-                    visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.ADULTINITIAL);
-                    visit.prescription_started = this.getEncounterCreated(visit, visitTypes.VISIT_NOTE);
-                    visit.person.age = this.calculateAge(visit.person.birthdate);
-                    visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number")?.value;
-                    visit.location = visit?.location?.name;
-                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
-                    this.inProgressVisits.push(visit);
-                }
-                this.inProgressVisits.sort((a, b) => {
-                    const parseTime = (value) => {
-                        if (value.includes("minutes ago")) {
-                            return { type: "minutes", time: parseInt(value) }; // Store only numeric minutes
-                        }
-                        if (value.includes("Hours ago")) {
-                            return { type: "hours", time: parseInt(value) * 60 }; // Convert hours to minutes for correct comparison
-                        }
-                        return { type: "date", time: moment(value, "DD MMM, YYYY").valueOf() };
-                    };
-                    const visitA = parseTime(a.prescription_started);
-                    const visitB = parseTime(b.prescription_started);
-                    // Sort minutes first (ascending)
-                    if (visitA.type === "minutes" && visitB.type === "minutes") {
-                        return visitA.time - visitB.time;
-                    }
-                    // Sort hours first (ascending)
-                    if (visitA.type === "hours" && visitB.type === "hours") {
-                        return visitA.time - visitB.time;
-                    }
-                    // Sort dates (descending)
-                    if (visitA.type === "date" && visitB.type === "date") {
-                        return visitB.time - visitA.time;
-                    }
-                    // Prioritize minutes over hours, and hours over dates
-                    if (visitA.type === "minutes")
-                        return -1;
-                    if (visitB.type === "minutes")
-                        return 1;
-                    if (visitA.type === "hours")
-                        return -1;
-                    if (visitB.type === "hours")
-                        return 1;
-                    return 0;
-                });
-                this.dataSource.data = [...this.inProgressVisits];
-                if (page == 1) {
-                    this.dataSource.paginator = this.tempPaginator;
-                    this.dataSource.sort = this.tableMatSort;
-                    this.dataSource.filterPredicate = (data, filter) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
-                }
-                else {
-                    this.tempPaginator.length = this.inProgressVisits.length;
-                    this.tempPaginator.nextPage();
-                }
-            }
-        });
+        this.loadVisitData(page, this.inProgressVisits, this.visitService.getInProgressVisits, visitTypes.VISIT_NOTE, this.sortInProgressVisits.bind(this));
     }
     /**
     * Get priority visits for a given page number
@@ -2011,102 +2131,41 @@ class TableGridComponent {
     * @return {void}
     */
     getPriorityVisits(page = 1) {
-        if (page == 1) {
-            this.priorityVisits = [];
-        }
-        this.visitService.getPriorityVisits(this.specialization, page).subscribe((res) => {
-            if (res.success) {
-                this.visitsLengthCount = res.totalCount;
-                this.emitVisitsCount(this.visitsLengthCount);
-                for (let i = 0; i < res.data.length; i++) {
-                    let visit = res.data[i];
-                    visit.cheif_complaint = this.getCheifComplaint(visit);
-                    visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.FLAGGED);
-                    visit.person.age = this.calculateAge(visit.person.birthdate);
-                    visit.location = visit?.location?.name;
-                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
-                    this.priorityVisits.push(visit);
-                }
-                this.dataSource.data = [...this.priorityVisits];
-                if (page == 1) {
-                    this.dataSource.paginator = this.tempPaginator;
-                    this.dataSource.sort = this.tableMatSort;
-                    this.dataSource.filterPredicate = (data, filter) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
-                }
-                else {
-                    this.tempPaginator.length = this.priorityVisits.length;
-                    this.tempPaginator.nextPage();
-                }
-            }
-        });
+        this.loadVisitData(page, this.priorityVisits, this.visitService.getPriorityVisits, visitTypes.FLAGGED);
     }
     /**
      * Get completed visits count
      * @return {void}
      */
     getCompletedVisits(page = 1) {
-        this.visitService.getEndedVisits(this.specialization, page).subscribe((res) => {
-            if (res.success) {
-                this.visitsLengthCount = res.totalCount;
-                this.emitVisitsCount(this.visitsLengthCount);
-                for (let i = 0; i < res.data.length; i++) {
-                    let visit = res.data[i];
-                    visit.cheif_complaint = this.getCheifComplaint(visit);
-                    visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.COMPLETED_VISIT);
-                    visit.person.age = this.calculateAge(visit.person.birthdate);
-                    visit.completed = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
-                    visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number")?.value;
-                    visit.location = visit?.location?.name;
-                    visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
-                    this.completedVisits.push(visit);
-                }
-                this.dataSource.data = [...this.completedVisits];
-                if (page == 1) {
-                    this.dataSource.paginator = this.tempPaginator;
-                    this.dataSource.sort = this.tableMatSort;
-                    this.dataSource.filterPredicate = (data, filter) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
-                }
-                else {
-                    this.tempPaginator.length = this.completedVisits.length;
-                    this.tempPaginator.nextPage();
-                }
-            }
-        });
+        this.loadVisitData(page, this.completedVisits, this.visitService.getEndedVisits, visitTypes.COMPLETED_VISIT);
     }
     /**
     * Get follow-up visits for a logged-in doctor
     * @return {void}
     */
     getFollowUpVisit(page = 1) {
-        this.visitService.getFollowUpVisits(this.specialization).subscribe({
+        this.ngxLoader.startLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag);
+        if (page === 1) {
+            this.followUpVisits.length = 0;
+            this.recordsFetched = 0;
+        }
+        this.visitService.getFollowUpVisits(this.specialization, page).subscribe({
             next: (res) => {
                 if (res.success) {
-                    for (let i = 0; i < res.data.length; i++) {
-                        let visit = res.data[i];
-                        if (visit?.encounters?.length) {
-                            this.visitsLengthCount += 1;
-                            visit.cheif_complaint = this.getCheifComplaint(visit);
-                            visit.visit_created = visit?.date_created ? this.getCreatedAt(visit.date_created.replace('Z', '+0530')) : this.getEncounterCreated(visit, visitTypes.COMPLETED_VISIT);
-                            visit.person.age = this.calculateAge(visit.person.birthdate);
-                            visit.completed = this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
-                            visit.followUp = this.processFollowUpDate(this.getEncounterObs(visit.encounters, visitTypes.VISIT_NOTE, 163345 /*Follow-up*/)?.value_text);
-                            visit.location = visit?.location?.name;
-                            visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
-                            this.followUpVisits.push(visit);
-                        }
-                    }
-                    this.emitVisitsCount(this.visitsLengthCount);
-                    this.dataSource.data = [...this.followUpVisits];
-                    if (page == 1) {
-                        this.dataSource.paginator = this.tempPaginator;
-                        this.dataSource.sort = this.tableMatSort;
-                        this.dataSource.filterPredicate = (data, filter) => data?.patient.identifier.toLowerCase().indexOf(filter) != -1 || data?.patient_name.given_name.concat((data?.patient_name.middle_name && this.checkPatientRegField('Middle Name') ? ' ' + data?.patient_name.middle_name : '') + ' ' + data?.patient_name.family_name).toLowerCase().indexOf(filter) != -1;
-                    }
-                    else {
-                        this.tempPaginator.length = this.followUpVisits.length;
-                        this.tempPaginator.nextPage();
-                    }
+                    this.totalRecords = res.totalCount;
+                    this.recordsFetched += this.pageSize;
+                    this.emitVisitsCount(this.totalRecords);
+                    const processedVisits = res.data
+                        .map(visit => this.processFollowUpVisitData(visit))
+                        .filter(visit => visit !== null);
+                    this.followUpVisits.push(...processedVisits);
+                    this.updateDataSources(this.followUpVisits, processedVisits);
                 }
+            },
+            complete: () => {
+                this.ngxLoader.stopLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag);
+                this.scrollToTop();
             }
         });
     }
@@ -2129,7 +2188,7 @@ class TableGridComponent {
      * Renders HTML content for a column, sanitized for security
      * @param {any} column - Column definition
      * @param {any} element - Data element to render
-     * @return {string} - Formatted HTML or element value
+     * @return {SafeHtml | string} - Formatted HTML or element value
      */
     renderHtmlContent(column, element) {
         return column.formatHtml && typeof column.formatHtml === 'function' ? this.sanitizer.bypassSecurityTrustHtml(column.formatHtml(element)) : element[column.key];
@@ -2153,7 +2212,7 @@ class TableGridComponent {
      * @return {string} - Formatted date
      */
     processFollowUpDate(value) {
-        return value.split(',').length > 1 ? `${value.split(',')[0]}${value.split(',')[1].replace("Time:", "")}` : value;
+        return value ? value.split(',').length > 1 ? `${value.split(',')[0]} ${value.split(',')[1].replace("Time:", "")}` : value : '';
     }
     ;
     /**
@@ -2191,20 +2250,245 @@ class TableGridComponent {
         };
         this.visitsCountDate.emit(visitsCountData);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: TableGridComponent, deps: [{ token: AppointmentService }, { token: VisitService }, { token: CoreService }, { token: i3.ToastrService }, { token: i4.TranslateService }, { token: MindmapService }, { token: i7.DomSanitizer }, { token: AppConfigService }, { token: i9.NgxRolesService }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: TableGridComponent, selector: "lib-table-grid", inputs: { pluginConfigObs: "pluginConfigObs" }, outputs: { visitsCountDate: "visitsCountDate" }, viewQueries: [{ propertyName: "paginator", first: true, predicate: MatPaginator, descendants: true }, { propertyName: "searchElement", first: true, predicate: ["searchInput"], descendants: true, static: true }, { propertyName: "tempPaginator", first: true, predicate: ["tempPaginator"], descendants: true }, { propertyName: "menuTrigger", first: true, predicate: MatMenuTrigger, descendants: true }, { propertyName: "tableMatSort", first: true, predicate: ["tableMatSort"], descendants: true, static: true }], usesOnChanges: true, ngImport: i0, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title>\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\"></div>\r\n      <div class=\"intel-accordion-title\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\">\r\n        <h6 class=\"mb-0 ml-2\">{{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})</h6>\r\n        <mat-icon aria-hidden=\"false\" aria-label=\"help icon\" matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" matTooltipPosition=\"right\" data-test-id=\"matIcoHelpAppointment\">help_outline</mat-icon>\r\n        <div class=\"ml-auto filter-search-container\">\r\n          <button *ngIf=\"pluginConfigObs.filterObs.filterFlag\" class=\"mat-stroked-button\"[matMenuTriggerFor]=\"filterMenu1\" class=\"filter-btn\" (click)=\"$event.stopPropagation();\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\"> {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n          <mat-menu #filterMenu1=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\">\r\n            <div class=\"toggle-buttons\">\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'date'\" (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Date' | translate}}</span></span></button>\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'range'\" (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Range' | translate}}</span></span></button>\r\n            </div>\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"date\" [matDatepicker]=\"dobdp\" placeholder=\"{{'Select date' | translate}}\" aria-label=\"Date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #dobdp></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dobdp\" data-test-id=\"dpDate\" class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n              </div>\r\n              <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\">\r\n                <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate\" formControlName=\"startDate\" [matDatepicker]=\"picker1\" placeholder=\"{{'Select start date'|translate}}\" aria-label=\"Start date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etSelStartDate\">\r\n                        <mat-datepicker #picker1></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker1\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [min]=\"filteredDateAndRangeForm.value.startDate\" [max]=\"maxDate\" formControlName=\"endDate\" [matDatepicker]=\"picker2\" placeholder=\"{{'Select end date'|translate}}\" aria-label=\"End date\" aria-describedby=\"basic-addon2\" readonly data-test-id=\"etSelEndDate\">\r\n                        <mat-datepicker #picker2></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker2\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </form>\r\n              </div>\r\n            <div class=\"action-buttons\">\r\n              <button mat-button class=\"mat-focus-indicator reset-btn mat-button mat-button-base\" (click)=\"resetDate();\"><span class=\"mat-button-wrapper\">{{ 'Reset'| translate }}</span></button>\r\n              <button mat-button class=\"mat-focus-indicator apply-btn mat-button mat-button-base\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\"><span class=\"mat-button-wrapper\">{{ 'Apply'| translate }}</span></button>\r\n            </div>\r\n          </mat-menu>\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\">\r\n            <input type=\"text\" #searchInput class=\"form-control\" placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" aria-label=\"search1\" aria-describedby=\"basic-addon1\" (keyup)=\"applyFilter($event)\" (keydown.Space)=\"$event.stopPropagation()\" (keydown.Enter)=\"$event.stopPropagation()\" data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" id=\"basic-addon1\"  *ngIf=\"!isFilterApplied\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button data-test-id=\"btnResetApSerach\"  class=\"btnResetApSerach\" class=\"btnResetApSerach\" class=\"mat-icon-button\" aria-label=\"Reset appointment search\"  (click)=\"clearFilter()\"  *ngIf=\"isFilterApplied\">\r\n                <mat-icon class=\"ml-0\" style=\"line-height: normal;\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\" #tableMatSort=\"matSort\" matSort>\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <ng-container *ngIf=\"column.isSortable; else noSort\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header matSortDirection=\"asc\">\r\n            {{ column.label | translate }}\r\n          </th>\r\n        </ng-container>\r\n        <ng-template #noSort>\r\n          <th mat-header-cell *matHeaderCellDef>\r\n            {{ column.label | translate }}\r\n          </th>\r\n        </ng-template>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\" [attr.data-test-id]=\"'td' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.patientId : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.person.uuid : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n              >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n    </table>\r\n    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]=\"pageSizeOptions\" aria-label=\"Select page of periodic elements\"></mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>\r\n", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"], dependencies: [{ kind: "directive", type: i10.RouterLink, selector: ":not(a):not(area)[routerLink]", inputs: ["queryParams", "fragment", "queryParamsHandling", "state", "relativeTo", "preserveFragment", "skipLocationChange", "replaceUrl", "routerLink"] }, { kind: "directive", type: i11.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i11.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i11.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i11.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: i12.MatPaginator, selector: "mat-paginator", inputs: ["disabled"], exportAs: ["matPaginator"] }, { kind: "directive", type: i13.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }, { kind: "directive", type: i5.MatSuffix, selector: "[matSuffix]" }, { kind: "component", type: i15.MatExpansionPanel, selector: "mat-expansion-panel", inputs: ["disabled", "expanded", "hideToggle", "togglePosition"], outputs: ["opened", "closed", "expandedChange", "afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { kind: "component", type: i15.MatExpansionPanelHeader, selector: "mat-expansion-panel-header", inputs: ["tabIndex", "expandedHeight", "collapsedHeight"] }, { kind: "directive", type: i15.MatExpansionPanelTitle, selector: "mat-panel-title" }, { kind: "component", type: i16.MatMenu, selector: "mat-menu", exportAs: ["matMenu"] }, { kind: "directive", type: i16.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", exportAs: ["matMenuTrigger"] }, { kind: "component", type: i17.MatTable, selector: "mat-table, table[mat-table]", exportAs: ["matTable"] }, { kind: "directive", type: i17.MatHeaderCellDef, selector: "[matHeaderCellDef]" }, { kind: "directive", type: i17.MatHeaderRowDef, selector: "[matHeaderRowDef]", inputs: ["matHeaderRowDef", "matHeaderRowDefSticky"] }, { kind: "directive", type: i17.MatColumnDef, selector: "[matColumnDef]", inputs: ["sticky", "matColumnDef"] }, { kind: "directive", type: i17.MatCellDef, selector: "[matCellDef]" }, { kind: "directive", type: i17.MatRowDef, selector: "[matRowDef]", inputs: ["matRowDefColumns", "matRowDefWhen"] }, { kind: "directive", type: i17.MatHeaderCell, selector: "mat-header-cell, th[mat-header-cell]" }, { kind: "directive", type: i17.MatCell, selector: "mat-cell, td[mat-cell]" }, { kind: "component", type: i17.MatHeaderRow, selector: "mat-header-row, tr[mat-header-row]", exportAs: ["matHeaderRow"] }, { kind: "component", type: i17.MatRow, selector: "mat-row, tr[mat-row]", exportAs: ["matRow"] }, { kind: "directive", type: i17.MatNoDataRow, selector: "ng-template[matNoDataRow]" }, { kind: "component", type: i18.MatIcon, selector: "mat-icon", inputs: ["color", "inline", "svgIcon", "fontSet", "fontIcon"], exportAs: ["matIcon"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", inputs: ["matDatepicker", "min", "max", "matDatepickerFilter"], exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", inputs: ["for", "tabIndex", "aria-label", "disabled", "disableRipple"], exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "directive", type: i20.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i20.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i20.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i20.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i20.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i20.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }, { kind: "directive", type: i21.MatSort, selector: "[matSort]", inputs: ["matSortDisabled", "matSortActive", "matSortStart", "matSortDirection", "matSortDisableClear"], outputs: ["matSortChange"], exportAs: ["matSort"] }, { kind: "component", type: i21.MatSortHeader, selector: "[mat-sort-header]", inputs: ["disabled", "mat-sort-header", "arrowPosition", "start", "sortActionDescription", "disableClear"], exportAs: ["matSortHeader"] }, { kind: "directive", type: DefaultImageDirective, selector: "img[src]", inputs: ["src"] }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }], changeDetection: i0.ChangeDetectionStrategy.OnPush });
+    getData(event) {
+        this.pageIndex = event.pageIndex;
+        this.pageSize = event.pageSize;
+        this.currentPage = event.pageIndex;
+        this.itemsPerPage = event.pageSize;
+        // If filters are active, disable pagination and don't make API calls
+        if (this.isFilterActive || this.paginationDisabled) {
+            this.scrollToTop();
+            return event;
+        }
+        const requiredRecords = (this.pageIndex + 1) * this.pageSize;
+        // Check if we need to fetch more data from API
+        if (requiredRecords > this.recordsFetched) {
+            this.fetchMoreData();
+        }
+        else {
+            // Data is already present, handle client-side pagination
+            this.handleClientSidePagination();
+        }
+        // Scroll to top when pagination changes
+        this.scrollToTop();
+        return event;
+    }
+    /**
+     * Fetch more data from API based on current plugin type
+     */
+    fetchMoreData() {
+        const nextPage = (this.recordsFetched + this.pageSize) / this.pageSize;
+        switch (this.pluginConfigObs?.pluginConfigObsFlag) {
+            case "Awaiting":
+                this.getAwaitingVisits(nextPage);
+                break;
+            case "Priority":
+                this.getPriorityVisits(nextPage);
+                break;
+            case "InProgress":
+                this.getInProgressVisits(nextPage);
+                break;
+            case "Completed":
+                this.getCompletedVisits(nextPage);
+                break;
+            case "FollowUp":
+                this.getFollowUpVisit(nextPage);
+                break;
+        }
+    }
+    /**
+     * Handle client-side pagination for already loaded data
+     */
+    handleClientSidePagination() {
+        // Ensure filteredDataSource has all the data from originalData
+        if (this.filteredDataSource.length < this.originalData.length) {
+            this.filteredDataSource = [...this.originalData];
+        }
+        // Apply pagination to the filtered data
+        this.applyPagination();
+        // Update paginator length to show correct total
+        if (this.tempPaginator) {
+            this.tempPaginator.length = this.totalRecords;
+        }
+    }
+    /**
+     * Handle sorting for current page data only
+     * @param {string} column - Column to sort by
+     * @param {string} direction - Sort direction ('asc' or 'desc')
+     */
+    handleSort(column, direction) {
+        if (!column || !direction)
+            return;
+        // Sort only the current page data
+        this.paginatedDataSource.sort((a, b) => {
+            let aValue = this.getSortValue(a, column);
+            let bValue = this.getSortValue(b, column);
+            // Convert to string for comparison if needed
+            if (typeof aValue === 'string')
+                aValue = aValue.toLowerCase();
+            if (typeof bValue === 'string')
+                bValue = bValue.toLowerCase();
+            return direction === 'asc'
+                ? (aValue < bValue ? -1 : aValue > bValue ? 1 : 0)
+                : (aValue > bValue ? -1 : aValue < bValue ? 1 : 0);
+        });
+    }
+    /**
+     * Get sort value for an item based on column
+     */
+    getSortValue(item, column) {
+        if (column === 'patient_name') {
+            return (item.patient_name?.given_name || '') + ' ' + (item.patient_name?.family_name || '');
+        }
+        return item[column];
+    }
+    /**
+     * Process visit data with common fields
+     */
+    processVisitData(visit, encounterType) {
+        visit.cheif_complaint = this.getCheifComplaint(visit);
+        visit.visit_created = visit?.date_created
+            ? this.getCreatedAt(visit.date_created.replace('Z', '+0530'))
+            : this.getEncounterCreated(visit, encounterType || visitTypes.ADULTINITIAL);
+        visit.person.age = this.calculateAge(visit.person.birthdate);
+        visit.location = visit?.location?.name;
+        visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
+        // Add specific fields based on visit type
+        if (encounterType === visitTypes.VISIT_NOTE) {
+            visit.prescription_started = this.getEncounterCreated(visit, visitTypes.VISIT_NOTE);
+        }
+        if (encounterType === visitTypes.COMPLETED_VISIT) {
+            visit.completed = visit?.date_created
+                ? this.getCreatedAt(visit.date_created.replace('Z', '+0530'))
+                : this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
+        }
+        if (encounterType === visitTypes.FLAGGED) {
+            visit.visit_created = visit?.date_created
+                ? this.getCreatedAt(visit.date_created.replace('Z', '+0530'))
+                : this.getEncounterCreated(visit, visitTypes.FLAGGED);
+        }
+        // Add common fields
+        visit.TMH_patient_id = this.getAttributeData(visit, "TMH Case Number")?.value;
+        visit.patient_type = this.getDemarcation(visit?.encounters);
+        return visit;
+    }
+    /**
+     * Generic data loading method
+     */
+    loadVisitData(page, visitArray, serviceMethod, encounterType, customSorting) {
+        this.ngxLoader.startLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag);
+        if (page === 1) {
+            visitArray.length = 0; // Clear array efficiently
+            this.recordsFetched = 0;
+        }
+        serviceMethod.call(this.visitService, this.specialization, page).subscribe({
+            next: (res) => {
+                if (res.success) {
+                    this.totalRecords = res.totalCount;
+                    this.recordsFetched += this.pageSize;
+                    this.emitVisitsCount(this.totalRecords);
+                    const processedVisits = res.data.map(visit => this.processVisitData(visit, encounterType));
+                    // Apply custom sorting if provided
+                    const sortedVisits = customSorting ? customSorting(processedVisits) : processedVisits;
+                    // Add to visit array
+                    visitArray.push(...sortedVisits);
+                    // Update data sources
+                    this.updateDataSources(visitArray, sortedVisits);
+                }
+            },
+            complete: () => {
+                this.ngxLoader.stopLoader('table-loader-' + this.pluginConfigObs.pluginConfigObsFlag);
+                this.scrollToTop();
+            }
+        });
+    }
+    /**
+     * Update all data sources with new data
+     */
+    updateDataSources(visitArray, sortedVisits) {
+        this.dataSource = sortedVisits ? [...sortedVisits] : [...visitArray];
+        this.originalData = [...visitArray];
+        this.filteredDataSource = [...visitArray];
+        this.applyPagination();
+    }
+    /**
+     * Custom sorting for in-progress visits by prescription time
+     */
+    sortInProgressVisits(visits) {
+        return visits.sort((a, b) => {
+            const parseTime = (value) => {
+                if (value.includes("minutes ago")) {
+                    return { type: "minutes", time: parseInt(value) };
+                }
+                if (value.includes("Hours ago")) {
+                    return { type: "hours", time: parseInt(value) * 60 };
+                }
+                return { type: "date", time: moment(value, "DD MMM, YYYY").valueOf() };
+            };
+            const visitA = parseTime(a.prescription_started);
+            const visitB = parseTime(b.prescription_started);
+            // Sort minutes first (ascending)
+            if (visitA.type === "minutes" && visitB.type === "minutes") {
+                return visitA.time - visitB.time;
+            }
+            // Sort hours first (ascending)
+            if (visitA.type === "hours" && visitB.type === "hours") {
+                return visitA.time - visitB.time;
+            }
+            // Sort dates (descending)
+            if (visitA.type === "date" && visitB.type === "date") {
+                return visitB.time - visitA.time;
+            }
+            // Prioritize minutes over hours, and hours over dates
+            if (visitA.type === "minutes")
+                return -1;
+            if (visitB.type === "minutes")
+                return 1;
+            if (visitA.type === "hours")
+                return -1;
+            if (visitB.type === "hours")
+                return 1;
+            return 0;
+        });
+    }
+    /**
+     * Process follow-up visit data with special handling
+     */
+    processFollowUpVisitData(visit) {
+        if (!visit?.encounters?.length)
+            return null;
+        visit.cheif_complaint = this.getCheifComplaint(visit);
+        visit.visit_created = visit?.date_created
+            ? this.getCreatedAt(visit.date_created.replace('Z', '+0530'))
+            : this.getEncounterCreated(visit, visitTypes.COMPLETED_VISIT);
+        visit.person.age = this.calculateAge(visit.person.birthdate);
+        visit.completed = this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
+        visit.followUp = this.processFollowUpDate(this.getEncounterObs(visit.encounters, visitTypes.VISIT_NOTE, TableGridComponent.FOLLOW_UP_CONCEPT_ID)?.value_text);
+        visit.location = visit?.location?.name;
+        visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
+        return visit;
+    }
+    /**
+     * Scroll to top of the table container
+     */
+    scrollToTop() {
+        // Find the table container and scroll to top using unique component ID
+        const tableContainer = document.querySelector('#table-container-' + this.componentId);
+        if (tableContainer) {
+            tableContainer.scrollTop = 0;
+        }
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: TableGridComponent, deps: [{ token: AppointmentService }, { token: VisitService }, { token: CoreService }, { token: i3.ToastrService }, { token: i4.TranslateService }, { token: MindmapService }, { token: i7.DomSanitizer }, { token: AppConfigService }, { token: i9.NgxRolesService }, { token: i10.NgxUiLoaderService }, { token: 'environment' }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: TableGridComponent, selector: "lib-table-grid", inputs: { pluginConfigObs: "pluginConfigObs" }, outputs: { visitsCountDate: "visitsCountDate" }, viewQueries: [{ propertyName: "searchElement", first: true, predicate: ["searchInput"], descendants: true, static: true }, { propertyName: "tempPaginator", first: true, predicate: ["tempPaginator"], descendants: true }, { propertyName: "menuTrigger", first: true, predicate: MatMenuTrigger, descendants: true }, { propertyName: "datePicker", first: true, predicate: ["datePicker"], descendants: true }, { propertyName: "startDatePicker", first: true, predicate: ["startDatePicker"], descendants: true }, { propertyName: "endDatePicker", first: true, predicate: ["endDatePicker"], descendants: true }, { propertyName: "filterMenu", first: true, predicate: ["filterMenu"], descendants: true }], usesOnChanges: true, ngImport: i0, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title data-test-id=\"matPanelTitleAppointment\">\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\" data-test-id=\"divAnchorAppointment\"></div>\r\n      <div class=\"intel-accordion-title\" data-test-id=\"divAccordionTitleAppointment\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\" data-test-id=\"imgTableHeaderIconAppointment\">\r\n        <h6 class=\"mb-0 ml-2\" [attr.data-test-id]=\"pluginConfigObs.tableHeader\"> \r\n          {{ pluginConfigObs.tableHeader | translate }} ({{ getCurrentTotalCount() }})\r\n        </h6>\r\n        <mat-icon \r\n          aria-hidden=\"false\" \r\n          aria-label=\"help icon\" \r\n          matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" \r\n          matTooltipPosition=\"right\" \r\n          data-test-id=\"icoHelpAppointment\">\r\n          help_outline\r\n        </mat-icon>\r\n\r\n        <!-- Filter button -->\r\n        <div class=\"ml-auto filter-search-container\" data-test-id=\"divFilterContainerAppointment\">\r\n          <button \r\n            *ngIf=\"pluginConfigObs.filterObs.filterFlag\" \r\n            class=\"mat-stroked-button filter-btn\" \r\n            [matMenuTriggerFor]=\"filterMenu\" \r\n            (click)=\"$event.stopPropagation();\" \r\n            data-test-id=\"btnFilterAppointment\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\" data-test-id=\"imgFilterIconAppointment\"> \r\n            {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n\r\n          <!-- Filter Menu -->\r\n          <mat-menu #filterMenu=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\" data-test-id=\"menuFilterAppointment\">\r\n            <div class=\"toggle-buttons\" data-test-id=\"divToggleButtonsAppointment\">\r\n              <button \r\n                mat-button \r\n                [class.active]=\"mode === 'date'\" \r\n                (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\" \r\n                data-test-id=\"btnDateModeAppointment\">\r\n                {{'Date' | translate}}\r\n              </button>\r\n              <button \r\n                mat-button \r\n                [class.active]=\"mode === 'range'\" \r\n                (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\" \r\n                data-test-id=\"btnRangeModeAppointment\">\r\n                {{'Range' | translate}}\r\n              </button>\r\n            </div>\r\n\r\n            <!-- Date Mode -->\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\" data-test-id=\"divDateModeAppointment\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input \r\n                        type=\"text\" \r\n                        class=\"form-control\" \r\n                        [max]=\"maxDate\" \r\n                        formControlName=\"date\" \r\n                        [matDatepicker]=\"datePicker\" \r\n                        placeholder=\"{{'Select date' | translate}}\" \r\n                        aria-label=\"Date\" \r\n                        readonly \r\n                        data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #datePicker></mat-datepicker>\r\n                      <mat-datepicker-toggle \r\n                        matSuffix \r\n                        [for]=\"datePicker\" \r\n                        data-test-id=\"dpDate\" \r\n                        class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n            </div>\r\n\r\n            <!-- Range Mode -->\r\n            <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\" data-test-id=\"divRangeModeAppointment\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input \r\n                        type=\"text\" \r\n                        class=\"form-control\" \r\n                        [max]=\"filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate\" \r\n                        formControlName=\"startDate\" \r\n                        [matDatepicker]=\"startDatePicker\" \r\n                        placeholder=\"{{'Select start date'|translate}}\" \r\n                        readonly \r\n                        data-test-id=\"etSelStartDate\">\r\n                      <mat-datepicker #startDatePicker></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"startDatePicker\" class=\"datepicker-icon\" data-test-id=\"dpStartDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input \r\n                        type=\"text\" \r\n                        class=\"form-control\" \r\n                        [min]=\"filteredDateAndRangeForm.value.startDate\" \r\n                        [max]=\"maxDate\" \r\n                        formControlName=\"endDate\" \r\n                        [matDatepicker]=\"endDatePicker\" \r\n                        placeholder=\"{{'Select end date'|translate}}\" \r\n                        readonly \r\n                        data-test-id=\"etSelEndDate\">\r\n                      <mat-datepicker #endDatePicker></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"endDatePicker\" class=\"datepicker-icon\" data-test-id=\"dpEndDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"action-buttons\" data-test-id=\"divFilterActionBtnsAppointment\">\r\n              <button mat-button class=\"reset-btn\" (click)=\"resetDate();\" data-test-id=\"btnResetFilterAppointment\">{{ 'Reset'| translate }}</button>\r\n              <button mat-button class=\"apply-btn\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\" data-test-id=\"btnApplyFilterAppointment\">{{ 'Apply'| translate }}</button>\r\n            </div>\r\n          </mat-menu>\r\n\r\n          <!-- Search -->\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\" data-test-id=\"divSearchAppointment\">\r\n            <input \r\n              type=\"text\" \r\n              #searchInput \r\n              class=\"form-control\" \r\n              placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" \r\n              (keyup)=\"applyFilter($event)\" \r\n              (keydown.Space)=\"$event.stopPropagation()\" \r\n              (keydown.Enter)=\"$event.stopPropagation()\" \r\n              data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" *ngIf=\"!isFilterApplied\" data-test-id=\"icoSearchAppointment\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button \r\n                class=\"btnResetApSerach mat-icon-button\" \r\n                aria-label=\"Reset appointment search\"  \r\n                (click)=\"clearFilter()\"  \r\n                *ngIf=\"isFilterApplied\" \r\n                data-test-id=\"btnResetSearchAppointment\">\r\n                <mat-icon class=\"ml-0\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n\r\n  <div class=\"mat-elevation-z8\" data-test-id=\"divTableWrapperAppointment\">\r\n    <span *ngIf=\"tableLoader\">\r\n      <ngx-ui-loader \r\n        [loaderId]=\"'table-loader-' + pluginConfigObs.pluginConfigObsFlag\" \r\n        [fgsType]=\"'ball-spin-clockwise'\" \r\n        [fgsColor]=\"'#aba4a4'\" \r\n        [fgsPosition]=\"'center-center'\" \r\n        [fgsSize]=\"50\" \r\n        [overlayColor]=\"'rgb(255, 255, 255)'\" \r\n        [hasProgressBar]=\"false\"\r\n        [text]=\"('Loading'|translate) + ' ' + (pluginConfigObs.pluginConfigObsFlag|translate) + ' ' + ('data'|translate) + '...'\"\r\n        [textColor]=\"'#333'\"\r\n        [textPosition]=\"'center-center'\"\r\n        data-test-id=\"loaderAppointment\"\r\n      ></ngx-ui-loader>\r\n    </span>\r\n    <div class=\"table-container\" id=\"table-container-{{componentId}}\">\r\n      <table mat-table [dataSource]=\"paginatedDataSource\">\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <ng-container *ngIf=\"column.isSortable; else noSort\">\r\n          <th mat-header-cell *matHeaderCellDef (click)=\"handleSort(column.key, 'asc')\" [attr.data-test-id]=\"'th-' + column.key + '-' + pluginConfigObs.pluginConfigObsFlag\" class=\"sortable-header\">\r\n            {{ column.label | translate }}\r\n            <mat-icon class=\"sort-icon\">arrow_upward</mat-icon>\r\n          </th>\r\n        </ng-container>\r\n        <ng-template #noSort>\r\n          <th mat-header-cell *matHeaderCellDef  [attr.data-test-id]=\"'th-' + column.key+ '-' + pluginConfigObs.pluginConfigObsFlag\">\r\n            {{ column.label | translate }}\r\n          </th>\r\n        </ng-template>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\"  [attr.data-test-id]=\"'td-' + column.key + '-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name' && column.key !== 'visit_completed'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n          \r\n          <!-- This is for visit_completed column -->\r\n          <ng-container *ngIf=\"column.key === 'visit_completed'\">\r\n            <div class=\"d-flex align-items-center visit-completed-cell\"   [attr.data-test-id]=\"'td-visit_completed-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n              <img src=\"assets/svgs/green-pad.svg\" alt=\"Completed\" class=\"mr-2\" />\r\n              <span class=\"text-success\">\r\n                {{ element.completed }}\r\n              </span>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\"   [attr.data-test-id]=\"'td-patient_name-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.patientId : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.person.uuid : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\"  [attr.data-test-id]=\"'td-patient_img-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons; let k = index\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n                  [attr.data-test-id]=\"'btn-action-' + action.label+'-'+ k\" >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n      </table>\r\n    </div>\r\n    <mat-paginator \r\n      *ngIf=\"pluginConfigObs?.pluginConfigObsFlag === 'Appointment'\"\r\n      #tempPaginator \r\n      hidePageSize \r\n      [pageSizeOptions]=\"pageSizeOptions\"\r\n      [length]=\"getCurrentTotalCount()\" \r\n      [pageIndex]=\"currentPage\" \r\n      [pageSize]=\"itemsPerPage\"\r\n      [disabled]=\"isPaginationDisabled()\"\r\n      aria-label=\"Select page of periodic elements\">\r\n    </mat-paginator>\r\n    <mat-paginator \r\n      #tempPaginator \r\n      *ngIf=\"pluginConfigObs?.pluginConfigObsFlag !== 'Appointment'\"\r\n      hidePageSize \r\n      [pageSizeOptions]=\"pageSizeOptions\"\r\n      [length]=\"getCurrentTotalCount()\" \r\n      [pageIndex]=\"currentPage\" \r\n      [pageSize]=\"itemsPerPage\" \r\n      [disabled]=\"isPaginationDisabled()\"\r\n      (page)=\"pageEvent = getData($event)\"  \r\n      aria-label=\"Select page of periodic elements\">\r\n    </mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}.table-container{max-height:440px;overflow-y:auto;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}.visit-completed-cell{color:green!important;background-color:#d4edda!important}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"], dependencies: [{ kind: "directive", type: i11.RouterLink, selector: ":not(a):not(area)[routerLink]", inputs: ["queryParams", "fragment", "queryParamsHandling", "state", "relativeTo", "preserveFragment", "skipLocationChange", "replaceUrl", "routerLink"] }, { kind: "directive", type: i12.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i12.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i12.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i12.NgStyle, selector: "[ngStyle]", inputs: ["ngStyle"] }, { kind: "component", type: i13.MatPaginator, selector: "mat-paginator", inputs: ["disabled"], exportAs: ["matPaginator"] }, { kind: "directive", type: i14.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }, { kind: "directive", type: i5.MatSuffix, selector: "[matSuffix]" }, { kind: "component", type: i16.MatExpansionPanel, selector: "mat-expansion-panel", inputs: ["disabled", "expanded", "hideToggle", "togglePosition"], outputs: ["opened", "closed", "expandedChange", "afterExpand", "afterCollapse"], exportAs: ["matExpansionPanel"] }, { kind: "component", type: i16.MatExpansionPanelHeader, selector: "mat-expansion-panel-header", inputs: ["tabIndex", "expandedHeight", "collapsedHeight"] }, { kind: "directive", type: i16.MatExpansionPanelTitle, selector: "mat-panel-title" }, { kind: "component", type: i17.MatMenu, selector: "mat-menu", exportAs: ["matMenu"] }, { kind: "directive", type: i17.MatMenuTrigger, selector: "[mat-menu-trigger-for], [matMenuTriggerFor]", exportAs: ["matMenuTrigger"] }, { kind: "component", type: i18.MatTable, selector: "mat-table, table[mat-table]", exportAs: ["matTable"] }, { kind: "directive", type: i18.MatHeaderCellDef, selector: "[matHeaderCellDef]" }, { kind: "directive", type: i18.MatHeaderRowDef, selector: "[matHeaderRowDef]", inputs: ["matHeaderRowDef", "matHeaderRowDefSticky"] }, { kind: "directive", type: i18.MatColumnDef, selector: "[matColumnDef]", inputs: ["sticky", "matColumnDef"] }, { kind: "directive", type: i18.MatCellDef, selector: "[matCellDef]" }, { kind: "directive", type: i18.MatRowDef, selector: "[matRowDef]", inputs: ["matRowDefColumns", "matRowDefWhen"] }, { kind: "directive", type: i18.MatHeaderCell, selector: "mat-header-cell, th[mat-header-cell]" }, { kind: "directive", type: i18.MatCell, selector: "mat-cell, td[mat-cell]" }, { kind: "component", type: i18.MatHeaderRow, selector: "mat-header-row, tr[mat-header-row]", exportAs: ["matHeaderRow"] }, { kind: "component", type: i18.MatRow, selector: "mat-row, tr[mat-row]", exportAs: ["matRow"] }, { kind: "directive", type: i18.MatNoDataRow, selector: "ng-template[matNoDataRow]" }, { kind: "component", type: i19.MatIcon, selector: "mat-icon", inputs: ["color", "inline", "svgIcon", "fontSet", "fontIcon"], exportAs: ["matIcon"] }, { kind: "component", type: i8.MatDatepicker, selector: "mat-datepicker", exportAs: ["matDatepicker"] }, { kind: "directive", type: i8.MatDatepickerInput, selector: "input[matDatepicker]", inputs: ["matDatepicker", "min", "max", "matDatepickerFilter"], exportAs: ["matDatepickerInput"] }, { kind: "component", type: i8.MatDatepickerToggle, selector: "mat-datepicker-toggle", inputs: ["for", "tabIndex", "aria-label", "disabled", "disableRipple"], exportAs: ["matDatepickerToggle"] }, { kind: "directive", type: i8.MatDatepickerToggleIcon, selector: "[matDatepickerToggleIcon]" }, { kind: "directive", type: i21.ɵNgNoValidate, selector: "form:not([ngNoForm]):not([ngNativeValidate])" }, { kind: "directive", type: i21.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i21.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i21.NgControlStatusGroup, selector: "[formGroupName],[formArrayName],[ngModelGroup],[formGroup],form:not([ngNoForm]),[ngForm]" }, { kind: "directive", type: i21.FormGroupDirective, selector: "[formGroup]", inputs: ["formGroup"], outputs: ["ngSubmit"], exportAs: ["ngForm"] }, { kind: "directive", type: i21.FormControlName, selector: "[formControlName]", inputs: ["formControlName", "disabled", "ngModel"], outputs: ["ngModelChange"] }, { kind: "component", type: i10.NgxUiLoaderComponent, selector: "ngx-ui-loader", inputs: ["bgsColor", "bgsOpacity", "bgsPosition", "bgsSize", "bgsTemplate", "bgsType", "fgsColor", "fgsPosition", "fgsSize", "fgsTemplate", "fgsType", "gap", "loaderId", "logoPosition", "logoSize", "logoUrl", "overlayBorderRadius", "overlayColor", "pbColor", "pbDirection", "pbThickness", "hasProgressBar", "text", "textColor", "textPosition"] }, { kind: "directive", type: DefaultImageDirective, selector: "img[src]", inputs: ["src"] }, { kind: "pipe", type: i4.TranslatePipe, name: "translate" }], changeDetection: i0.ChangeDetectionStrategy.OnPush });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: TableGridComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'lib-table-grid', changeDetection: ChangeDetectionStrategy.OnPush, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title>\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\"></div>\r\n      <div class=\"intel-accordion-title\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\">\r\n        <h6 class=\"mb-0 ml-2\">{{ pluginConfigObs.tableHeader | translate }} ({{ visitsLengthCount }})</h6>\r\n        <mat-icon aria-hidden=\"false\" aria-label=\"help icon\" matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" matTooltipPosition=\"right\" data-test-id=\"matIcoHelpAppointment\">help_outline</mat-icon>\r\n        <div class=\"ml-auto filter-search-container\">\r\n          <button *ngIf=\"pluginConfigObs.filterObs.filterFlag\" class=\"mat-stroked-button\"[matMenuTriggerFor]=\"filterMenu1\" class=\"filter-btn\" (click)=\"$event.stopPropagation();\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\"> {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n          <mat-menu #filterMenu1=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\">\r\n            <div class=\"toggle-buttons\">\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'date'\" (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Date' | translate}}</span></span></button>\r\n              <button class=\"mat-focus-indicator mat-button mat-button-base\" class=\"mat-focus-indicator mat-button mat-button-base\" mat-button [class.active]=\"mode === 'range'\" (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\"><span class=\"mat-button-wrapper\"><span class=\"mat-button-wrapper\">{{'Range' | translate}}</span></span></button>\r\n            </div>\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input type=\"text\" class=\"form-control\" [max]=\"maxDate\" formControlName=\"date\" [matDatepicker]=\"dobdp\" placeholder=\"{{'Select date' | translate}}\" aria-label=\"Date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #dobdp></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"dobdp\" data-test-id=\"dpDate\" class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n              </div>\r\n              <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\">\r\n                <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [max]=\"filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate\" formControlName=\"startDate\" [matDatepicker]=\"picker1\" placeholder=\"{{'Select start date'|translate}}\" aria-label=\"Start date\" aria-describedby=\"basic-addon1\" readonly data-test-id=\"etSelStartDate\">\r\n                        <mat-datepicker #picker1></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker1\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"form-date\">\r\n                    <div class=\"input-date\">\r\n                      <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                      <div class=\"input-wrapper\">\r\n                        <input type=\"text\" class=\"form-control\" [min]=\"filteredDateAndRangeForm.value.startDate\" [max]=\"maxDate\" formControlName=\"endDate\" [matDatepicker]=\"picker2\" placeholder=\"{{'Select end date'|translate}}\" aria-label=\"End date\" aria-describedby=\"basic-addon2\" readonly data-test-id=\"etSelEndDate\">\r\n                        <mat-datepicker #picker2></mat-datepicker>\r\n                        <mat-datepicker-toggle matSuffix [for]=\"picker2\" class=\"datepicker-icon\">\r\n                          <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                        </mat-datepicker-toggle>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </form>\r\n              </div>\r\n            <div class=\"action-buttons\">\r\n              <button mat-button class=\"mat-focus-indicator reset-btn mat-button mat-button-base\" (click)=\"resetDate();\"><span class=\"mat-button-wrapper\">{{ 'Reset'| translate }}</span></button>\r\n              <button mat-button class=\"mat-focus-indicator apply-btn mat-button mat-button-base\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\"><span class=\"mat-button-wrapper\">{{ 'Apply'| translate }}</span></button>\r\n            </div>\r\n          </mat-menu>\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\">\r\n            <input type=\"text\" #searchInput class=\"form-control\" placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" aria-label=\"search1\" aria-describedby=\"basic-addon1\" (keyup)=\"applyFilter($event)\" (keydown.Space)=\"$event.stopPropagation()\" (keydown.Enter)=\"$event.stopPropagation()\" data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" id=\"basic-addon1\"  *ngIf=\"!isFilterApplied\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button data-test-id=\"btnResetApSerach\"  class=\"btnResetApSerach\" class=\"btnResetApSerach\" class=\"mat-icon-button\" aria-label=\"Reset appointment search\"  (click)=\"clearFilter()\"  *ngIf=\"isFilterApplied\">\r\n                <mat-icon class=\"ml-0\" style=\"line-height: normal;\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n  <div class=\"mat-elevation-z8\">\r\n    <table mat-table [dataSource]=\"dataSource\" #tableMatSort=\"matSort\" matSort>\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <ng-container *ngIf=\"column.isSortable; else noSort\">\r\n          <th mat-header-cell *matHeaderCellDef mat-sort-header matSortDirection=\"asc\">\r\n            {{ column.label | translate }}\r\n          </th>\r\n        </ng-container>\r\n        <ng-template #noSort>\r\n          <th mat-header-cell *matHeaderCellDef>\r\n            {{ column.label | translate }}\r\n          </th>\r\n        </ng-template>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\" [attr.data-test-id]=\"'td' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.patientId : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.person.uuid : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n              >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n    </table>\r\n    <mat-paginator #tempPaginator hidePageSize [pageSizeOptions]=\"pageSizeOptions\" aria-label=\"Select page of periodic elements\"></mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>\r\n", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"] }]
-        }], ctorParameters: function () { return [{ type: AppointmentService }, { type: VisitService }, { type: CoreService }, { type: i3.ToastrService }, { type: i4.TranslateService }, { type: MindmapService }, { type: i7.DomSanitizer }, { type: AppConfigService }, { type: i9.NgxRolesService }, { type: undefined, decorators: [{
+            args: [{ selector: 'lib-table-grid', changeDetection: ChangeDetectionStrategy.OnPush, template: "<mat-expansion-panel [expanded]=\"true\" data-test-id=\"matExpAppointment\">\r\n  <mat-expansion-panel-header data-test-id=\"matExpHeaderAppointment\">\r\n    <mat-panel-title data-test-id=\"matPanelTitleAppointment\">\r\n      <div id=\"{{pluginConfigObs.anchorId}}\" class=\"anchor-con\" data-test-id=\"divAnchorAppointment\"></div>\r\n      <div class=\"intel-accordion-title\" data-test-id=\"divAccordionTitleAppointment\">\r\n        <img src=\"{{ pluginConfigObs.tableHeaderIcon }}\" alt=\"\" width=\"44px\" data-test-id=\"imgTableHeaderIconAppointment\">\r\n        <h6 class=\"mb-0 ml-2\" [attr.data-test-id]=\"pluginConfigObs.tableHeader\"> \r\n          {{ pluginConfigObs.tableHeader | translate }} ({{ getCurrentTotalCount() }})\r\n        </h6>\r\n        <mat-icon \r\n          aria-hidden=\"false\" \r\n          aria-label=\"help icon\" \r\n          matTooltip=\"{{ (pluginConfigObs.tooltipLabel | translate) }}\" \r\n          matTooltipPosition=\"right\" \r\n          data-test-id=\"icoHelpAppointment\">\r\n          help_outline\r\n        </mat-icon>\r\n\r\n        <!-- Filter button -->\r\n        <div class=\"ml-auto filter-search-container\" data-test-id=\"divFilterContainerAppointment\">\r\n          <button \r\n            *ngIf=\"pluginConfigObs.filterObs.filterFlag\" \r\n            class=\"mat-stroked-button filter-btn\" \r\n            [matMenuTriggerFor]=\"filterMenu\" \r\n            (click)=\"$event.stopPropagation();\" \r\n            data-test-id=\"btnFilterAppointment\">\r\n            <img src=\"{{pluginConfigObs.filterObs.filterIcon}}\" alt=\"\" data-test-id=\"imgFilterIconAppointment\"> \r\n            {{( pluginConfigObs.filterObs.filterLabel| translate)}}\r\n          </button>\r\n\r\n          <!-- Filter Menu -->\r\n          <mat-menu #filterMenu=\"matMenu\" class=\"custom-menu\" [hasBackdrop]=\"true\" xPosition=\"before\" data-test-id=\"menuFilterAppointment\">\r\n            <div class=\"toggle-buttons\" data-test-id=\"divToggleButtonsAppointment\">\r\n              <button \r\n                mat-button \r\n                [class.active]=\"mode === 'date'\" \r\n                (click)=\"setMode('date'); $event.stopPropagation(); resetDate(true)\" \r\n                data-test-id=\"btnDateModeAppointment\">\r\n                {{'Date' | translate}}\r\n              </button>\r\n              <button \r\n                mat-button \r\n                [class.active]=\"mode === 'range'\" \r\n                (click)=\"setMode('range'); $event.stopPropagation(); resetDate(true)\" \r\n                data-test-id=\"btnRangeModeAppointment\">\r\n                {{'Range' | translate}}\r\n              </button>\r\n            </div>\r\n\r\n            <!-- Date Mode -->\r\n            <div *ngIf=\"mode === 'date'\" class=\"date-view\" (click)=\"$event.stopPropagation()\" data-test-id=\"divDateModeAppointment\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Select date' | translate}}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input \r\n                        type=\"text\" \r\n                        class=\"form-control\" \r\n                        [max]=\"maxDate\" \r\n                        formControlName=\"date\" \r\n                        [matDatepicker]=\"datePicker\" \r\n                        placeholder=\"{{'Select date' | translate}}\" \r\n                        aria-label=\"Date\" \r\n                        readonly \r\n                        data-test-id=\"etDate\"/>\r\n                      <mat-datepicker #datePicker></mat-datepicker>\r\n                      <mat-datepicker-toggle \r\n                        matSuffix \r\n                        [for]=\"datePicker\" \r\n                        data-test-id=\"dpDate\" \r\n                        class=\"datepicker-icon\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n            </div>\r\n\r\n            <!-- Range Mode -->\r\n            <div *ngIf=\"mode === 'range'\" class=\"range-view\" (click)=\" $event.stopPropagation()\" data-test-id=\"divRangeModeAppointment\">\r\n              <form [formGroup]=\"filteredDateAndRangeForm\">\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'Start date' | translate }}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input \r\n                        type=\"text\" \r\n                        class=\"form-control\" \r\n                        [max]=\"filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate\" \r\n                        formControlName=\"startDate\" \r\n                        [matDatepicker]=\"startDatePicker\" \r\n                        placeholder=\"{{'Select start date'|translate}}\" \r\n                        readonly \r\n                        data-test-id=\"etSelStartDate\">\r\n                      <mat-datepicker #startDatePicker></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"startDatePicker\" class=\"datepicker-icon\" data-test-id=\"dpStartDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n                <div class=\"form-date\">\r\n                  <div class=\"input-date\">\r\n                    <label class=\"label-text\">{{ 'End date' | translate }}</label>\r\n                    <div class=\"input-wrapper\">\r\n                      <input \r\n                        type=\"text\" \r\n                        class=\"form-control\" \r\n                        [min]=\"filteredDateAndRangeForm.value.startDate\" \r\n                        [max]=\"maxDate\" \r\n                        formControlName=\"endDate\" \r\n                        [matDatepicker]=\"endDatePicker\" \r\n                        placeholder=\"{{'Select end date'|translate}}\" \r\n                        readonly \r\n                        data-test-id=\"etSelEndDate\">\r\n                      <mat-datepicker #endDatePicker></mat-datepicker>\r\n                      <mat-datepicker-toggle matSuffix [for]=\"endDatePicker\" class=\"datepicker-icon\" data-test-id=\"dpEndDate\">\r\n                        <img matDatepickerToggleIcon src=\"assets/svgs/calendar-date.svg\" alt=\"\">\r\n                      </mat-datepicker-toggle>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"action-buttons\" data-test-id=\"divFilterActionBtnsAppointment\">\r\n              <button mat-button class=\"reset-btn\" (click)=\"resetDate();\" data-test-id=\"btnResetFilterAppointment\">{{ 'Reset'| translate }}</button>\r\n              <button mat-button class=\"apply-btn\" (click)=\"applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)\" data-test-id=\"btnApplyFilterAppointment\">{{ 'Apply'| translate }}</button>\r\n            </div>\r\n          </mat-menu>\r\n\r\n          <!-- Search -->\r\n          <div class=\"input-group search-bar ml-auto\" (click)=\"$event.stopPropagation();\" data-test-id=\"divSearchAppointment\">\r\n            <input \r\n              type=\"text\" \r\n              #searchInput \r\n              class=\"form-control\" \r\n              placeholder=\"{{ pluginConfigObs.searchPlaceHolder | translate }}\" \r\n              (keyup)=\"applyFilter($event)\" \r\n              (keydown.Space)=\"$event.stopPropagation()\" \r\n              (keydown.Enter)=\"$event.stopPropagation()\" \r\n              data-test-id=\"etSearchAppointmentDashboard\">\r\n            <div class=\"input-group-append\">\r\n              <span class=\"input-group-text\" *ngIf=\"!isFilterApplied\" data-test-id=\"icoSearchAppointment\">\r\n                <img src=\"assets/svgs/search-icon.svg\" alt=\"\" width=\"20px\" height=\"20px\">\r\n              </span>\r\n              <button \r\n                class=\"btnResetApSerach mat-icon-button\" \r\n                aria-label=\"Reset appointment search\"  \r\n                (click)=\"clearFilter()\"  \r\n                *ngIf=\"isFilterApplied\" \r\n                data-test-id=\"btnResetSearchAppointment\">\r\n                <mat-icon class=\"ml-0\">close</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </mat-panel-title>\r\n  </mat-expansion-panel-header>\r\n\r\n  <div class=\"mat-elevation-z8\" data-test-id=\"divTableWrapperAppointment\">\r\n    <span *ngIf=\"tableLoader\">\r\n      <ngx-ui-loader \r\n        [loaderId]=\"'table-loader-' + pluginConfigObs.pluginConfigObsFlag\" \r\n        [fgsType]=\"'ball-spin-clockwise'\" \r\n        [fgsColor]=\"'#aba4a4'\" \r\n        [fgsPosition]=\"'center-center'\" \r\n        [fgsSize]=\"50\" \r\n        [overlayColor]=\"'rgb(255, 255, 255)'\" \r\n        [hasProgressBar]=\"false\"\r\n        [text]=\"('Loading'|translate) + ' ' + (pluginConfigObs.pluginConfigObsFlag|translate) + ' ' + ('data'|translate) + '...'\"\r\n        [textColor]=\"'#333'\"\r\n        [textPosition]=\"'center-center'\"\r\n        data-test-id=\"loaderAppointment\"\r\n      ></ngx-ui-loader>\r\n    </span>\r\n    <div class=\"table-container\" id=\"table-container-{{componentId}}\">\r\n      <table mat-table [dataSource]=\"paginatedDataSource\">\r\n\r\n      <ng-container *ngFor=\"let column of displayedAppointmentColumns\" [matColumnDef]=\"column.key\">\r\n        <ng-container *ngIf=\"column.isSortable; else noSort\">\r\n          <th mat-header-cell *matHeaderCellDef (click)=\"handleSort(column.key, 'asc')\" [attr.data-test-id]=\"'th-' + column.key + '-' + pluginConfigObs.pluginConfigObsFlag\" class=\"sortable-header\">\r\n            {{ column.label | translate }}\r\n            <mat-icon class=\"sort-icon\">arrow_upward</mat-icon>\r\n          </th>\r\n        </ng-container>\r\n        <ng-template #noSort>\r\n          <th mat-header-cell *matHeaderCellDef  [attr.data-test-id]=\"'th-' + column.key+ '-' + pluginConfigObs.pluginConfigObsFlag\">\r\n            {{ column.label | translate }}\r\n          </th>\r\n        </ng-template>\r\n\r\n        <td mat-cell *matCellDef=\"let element; let j = index;\"  [attr.data-test-id]=\"'td-' + column.key + '-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n          <ng-container *ngIf=\"column.key !== 'patient_name' && column.key !== 'visit_completed'\">\r\n            <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n            </div>\r\n          </ng-container>\r\n          \r\n          <!-- This is for visit_completed column -->\r\n          <ng-container *ngIf=\"column.key === 'visit_completed'\">\r\n            <div class=\"d-flex align-items-center visit-completed-cell\"   [attr.data-test-id]=\"'td-visit_completed-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n              <img src=\"assets/svgs/green-pad.svg\" alt=\"Completed\" class=\"mr-2\" />\r\n              <span class=\"text-success\">\r\n                {{ element.completed }}\r\n              </span>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Patient Name Column -->\r\n          <ng-container *ngIf=\"column.key === 'patient_name'\">\r\n            <div class=\"d-flex align-items-center\"   [attr.data-test-id]=\"'td-patient_name-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n              <img *ngIf=\"element.patientId\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.patientId : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\">\r\n              <img *ngIf=\"pluginConfigObs.pluginConfigObsFlag !== 'Appointment'\" src=\"{{ checkPatientRegField('Profile Photo') ? baseURL + '/personimage/' + element.person.uuid : '' }}\" alt=\"\" width=\"32px\" height=\"32px\" style=\"border-radius: 50%;\"  [attr.data-test-id]=\"'td-patient_img-' + pluginConfigObs.pluginConfigObsFlag + '-' + j\">\r\n\r\n              <div class=\"float-left\" \r\n                [innerHTML]=\"renderHtmlContent(column, element)\" \r\n                [ngClass]=\"getClasses(column, element)\">\r\n              </div>\r\n            </div>\r\n          </ng-container>\r\n\r\n          <!-- Telephone Column -->\r\n          <ng-container *ngIf=\"column.key === 'telephone' && element.telephone\">\r\n            <a (click)=\"openWhatsApp($event, element.telephone)\" class=\"float-left icon-btn m-0\" [attr.data-test-id]=\"'linkPatientWhatsApp' + j\">\r\n              <img src=\"assets/svgs/whatsapp-green.svg\" alt=\"WhatsApp\" />\r\n            </a>\r\n          </ng-container>\r\n\r\n          <!-- Actions Column -->\r\n          <ng-container *ngIf=\"column.key === 'actions'\">\r\n            <div class=\"actions-btn-wrap d-flex align-items-center\">\r\n              <button\r\n                *ngFor=\"let action of column.actionButtons; let k = index\"\r\n                [ngStyle]=\"{\r\n                  color: action.style?.color,\r\n                  backgroundColor: action.style?.backgroundColor\r\n                }\"\r\n                class=\"action-btn mr-2\"\r\n                type=\"button\"\r\n                (click)=\"$event.stopPropagation(); handleAction(action, element)\"\r\n                  [attr.data-test-id]=\"'btn-action-' + action.label+'-'+ k\" >\r\n                {{ action.label | translate }}\r\n              </button>\r\n            </div>\r\n          </ng-container>\r\n        </td>\r\n      </ng-container>\r\n    \r\n\r\n      <!-- No Data Row -->\r\n      <tr class=\"mat-row\" *matNoDataRow>\r\n        <td class=\"mat-cell text-center\" [attr.colspan]=\"displayedColumns.length\">\r\n          {{ pluginConfigObs.noRecordFound | translate }}\r\n        </td>\r\n      </tr>\r\n\r\n      <!-- Row Definitions -->\r\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\r\n      <tr mat-row *matRowDef=\"let row; let x = index; columns: displayedColumns;\" [attr.data-test-id]=\"'tr' + x\" [routerLink]=\"['/dashboard/visit-summary', row.uuid]\"></tr>\r\n      \r\n      </table>\r\n    </div>\r\n    <mat-paginator \r\n      *ngIf=\"pluginConfigObs?.pluginConfigObsFlag === 'Appointment'\"\r\n      #tempPaginator \r\n      hidePageSize \r\n      [pageSizeOptions]=\"pageSizeOptions\"\r\n      [length]=\"getCurrentTotalCount()\" \r\n      [pageIndex]=\"currentPage\" \r\n      [pageSize]=\"itemsPerPage\"\r\n      [disabled]=\"isPaginationDisabled()\"\r\n      aria-label=\"Select page of periodic elements\">\r\n    </mat-paginator>\r\n    <mat-paginator \r\n      #tempPaginator \r\n      *ngIf=\"pluginConfigObs?.pluginConfigObsFlag !== 'Appointment'\"\r\n      hidePageSize \r\n      [pageSizeOptions]=\"pageSizeOptions\"\r\n      [length]=\"getCurrentTotalCount()\" \r\n      [pageIndex]=\"currentPage\" \r\n      [pageSize]=\"itemsPerPage\" \r\n      [disabled]=\"isPaginationDisabled()\"\r\n      (page)=\"pageEvent = getData($event)\"  \r\n      aria-label=\"Select page of periodic elements\">\r\n    </mat-paginator>\r\n  </div>\r\n</mat-expansion-panel>", styles: [".mat-elevation-z8{box-shadow:none;width:100%;overflow-x:auto}.table-container{max-height:440px;overflow-y:auto;overflow-x:auto}table{width:100%;font-family:DM Sans}th.mat-header-cell{border:none;font-size:14px!important;font-weight:700;color:var(--color-gray);height:21px}th.mat-header-cell,td.mat-cell,td.mat-footer-cell{border:none;min-width:60px;white-space:nowrap;padding-right:24px}th.mat-header-cell span.alert-danger,td.mat-cell span.alert-danger,td.mat-footer-cell span.alert-danger{color:var(--color-red);font-weight:700;background:transparent;border:none}th.mat-header-cell span.alert-success,td.mat-cell span.alert-success,td.mat-footer-cell span.alert-success{color:var(--color-green);font-weight:700;background:transparent;border:none}td.mat-cell{font-size:16px}tr.mat-row,tr.mat-footer-row{height:88px;border-radius:8px;cursor:pointer}tr.mat-row.upcoming{background:#e6fff3!important}tr.mat-row:nth-child(odd){background:#f7f7fa}td:first-child,th:first-child{border-radius:8px 0 0 8px}td:last-child,th:last-child{border-radius:0 8px 8px 0}.actions-btn-wrap .action-btn{outline:none;border:none;height:36px;min-width:102px;padding:6px 8px;background:#fff;border-radius:4px;color:var(--color-black);font-family:DM Sans;font-size:16px}.actions-btn-wrap .blue-btn{background:var(--color-lightGray);color:var(--color-darkBlue)}.actions-btn-wrap .pink-btn{background:var(--color-lightPink);color:var(--color-red)}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded .input-group{display:flex}.input-group{background:var(--color-white);border:1px solid rgba(127,123,146,.5);border-radius:6px;height:46px;align-items:center;max-width:60vw;width:300px;display:none}.input-group .input-group-text{background:none;border:none;cursor:default}.input-group .form-control{border:none;outline:none;background:transparent;font-size:16px;line-height:150%;padding-left:16px}.input-group .form-control:focus{box-shadow:none}.mat-expansion-panel{background:#fff;box-shadow:0 4px 24px #1f1c3a14;border-radius:20px!important;padding:24px;margin-bottom:24px}.mat-expansion-panel .mat-expansion-panel-header{padding:0}.mat-expansion-panel .mat-expansion-panel-header .mat-content{align-items:center}.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:48px}.mat-expansion-panel .mat-expansion-panel-header:hover{background:transparent!important}.mat-expansion-panel .intel-accordion-title{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;width:100%}.mat-expansion-panel .intel-accordion-title .mat-icon{height:20px;width:20px;font-size:20px;color:#461d90;margin-left:8px}.mat-expansion-panel .intel-accordion-title h6{font-size:18px;font-weight:700;color:#000}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body{padding:0;margin-top:24px;position:relative}.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body:after{content:\"\";position:absolute;top:0;height:1px;left:0;right:0;background:#efe8ff}.anchor-con{position:absolute;top:-120px;left:0}.visit-completed-cell{color:green!important;background-color:#d4edda!important}@media (max-width: 768px){.input-group{width:100%;max-width:100%;margin:10px 0}.mat-expansion-panel .mat-expansion-panel-header,.mat-expansion-panel .mat-expansion-panel-header.mat-expanded{height:fit-content}.info-icon{display:none}.anchor-con{top:-100px}}.matIconButton{border:none;background:transparent}::ng-deep .custom-menu{background:var(--color-white);border-radius:8px!important;padding:16px;width:352px;box-shadow:0 4px 8px #7f7b9229}.mat-expansion-panel.mat-expanded .mat-expansion-panel-header .filter-btn{display:flex!important}.btnResetApSerach{display:none}.filter-btn{background:none;align-items:center;border:1px solid rgba(127,123,146,.5);border-radius:6px;color:#2e1e91;font-weight:500;padding:4px 12px;white-space:nowrap;height:46px;display:none;gap:4px}.toggle-buttons{display:flex;justify-content:space-between;margin-bottom:16px;gap:16px}button.mat-button,.action-buttons button.mat-button{flex:1;color:#2e1e91;background:#fff;border-radius:8px;font-family:DM Sans;font-size:14px;font-weight:500;border:1.33px solid #EFE8FF}.action-buttons button.mat-button.reset-btn{font-size:12px;font-weight:700;margin:0 0 0 20px;width:96px}.action-buttons button.mat-button.apply-btn{color:#fff;background:var(--color-darkBlue);font-size:12px;font-weight:700;width:96px}button.mat-button.active{background:#efe8ff;color:#2e1e91}button.mat-button .reset-btn{color:var(--color-darkBlue)}.action-buttons{display:flex;justify-content:space-between;gap:16px}.reset-btn{color:var(--color-darkBlue);background:#f5f5f5;border-radius:8px}.filter-search-container{display:flex;align-items:center;gap:1rem}.form-date{margin-bottom:16px}.input-wrapper{position:relative;display:flex;align-items:center}.input-wrapper .form-control{width:100%;padding-right:40px;border:1px solid rgba(178,175,190,.2);background:transparent;border-radius:8px;height:48px;font-size:16px;color:var(--color-darkestBlue)}.datepicker-icon{position:absolute;right:4px;top:50%;transform:translateY(-50%);cursor:pointer;background:transparent;border:none}.form-control:focus{box-shadow:none}.label-text{font-size:14px;margin-bottom:8px;color:#7f7b92}.userImage{width:32px;height:32px;border-radius:50%}.red-pill{display:flex;flex-direction:row;align-items:center;background:#ffe8e8;border-radius:4px;height:32px;color:#ea315b;padding:4px 6px;width:fit-content}.left{text-align:left}.chip{display:flex;flex-direction:row;align-items:center;border-radius:4px;height:32px;padding:4px 6px;width:fit-content}.chip.green{color:#0fd197}.chip.blue{color:#2e1e91}.chip-item-blue{background:var(--color-lightGray)}.chip-item-green{background:#e6fff3}\n"] }]
+        }], ctorParameters: function () { return [{ type: AppointmentService }, { type: VisitService }, { type: CoreService }, { type: i3.ToastrService }, { type: i4.TranslateService }, { type: MindmapService }, { type: i7.DomSanitizer }, { type: AppConfigService }, { type: i9.NgxRolesService }, { type: i10.NgxUiLoaderService }, { type: undefined, decorators: [{
                     type: Inject,
                     args: ['environment']
                 }] }]; }, propDecorators: { pluginConfigObs: [{
                 type: Input
-            }], paginator: [{
-                type: ViewChild,
-                args: [MatPaginator]
             }], searchElement: [{
                 type: ViewChild,
                 args: ['searchInput', { static: true }]
@@ -2214,9 +2498,18 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
             }], menuTrigger: [{
                 type: ViewChild,
                 args: [MatMenuTrigger]
-            }], tableMatSort: [{
+            }], datePicker: [{
                 type: ViewChild,
-                args: ['tableMatSort', { static: true }]
+                args: ['datePicker']
+            }], startDatePicker: [{
+                type: ViewChild,
+                args: ['startDatePicker']
+            }], endDatePicker: [{
+                type: ViewChild,
+                args: ['endDatePicker']
+            }], filterMenu: [{
+                type: ViewChild,
+                args: ['filterMenu']
             }], visitsCountDate: [{
                 type: Output
             }] } });
@@ -2333,7 +2626,8 @@ class IhLibraryModule {
             MatNativeDateModule,
             FormsModule,
             ReactiveFormsModule,
-            MatSortModule], exports: [DefaultImageDirective,
+            MatSortModule,
+            NgxUiLoaderModule], exports: [DefaultImageDirective,
             IhLibraryComponent,
             TableGridComponent,
             MatPaginatorModule,
@@ -2399,7 +2693,8 @@ class IhLibraryModule {
             MatNativeDateModule,
             FormsModule,
             ReactiveFormsModule,
-            MatSortModule, MatPaginatorModule,
+            MatSortModule,
+            NgxUiLoaderModule, MatPaginatorModule,
             MatTooltipModule,
             MatInputModule,
             MatFormFieldModule,
@@ -2469,7 +2764,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImpor
                         MatNativeDateModule,
                         FormsModule,
                         ReactiveFormsModule,
-                        MatSortModule
+                        MatSortModule,
+                        NgxUiLoaderModule
                     ],
                     exports: [
                         DefaultImageDirective,
