@@ -359,6 +359,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      */
     emitVisitsCount(visitsCount: number): void;
     getData(event?: PageEvent): PageEvent;
+    getAppointmentData(event: PageEvent): PageEvent;
     /**
      * Fetch more data from API based on current plugin type
      */
