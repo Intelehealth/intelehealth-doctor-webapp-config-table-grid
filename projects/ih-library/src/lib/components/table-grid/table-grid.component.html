@@ -139,27 +139,27 @@
 
           <!-- Search -->
           <div class="input-group search-bar ml-auto" (click)="$event.stopPropagation();" data-test-id="divSearchAppointment">
-            <input 
-              type="text" 
-              #searchInput 
-              class="form-control" 
-              placeholder="{{ pluginConfigObs.searchPlaceHolder | translate }}" 
-              (keyup)="applyFilter($event)" 
-              (keydown.Space)="$event.stopPropagation()" 
-              (keydown.Enter)="$event.stopPropagation()" 
+            <input
+              type="text"
+              #searchInput
+              class="form-control"
+              placeholder="{{ pluginConfigObs.searchPlaceHolder | translate }}"
+              (keyup)="applyFilter($event)"
+              (keydown.Space)="$event.stopPropagation()"
+              (keydown.Enter)="$event.stopPropagation()"
               data-test-id="etSearchAppointmentDashboard">
             <div class="input-group-append">
-              <span class="input-group-text" *ngIf="!isFilterApplied" data-test-id="icoSearchAppointment">
-                <img src="assets/svgs/search-icon.svg" alt="" width="20px" height="20px">
-              </span>
-              <button 
-                class="btnResetApSerach mat-icon-button" 
-                aria-label="Reset appointment search"  
-                (click)="clearFilter()"  
-                *ngIf="isFilterApplied" 
+              <button
+                class="btnResetApSerach mat-icon-button"
+                aria-label="Reset appointment search"
+                (click)="clearFilter(); $event.stopPropagation();"
+                *ngIf="isFilterApplied"
                 data-test-id="btnResetSearchAppointment">
                 <mat-icon class="ml-0">close</mat-icon>
               </button>
+              <span class="input-group-text search-icon-span" data-test-id="icoSearchAppointment">
+                <img src="assets/svgs/search-icon.svg" alt="" width="20px" height="20px" data-test-id="imgSearchIconAppointment">
+              </span>
             </div>
           </div>
         </div>

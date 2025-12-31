@@ -251,8 +251,30 @@
     display: flex !important;
   }
   
-  .btnResetApSerach{
-    display: none;
+  .btnResetApSerach {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #7F7B92;
+    }
+
+    &:hover .mat-icon {
+      color: #2E1E91;
+    }
+  }
+
+  .search-icon-span {
+    pointer-events: none;
   }
   
   .filter-btn {
