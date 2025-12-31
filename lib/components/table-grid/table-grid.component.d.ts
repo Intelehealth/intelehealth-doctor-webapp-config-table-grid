@@ -52,6 +52,9 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     panelExpanded: boolean;
     mode: 'date' | 'range';
     maxDate: Date;
+    dateErrorMessage: string;
+    startDateErrorMessage: string;
+    endDateErrorMessage: string;
     appointments: AppointmentModel[];
     priorityVisits: CustomVisitModel[];
     awaitingVisits: CustomVisitModel[];
@@ -359,7 +362,6 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      */
     emitVisitsCount(visitsCount: number): void;
     getData(event?: PageEvent): PageEvent;
-    getAppointmentData(event: PageEvent): PageEvent;
     /**
      * Fetch more data from API based on current plugin type
      */
