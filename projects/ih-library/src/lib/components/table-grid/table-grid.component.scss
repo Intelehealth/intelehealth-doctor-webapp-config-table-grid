@@ -423,3 +423,15 @@
   .chip-item-green {
     background: #E6FFF3;
   }
+
+  .error-message {
+    color: #ea315b;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    font-family: DM Sans;
+  }
+
+  .error-border {
+    border-color: #ea315b !important;
+  }

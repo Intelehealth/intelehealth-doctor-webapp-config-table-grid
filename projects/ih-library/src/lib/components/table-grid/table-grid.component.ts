@@ -62,6 +62,9 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   panelExpanded: boolean = true;
   mode: 'date' | 'range' = 'date';
   maxDate: Date;
+  dateErrorMessage: string = '';
+  startDateErrorMessage: string = '';
+  endDateErrorMessage: string = '';
 
   appointments: AppointmentModel[] = [];
   priorityVisits: CustomVisitModel[] = [];
@@ -623,6 +626,10 @@ export class TableGridComponent implements OnInit, AfterViewInit {
    */
   setMode(mode: 'date' | 'range') {
     this.mode = mode;
+    // Clear error messages when switching modes
+    this.dateErrorMessage = '';
+    this.startDateErrorMessage = '';
+    this.endDateErrorMessage = '';
   }
 
 
@@ -679,6 +686,35 @@ export class TableGridComponent implements OnInit, AfterViewInit {
     const startDate = this.filteredDateAndRangeForm.get('startDate')?.value;
     const endDate = this.filteredDateAndRangeForm.get('endDate')?.value;
 
+    // Clear previous error messages
+    this.dateErrorMessage = '';
+    this.startDateErrorMessage = '';
+    this.endDateErrorMessage = '';
+
+    // Validation for date mode
+    if (this.mode === 'date' && !selectedDate) {
+      this.dateErrorMessage = this.translateService.instant('Please select a date');
+      return;
+    }
+
+    // Validation for range mode
+    if (this.mode === 'range') {
+      let hasError = false;
+
+      if (!startDate) {
+        this.startDateErrorMessage = this.translateService.instant('Please select start date');
+        hasError = true;
+      }
+      if (!endDate) {
+        this.endDateErrorMessage = this.translateService.instant('Please select end date');
+        hasError = true;
+      }
+
+      if (hasError) {
+        return;
+      }
+    }
+
     if (selectedDate) {
       const formattedDate = this.formatDate(selectedDate);
       this.dateFilter = this.formatDate(selectedDate);
@@ -701,7 +737,7 @@ export class TableGridComponent implements OnInit, AfterViewInit {
       this.dateFilter = '';
       this.currentDateFilter = null;
     }
-    
+
     this.dateField = dateField;
     this.applyFilters();
     this.closeMenu();
@@ -714,6 +750,10 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   resetDate(flag: boolean = false) {
     this.filteredDateAndRangeForm.reset();
     this.currentDateFilter = null;
+    // Clear error messages
+    this.dateErrorMessage = '';
+    this.startDateErrorMessage = '';
+    this.endDateErrorMessage = '';
     this.applyFilters();
     if (!flag) {
       this.closeMenu();

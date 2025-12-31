@@ -6,7 +6,7 @@
         <img src="{{ pluginConfigObs.tableHeaderIcon }}" alt="" width="44px" data-test-id="imgTableHeaderIconAppointment">
         <h6 class="mb-0 ml-2" [attr.data-test-id]="pluginConfigObs.tableHeader"> 
           {{ pluginConfigObs.tableHeader | translate }} ({{ getCurrentTotalCount() }})
-        </h6>
+        </h6>   
         <mat-icon 
           aria-hidden="false" 
           aria-label="help icon" 
@@ -49,30 +49,32 @@
 
             <!-- Date Mode -->
             <div *ngIf="mode === 'date'" class="date-view" (click)="$event.stopPropagation()" data-test-id="divDateModeAppointment">
-              <form [formGroup]="filteredDateAndRangeForm">
-                <div class="form-date">
-                  <div class="input-date">
-                    <label class="label-text">{{ 'Select date' | translate}}</label>
-                    <div class="input-wrapper">
-                      <input 
-                        type="text" 
-                        class="form-control" 
-                        [max]="maxDate" 
-                        formControlName="date" 
-                        [matDatepicker]="datePicker" 
-                        placeholder="{{'Select date' | translate}}" 
-                        aria-label="Date" 
-                        readonly 
+              <form [formGroup]="filteredDateAndRangeForm" data-test-id="formDateFilterAppointment">
+                <div class="form-date" data-test-id="divFormDateAppointment">
+                  <div class="input-date" data-test-id="divInputDateAppointment">
+                    <label class="label-text" data-test-id="lblSelectDateAppointment">{{ 'Select date' | translate}}</label>
+                    <div class="input-wrapper" data-test-id="divInputWrapperDateAppointment">
+                      <input
+                        type="text"
+                        class="form-control"
+                        [class.error-border]="dateErrorMessage"
+                        [max]="maxDate"
+                        formControlName="date"
+                        [matDatepicker]="datePicker"
+                        placeholder="{{'Select date' | translate}}"
+                        aria-label="Date"
+                        readonly
                         data-test-id="etDate"/>
-                      <mat-datepicker #datePicker></mat-datepicker>
-                      <mat-datepicker-toggle 
-                        matSuffix 
-                        [for]="datePicker" 
-                        data-test-id="dpDate" 
+                      <mat-datepicker #datePicker data-test-id="matDatePickerAppointment"></mat-datepicker>
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="datePicker"
+                        data-test-id="dpDate"
                         class="datepicker-icon">
-                        <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="">
+                        <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="" data-test-id="imgDatePickerIconAppointment">
                       </mat-datepicker-toggle>
                     </div>
+                    <span *ngIf="dateErrorMessage" class="error-message" data-test-id="spanDateErrorMessageAppointment">{{ dateErrorMessage }}</span>
                   </div>
                 </div>
               </form>
@@ -80,54 +82,58 @@
 
             <!-- Range Mode -->
             <div *ngIf="mode === 'range'" class="range-view" (click)=" $event.stopPropagation()" data-test-id="divRangeModeAppointment">
-              <form [formGroup]="filteredDateAndRangeForm">
-                <div class="form-date">
-                  <div class="input-date">
-                    <label class="label-text">{{ 'Start date' | translate }}</label>
-                    <div class="input-wrapper">
-                      <input 
-                        type="text" 
-                        class="form-control" 
-                        [max]="filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate" 
-                        formControlName="startDate" 
-                        [matDatepicker]="startDatePicker" 
-                        placeholder="{{'Select start date'|translate}}" 
-                        readonly 
+              <form [formGroup]="filteredDateAndRangeForm" data-test-id="formRangeFilterAppointment">
+                <div class="form-date" data-test-id="divFormStartDateAppointment">
+                  <div class="input-date" data-test-id="divInputStartDateAppointment">
+                    <label class="label-text" data-test-id="lblStartDateAppointment">{{ 'Start date' | translate }}</label>
+                    <div class="input-wrapper" data-test-id="divInputWrapperStartDateAppointment">
+                      <input
+                        type="text"
+                        class="form-control"
+                        [class.error-border]="startDateErrorMessage"
+                        [max]="filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate"
+                        formControlName="startDate"
+                        [matDatepicker]="startDatePicker"
+                        placeholder="{{'Select start date'|translate}}"
+                        readonly
                         data-test-id="etSelStartDate">
-                      <mat-datepicker #startDatePicker></mat-datepicker>
+                      <mat-datepicker #startDatePicker data-test-id="matStartDatePickerAppointment"></mat-datepicker>
                       <mat-datepicker-toggle matSuffix [for]="startDatePicker" class="datepicker-icon" data-test-id="dpStartDate">
-                        <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="">
+                        <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="" data-test-id="imgStartDatePickerIconAppointment">
                       </mat-datepicker-toggle>
                     </div>
+                    <span *ngIf="startDateErrorMessage" class="error-message" data-test-id="spanStartDateErrorMessageAppointment">{{ startDateErrorMessage }}</span>
                   </div>
                 </div>
-                <div class="form-date">
-                  <div class="input-date">
-                    <label class="label-text">{{ 'End date' | translate }}</label>
-                    <div class="input-wrapper">
-                      <input 
-                        type="text" 
-                        class="form-control" 
-                        [min]="filteredDateAndRangeForm.value.startDate" 
-                        [max]="maxDate" 
-                        formControlName="endDate" 
-                        [matDatepicker]="endDatePicker" 
-                        placeholder="{{'Select end date'|translate}}" 
-                        readonly 
+                <div class="form-date" data-test-id="divFormEndDateAppointment">
+                  <div class="input-date" data-test-id="divInputEndDateAppointment">
+                    <label class="label-text" data-test-id="lblEndDateAppointment">{{ 'End date' | translate }}</label>
+                    <div class="input-wrapper" data-test-id="divInputWrapperEndDateAppointment">
+                      <input
+                        type="text"
+                        class="form-control"
+                        [class.error-border]="endDateErrorMessage"
+                        [min]="filteredDateAndRangeForm.value.startDate"
+                        [max]="maxDate"
+                        formControlName="endDate"
+                        [matDatepicker]="endDatePicker"
+                        placeholder="{{'Select end date'|translate}}"
+                        readonly
                         data-test-id="etSelEndDate">
-                      <mat-datepicker #endDatePicker></mat-datepicker>
+                      <mat-datepicker #endDatePicker data-test-id="matEndDatePickerAppointment"></mat-datepicker>
                       <mat-datepicker-toggle matSuffix [for]="endDatePicker" class="datepicker-icon" data-test-id="dpEndDate">
-                        <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="">
+                        <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="" data-test-id="imgEndDatePickerIconAppointment">
                       </mat-datepicker-toggle>
                     </div>
+                    <span *ngIf="endDateErrorMessage" class="error-message" data-test-id="spanEndDateErrorMessageAppointment">{{ endDateErrorMessage }}</span>
                   </div>
                 </div>
               </form>
             </div>
 
             <div class="action-buttons" data-test-id="divFilterActionBtnsAppointment">
-              <button mat-button class="reset-btn" (click)="resetDate();" data-test-id="btnResetFilterAppointment">{{ 'Reset'| translate }}</button>
-              <button mat-button class="apply-btn" (click)="applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField)" data-test-id="btnApplyFilterAppointment">{{ 'Apply'| translate }}</button>
+              <button mat-button class="reset-btn" (click)="resetDate(); $event.stopPropagation();" data-test-id="btnResetFilterAppointment">{{ 'Reset'| translate }}</button>
+              <button mat-button class="apply-btn" (click)="applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField); $event.stopPropagation();" data-test-id="btnApplyFilterAppointment">{{ 'Apply'| translate }}</button>
             </div>
           </mat-menu>
 
