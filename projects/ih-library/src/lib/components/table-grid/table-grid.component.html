@@ -61,11 +61,11 @@
                         [max]="maxDate"
                         formControlName="date"
                         [matDatepicker]="datePicker"
-                        placeholder="{{'Select date' | translate}}"
+                        [placeholder]="filteredDateAndRangeForm.get('date')?.value ? (filteredDateAndRangeForm.get('date')?.value | date: 'dd/MM/yyyy') : ('Select date' | translate)"
                         aria-label="Date"
                         readonly
                         data-test-id="etDate"/>
-                      <mat-datepicker #datePicker data-test-id="matDatePickerAppointment"></mat-datepicker>
+                      <mat-datepicker #datePicker (opened)="addCalendarNavigationTestIds()" data-test-id="matDatePickerAppointment"></mat-datepicker>
                       <mat-datepicker-toggle
                         matSuffix
                         [for]="datePicker"
@@ -94,10 +94,10 @@
                         [max]="filteredDateAndRangeForm.value.endDate ? filteredDateAndRangeForm.value.endDate : maxDate"
                         formControlName="startDate"
                         [matDatepicker]="startDatePicker"
-                        placeholder="{{'Select start date'|translate}}"
+                        [placeholder]="filteredDateAndRangeForm.get('startDate')?.value ? (filteredDateAndRangeForm.get('startDate')?.value | date: 'dd/MM/yyyy') : ('Select start date'|translate)"
                         readonly
                         data-test-id="etSelStartDate">
-                      <mat-datepicker #startDatePicker data-test-id="matStartDatePickerAppointment"></mat-datepicker>
+                      <mat-datepicker #startDatePicker (opened)="addCalendarNavigationTestIds()" data-test-id="matStartDatePickerAppointment"></mat-datepicker>
                       <mat-datepicker-toggle matSuffix [for]="startDatePicker" class="datepicker-icon" data-test-id="dpStartDate">
                         <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="" data-test-id="imgStartDatePickerIconAppointment">
                       </mat-datepicker-toggle>
@@ -117,10 +117,10 @@
                         [max]="maxDate"
                         formControlName="endDate"
                         [matDatepicker]="endDatePicker"
-                        placeholder="{{'Select end date'|translate}}"
+                        [placeholder]="filteredDateAndRangeForm.get('endDate')?.value ? (filteredDateAndRangeForm.get('endDate')?.value | date: 'dd/MM/yyyy') : ('Select end date'|translate)"
                         readonly
                         data-test-id="etSelEndDate">
-                      <mat-datepicker #endDatePicker data-test-id="matEndDatePickerAppointment"></mat-datepicker>
+                      <mat-datepicker #endDatePicker (opened)="addCalendarNavigationTestIds()" data-test-id="matEndDatePickerAppointment"></mat-datepicker>
                       <mat-datepicker-toggle matSuffix [for]="endDatePicker" class="datepicker-icon" data-test-id="dpEndDate">
                         <img matDatepickerToggleIcon src="assets/svgs/calendar-date.svg" alt="" data-test-id="imgEndDatePickerIconAppointment">
                       </mat-datepicker-toggle>
@@ -132,7 +132,7 @@
             </div>
 
             <div class="action-buttons" data-test-id="divFilterActionBtnsAppointment">
-              <button mat-button class="reset-btn" (click)="resetDate(); $event.stopPropagation();" data-test-id="btnResetFilterAppointment">{{ 'Reset'| translate }}</button>
+              <button mat-button class="reset-btn" (click)="resetDate(true); $event.stopPropagation();" data-test-id="btnResetFilterAppointment">{{ 'Reset'| translate }}</button>
               <button mat-button class="apply-btn" (click)="applyDateOrRangeFilter(pluginConfigObs.filterObs.filterDateField); $event.stopPropagation();" data-test-id="btnApplyFilterAppointment">{{ 'Apply'| translate }}</button>
             </div>
           </mat-menu>
@@ -292,7 +292,8 @@
       [pageSize]="itemsPerPage" 
       [disabled]="isPaginationDisabled()"
       (page)="pageEvent = getData($event)"  
-      aria-label="Select page of periodic elements">
+      aria-label="Select page of periodic elements"
+      >
     </mat-paginator>
   </div>
 </mat-expansion-panel>

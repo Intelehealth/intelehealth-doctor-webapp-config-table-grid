@@ -50,6 +50,9 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput', { static: true }) searchElement: ElementRef;
   filteredDateAndRangeForm: FormGroup;
   @ViewChild('tempPaginator') tempPaginator: MatPaginator;
+  @ViewChild('tempPaginator', { read: ElementRef })
+paginatorEl!: ElementRef<HTMLElement>;
+
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
   
   // Date picker ViewChild references
@@ -104,10 +107,31 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   isFilterActive: boolean = false;
   paginationDisabled: boolean = false;
 
-  ngAfterViewInit() {
-    // Paginator will be set when data is loaded
-  }
 
+ngAfterViewInit(): void {
+  // Wait for the paginator to be fully initialized
+  setTimeout(() => {
+    if (this.paginatorEl && this.paginatorEl.nativeElement) {
+      const el = this.paginatorEl.nativeElement;
+      const suffix = this.pluginConfigObs?.pluginConfigObsFlag || '';
+
+      el.querySelector('.mat-paginator-navigation-next')
+        ?.setAttribute('data-test-id', `paginator-next-${suffix}`);
+
+      el.querySelector('.mat-paginator-navigation-previous')
+        ?.setAttribute('data-test-id', `paginator-prev-${suffix}`);
+
+      el.querySelector('.mat-paginator-navigation-first')
+        ?.setAttribute('data-test-id', `paginator-first-${suffix}`);
+
+      el.querySelector('.mat-paginator-navigation-last')
+        ?.setAttribute('data-test-id', `paginator-last-${suffix}`);
+
+      el.querySelector('.mat-paginator-range-label')
+        ?.setAttribute('data-test-id', `paginator-range-label-${suffix}`);
+    }
+  }, 100);
+}
   constructor(
     private appointmentService: AppointmentService,
     private visitService: VisitService,
@@ -1331,6 +1355,39 @@ export class TableGridComponent implements OnInit, AfterViewInit {
     if (tableContainer) {
       tableContainer.scrollTop = 0;
     }
+  }
+
+  /**
+   * Add data-test-ids to datepicker calendar navigation buttons and date cells
+   */
+  addCalendarNavigationTestIds() {
+    setTimeout(() => {
+      // Add test IDs to navigation buttons
+      const prevButton = document.querySelector('.mat-calendar-previous-button');
+      const nextButton = document.querySelector('.mat-calendar-next-button');
+
+      if (prevButton && !prevButton.getAttribute('data-test-id')) {
+        prevButton.setAttribute('data-test-id', 'calendarNavPrevious');
+      }
+
+      if (nextButton && !nextButton.getAttribute('data-test-id')) {
+        nextButton.setAttribute('data-test-id', 'calendarNavNext');
+      }
+
+      // Add test IDs to all date cells
+      const dateCells = document.querySelectorAll('.mat-calendar-body-cell');
+      dateCells.forEach((cell: Element) => {
+        if (!cell.getAttribute('data-test-id')) {
+          const dateButton = cell.querySelector('.mat-calendar-body-cell-content');
+          if (dateButton) {
+            const dateValue = dateButton.textContent?.trim();
+            if (dateValue) {
+              cell.setAttribute('data-test-id', `calendarDate-${dateValue}`);
+            }
+          }
+        }
+      });
+    }, 0);
   }
 }
 
