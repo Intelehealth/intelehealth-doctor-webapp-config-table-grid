@@ -44,6 +44,7 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
     searchElement: ElementRef;
     filteredDateAndRangeForm: FormGroup;
     tempPaginator: MatPaginator;
+    paginatorEl: ElementRef<HTMLElement>;
     menuTrigger: MatMenuTrigger;
     datePicker: any;
     startDatePicker: any;
@@ -404,6 +405,10 @@ export declare class TableGridComponent implements OnInit, AfterViewInit {
      * Scroll to top of the table container
      */
     private scrollToTop;
+    /**
+     * Add data-test-ids to datepicker calendar navigation buttons and date cells
+     */
+    addCalendarNavigationTestIds(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<TableGridComponent, never>;
     static ɵcmp: i0.ɵɵComponentDeclaration<TableGridComponent, "lib-table-grid", never, { "pluginConfigObs": "pluginConfigObs"; }, { "visitsCountDate": "visitsCountDate"; }, never, never, false>;
 }
