@@ -4,7 +4,7 @@
       <div id="{{pluginConfigObs.anchorId}}" class="anchor-con" data-test-id="divAnchorAppointment"></div>
       <div class="intel-accordion-title" data-test-id="divAccordionTitleAppointment">
         <img src="{{ pluginConfigObs.tableHeaderIcon }}" alt="" width="44px" data-test-id="imgTableHeaderIconAppointment">
-        <h6 class="mb-0 ml-2" [attr.data-test-id]="pluginConfigObs.tableHeader"> 
+        <h6 class="mb-0 ml-2" [attr.data-test-id]="pluginConfigObs.tableHeader"> Shaheen
           {{ pluginConfigObs.tableHeader | translate }} ({{ getCurrentTotalCount() }})
         </h6>   
         <mat-icon 
@@ -25,7 +25,7 @@
             (click)="$event.stopPropagation();" 
             data-test-id="btnFilterAppointment">
             <img src="{{pluginConfigObs.filterObs.filterIcon}}" alt="" data-test-id="imgFilterIconAppointment"> 
-            {{( pluginConfigObs.filterObs.filterLabel| translate)}}
+            shaheen{{( pluginConfigObs.filterObs.filterLabel| translate)}}
           </button>
 
           <!-- Filter Menu -->
@@ -147,7 +147,8 @@
               (keyup)="applyFilter($event)"
               (keydown.Space)="$event.stopPropagation()"
               (keydown.Enter)="$event.stopPropagation()"
-              data-test-id="etSearchAppointmentDashboard">
+              [attr.data-test-id]="'etSearch_'+pluginConfigObs.tableHeader"
+              >
             <div class="input-group-append">
               <button
                 class="btnResetApSerach mat-icon-button"
