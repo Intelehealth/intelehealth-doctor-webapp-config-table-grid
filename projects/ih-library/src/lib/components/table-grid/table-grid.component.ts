@@ -51,7 +51,7 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   filteredDateAndRangeForm: FormGroup;
   @ViewChild('tempPaginator') tempPaginator: MatPaginator;
   @ViewChild('tempPaginator', { read: ElementRef })
-paginatorEl!: ElementRef<HTMLElement>;
+  paginatorEl!: ElementRef<HTMLElement>;
 
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
   
@@ -145,9 +145,9 @@ ngAfterViewInit(): void {
     private ngxLoader: NgxUiLoaderService,
     @Inject('environment') environment
   ) { 
+    this.isBrandName = environment.brandName;
     // Generate unique component ID
     this.componentId = 'table-grid-' + Math.random().toString(36).substr(2, 9);
-    
     this.tableLoader = isFeaturePresent(environment.featureList, 'tableLoader');
     this.baseURL = environment.baseURL;
     this.pageSize = environment.recordsPerPage;
@@ -1052,6 +1052,9 @@ ngAfterViewInit(): void {
    * @return {string} - Formatted date
    */
   processFollowUpDate(value: string): string {
+    if(this.isBrandName === "NAS") {
+      return value ? value.split(',').length > 1 ? `${value.split(',')[0]}` : value : '';
+    }
     return value ? value.split(',').length > 1 ? `${value.split(',')[0]} ${value.split(',')[1].replace("Time:", "")}` : value : '';
   };
 

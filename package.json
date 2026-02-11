@@ -13,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",  
     "prepare": "husky install",
-    "build-library": "ng build ih-library --watch",
+    "build-library": "ng build ih-library --configuration production",
     "build-library-no-watch": "ng build ih-library"
   },
   "lint-staged": {
