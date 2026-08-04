@@ -1,0 +1,38 @@
+{
+  "name": "ih-library",
+  "version": "0.2.25",
+  "peerDependencies": {
+    "@angular/animations": "^16.2.0",
+    "@angular/cdk": "^16.2.0",
+    "@angular/common": "^16.2.0",
+    "@angular/core": "^16.2.0",
+    "@angular/forms": "^16.2.0",
+    "@angular/material": "^16.2.0",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^16.0.1",
+    "@types/moment": "^2.13.0",
+    "bootstrap": "^5.3.3",
+    "moment": "^2.29.4",
+    "ngx-permissions": "^13.0.1",
+    "ngx-toastr": "^14.3.0",
+    "sass": "^1.79.4",
+    "ngx-ui-loader": "^13.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "module": "fesm2022/ih-library.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/ih-library.mjs",
+      "esm": "./esm2022/ih-library.mjs",
+      "default": "./fesm2022/ih-library.mjs"
+    }
+  }
+}
