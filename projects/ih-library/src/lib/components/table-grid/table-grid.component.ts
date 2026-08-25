@@ -88,6 +88,7 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   pvs: PatientVisitSummaryConfigModel;
   baseURL: any;
   isBrandName: string;
+  isTurnServer: boolean;
 
   // to apply filter with date and text search
   dateField: string;
@@ -146,6 +147,7 @@ ngAfterViewInit(): void {
     @Inject('environment') environment
   ) { 
     this.isBrandName = environment.brandName;
+    this.isTurnServer = environment.isTurnServer;
     // Generate unique component ID
     this.componentId = 'table-grid-' + Math.random().toString(36).substr(2, 9);
     this.tableLoader = isFeaturePresent(environment.featureList, 'tableLoader');
@@ -840,6 +842,17 @@ ngAfterViewInit(): void {
               }
             }
           });
+          if (this.isTurnServer) {
+            // Count the rows actually rendered, not the raw response. The count
+            // above is taken before the booked/visitStatus filter runs, so the
+            // paginator length would not match the visible rows.
+            this.totalRecords = this.appointments.length;
+            this.recordsFetched = this.appointments.length;
+            this.emitVisitsCount(this.totalRecords);
+          }
+          // Soonest appointment first, regardless of the order the API returned.
+          this.appointments.sort((a: AppointmentModel, b: AppointmentModel) =>
+            moment(a.slotJsDate).valueOf() - moment(b.slotJsDate).valueOf());
           this.dataSource = [...this.appointments];
           this.storeOriginalData();
         },
@@ -1109,8 +1122,17 @@ ngAfterViewInit(): void {
       return event;
     }
     
+    // Appointments are fetched in a single call, so there is no further page to
+    // fetch from the API. Paginate them client-side instead, otherwise
+    // fetchMoreData() has no 'Appointment' case and paging silently does nothing.
+    if (this.isTurnServer && this.pluginConfigObs?.pluginConfigObsFlag === 'Appointment') {
+      this.handleClientSidePagination();
+      this.scrollToTop();
+      return event;
+    }
+
     const requiredRecords = (this.pageIndex + 1) * this.pageSize;
-    
+
     // Check if we need to fetch more data from API
     if (requiredRecords > this.recordsFetched) {
       this.fetchMoreData();
