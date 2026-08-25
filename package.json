@@ -1,10 +1,6 @@
 {
   "name": "ih-library",
-<<<<<<< Updated upstream
-  "version": "0.2.25",
-=======
   "version": "0.2.26",
->>>>>>> Stashed changes
   "peerDependencies": {
     "@angular/animations": "^16.2.0",
     "@angular/cdk": "^16.2.0",
