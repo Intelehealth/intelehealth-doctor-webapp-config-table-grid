@@ -27,7 +27,9 @@ export class TableGridComponent implements OnInit, AfterViewInit {
   
   // Constants
   private static readonly DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 25];
-  private static readonly APPOINTMENT_PAGE_SIZE = 5;
+  // Appointments are all fetched in one call -- show them on a single page
+  // instead of paginating, matching the other sections' no-pagination feel.
+  private static readonly APPOINTMENT_PAGE_SIZE = 100000;
   private static readonly SPECIALIZATION_UUID = 'ed1715f5-93e2-404e-b3c9-2a2d9600f062';
   private static readonly TELEPHONE_ATTRIBUTE_ID = 8;
   private static readonly FOLLOW_UP_CONCEPT_ID = 163345;
@@ -850,9 +852,9 @@ ngAfterViewInit(): void {
             this.recordsFetched = this.appointments.length;
             this.emitVisitsCount(this.totalRecords);
           }
-          // Soonest appointment first, regardless of the order the API returned.
+          // Most recently booked/created appointment first.
           this.appointments.sort((a: AppointmentModel, b: AppointmentModel) =>
-            moment(a.slotJsDate).valueOf() - moment(b.slotJsDate).valueOf());
+            moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf());
           this.dataSource = [...this.appointments];
           this.storeOriginalData();
         },
