@@ -1345,7 +1345,9 @@ class TableGridComponent {
     ngxLoader;
     // Constants
     static DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 25];
-    static APPOINTMENT_PAGE_SIZE = 5;
+    // Appointments are all fetched in one call -- show them on a single page
+    // instead of paginating, matching the other sections' no-pagination feel.
+    static APPOINTMENT_PAGE_SIZE = 100000;
     static SPECIALIZATION_UUID = 'ed1715f5-93e2-404e-b3c9-2a2d9600f062';
     static TELEPHONE_ATTRIBUTE_ID = 8;
     static FOLLOW_UP_CONCEPT_ID = 163345;
@@ -2090,8 +2092,8 @@ class TableGridComponent {
                     this.recordsFetched = this.appointments.length;
                     this.emitVisitsCount(this.totalRecords);
                 }
-                // Soonest appointment first, regardless of the order the API returned.
-                this.appointments.sort((a, b) => moment(a.slotJsDate).valueOf() - moment(b.slotJsDate).valueOf());
+                // Most recently booked/created appointment first.
+                this.appointments.sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf());
                 this.dataSource = [...this.appointments];
                 this.storeOriginalData();
             },
