@@ -850,6 +850,9 @@ ngAfterViewInit(): void {
             this.recordsFetched = this.appointments.length;
             this.emitVisitsCount(this.totalRecords);
           }
+          // Soonest appointment first, regardless of the order the API returned.
+          this.appointments.sort((a: AppointmentModel, b: AppointmentModel) =>
+            moment(a.slotJsDate).valueOf() - moment(b.slotJsDate).valueOf());
           this.dataSource = [...this.appointments];
           this.storeOriginalData();
         },

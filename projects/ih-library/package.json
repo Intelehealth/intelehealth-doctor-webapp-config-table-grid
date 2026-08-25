@@ -1,6 +1,6 @@
 {
   "name": "ih-library",
-  "version": "0.2.25",
+  "version": "0.2.26",
   "scripts": {
     "dev": "ng build ih-library --watch"
   },

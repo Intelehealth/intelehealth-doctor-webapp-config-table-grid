@@ -576,6 +576,7 @@
       [pageIndex]="currentPage"
       [pageSize]="itemsPerPage"
       [disabled]="isPaginationDisabled()"
+      (page)="pageEvent = getData($event)"
       aria-label="Select page of periodic elements"
     ></mat-paginator>
     <mat-paginator
