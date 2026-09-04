@@ -1,6 +1,6 @@
 {
   "name": "ih-library",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "peerDependencies": {
     "@angular/animations": "^16.2.0",
     "@angular/cdk": "^16.2.0",
