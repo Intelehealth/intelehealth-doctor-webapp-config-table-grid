@@ -362,7 +362,7 @@ export class VisitSummaryComponent implements OnInit, OnDestroy, AfterViewInit {
       followUpTime: new FormControl(null),
       followUpReason: new FormControl(null),
       uuid: new FormControl(null),
-      followUpType: new FormControl(null)
+      followUpType: new FormControl(environment.isTurnServer ? 'Telemedicine' : null) // Turn is always telemedicine, no picker shown
     });
 
     this.recommendationForm = new FormGroup({
@@ -1932,7 +1932,7 @@ export class VisitSummaryComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   deleteFollowUp(): void {
     this.diagnosisService.deleteObs(this.followUpForm.value.uuid).subscribe(() => {
-      this.followUpForm.patchValue({ present: false, uuid: null, wantFollowUp: '', followUpDate: null, followUpTime: null, followUpReason: null, followUpType: null });
+      this.followUpForm.patchValue({ present: false, uuid: null, wantFollowUp: '', followUpDate: null, followUpTime: null, followUpReason: null, followUpType: environment.isTurnServer ? 'Telemedicine' : null });
       this.followUpDatetime = null;
     });
   }

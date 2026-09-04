@@ -998,14 +998,13 @@ ngAfterViewInit(): void {
     this.visitService.getFollowUpVisits(this.specialization, page).subscribe({
       next: (res: ApiResponseModel) => {
         if (res.success) {
-          this.totalRecords = res.totalCount;
           this.recordsFetched += this.pageSize;
-          this.emitVisitsCount(this.totalRecords);
-          
           const processedVisits = res.data
             .map(visit => this.processFollowUpVisitData(visit))
             .filter(visit => visit !== null);
-          
+          this.totalRecords = (page === 1 ? 0 : this.totalRecords) + processedVisits.length;
+          this.emitVisitsCount(this.totalRecords);
+
           this.followUpVisits.push(...processedVisits);
           this.updateDataSources(this.followUpVisits, processedVisits);
         }
