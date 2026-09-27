@@ -1364,7 +1364,10 @@ ngAfterViewInit(): void {
     visit.person.age = this.calculateAge(visit.person.birthdate);
     visit.completed = this.getEncounterCreated(visit, visitTypes.VISIT_COMPLETE);
     visit.followUp = this.processFollowUpDate(
-      this.getEncounterObs(visit.encounters, visitTypes.VISIT_NOTE, TableGridComponent.FOLLOW_UP_CONCEPT_ID)?.value_text
+      (
+        this.getEncounterObs(visit.encounters, visitTypes.VISIT_NOTE, TableGridComponent.FOLLOW_UP_CONCEPT_ID) ||
+        this.getEncounterObs(visit.encounters, visitTypes.SPECIALIST_VISIT_NOTE, TableGridComponent.FOLLOW_UP_CONCEPT_ID)
+      )?.value_text
     );
     visit.location = visit?.location?.name;
     visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');

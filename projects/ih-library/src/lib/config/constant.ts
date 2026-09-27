@@ -31,6 +31,7 @@ export const visitTypes = {
     FLAGGED:'Flagged',
     VITALS:'Vitals',
     VISIT_NOTE:'Visit Note',
+    SPECIALIST_VISIT_NOTE:'Specialist Visit Note',
     MEDICAL_HISTORY:'MEDICAL HISTORY',
     FAMILY_HISTORY:'FAMILY HISTORY',
     FOLLOW_UP:'Follow-up',
