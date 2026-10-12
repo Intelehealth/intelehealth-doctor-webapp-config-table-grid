@@ -29,6 +29,7 @@ export declare const visitTypes: {
     FLAGGED: string;
     VITALS: string;
     VISIT_NOTE: string;
+    SPECIALIST_VISIT_NOTE: string;
     MEDICAL_HISTORY: string;
     FAMILY_HISTORY: string;
     FOLLOW_UP: string;
