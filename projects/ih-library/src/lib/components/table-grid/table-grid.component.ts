@@ -1232,6 +1232,10 @@ ngAfterViewInit(): void {
     visit.visit_created = visit?.date_created 
       ? this.getCreatedAt(visit.date_created.replace('Z','+0530')) 
       : this.getEncounterCreated(visit, encounterType || visitTypes.ADULTINITIAL);
+    // No appointments on a TURN server, so awaiting visits show the upload date rather than "x Hours ago"
+    if (this.isTurnServer && this.pluginConfigObs?.pluginConfigObsFlag === 'Awaiting' && visit?.date_created) {
+      visit.visit_created = moment(visit.date_created.replace('Z','+0530')).format('DD MMM, YYYY');
+    }
     visit.person.age = this.calculateAge(visit.person.birthdate);
     visit.location = visit?.location?.name;
     visit.age = visit?.person?.age + ' ' + this.translateService.instant('y');
